@@ -1,0 +1,164 @@
+{
+  "1": {
+    "name": "Gratin de courgettes",
+    "image": "",
+    "ingredients": {
+      "Ground Beef": 200,
+      "Cucumber": 2
+    }
+  },
+  "2": {
+    "name": "Spaghetti Carbonara",
+    "image": "",
+    "ingredients": {
+      "Spaghetti": 250,
+      "Egg": 2,
+      "Bacon": 100,
+      "Parmesan": 50,
+      "Pepper": 2
+    }
+  },
+  "3": {
+    "name": "Chicken Curry",
+    "image": "",
+    "ingredients": {
+      "Chicken": 300,
+      "Coconut Milk": { "qtt": 200, "unit": "ml" },
+      "Curry Powder": 2,
+      "Onion": 1,
+      "Garlic": 2
+    }
+  },
+  "4": {
+    "name": "Vegetable Stir Fry",
+    "image": "",
+    "ingredients": {
+      "Broccoli": 0.5,
+      "Carrot": 2,
+      "Bell Pepper": 1,
+      "Soy Sauce": 2,
+      "Ginger": 0.5
+    }
+  },
+  "5": {
+    "name": "Pancakes",
+    "image": "",
+    "ingredients": {
+      "Wheat Flour": 200,
+      "Milk": 300,
+      "Egg": 1,
+      "Sugar": 25,
+      "Butter": 50
+    }
+  },
+  "6": {
+    "name": "Beef Tacos",
+    "image": "",
+    "ingredients": {
+      "Ground Beef": 300,
+      "Taco Shells": 6,
+      "Lettuce": 0.25,
+      "Cheddar": 100,
+      "Salsa": 100
+    }
+  },
+  "7": {
+    "name": "Margarita Pizza",
+    "image": "",
+    "ingredients": {
+      "Pizza Dough": 1,
+      "Tomato Sauce": 100,
+      "Mozzarella": 1,
+      "Basil": 3,
+      "Olive Oil": 1
+    }
+  },
+  "8": {
+    "name": "Caesar Salad",
+    "image": "",
+    "ingredients": {
+      "Lettuce": 1,
+      "Crouton": 50,
+      "Parmesan": 30,
+      "Caesar Sauce": 50,
+      "Chicken": 150
+    }
+  },
+  "9": {
+    "name": "Chocolate Cake",
+    "image": "",
+    "ingredients": {
+      "Wheat Flour": 200,
+      "Sugar": 150,
+      "Chocolate": 100,
+      "Butter": 100,
+      "Egg": 2
+    }
+  },
+  "10": {
+    "name": "Tomato Soup",
+    "image": "",
+    "ingredients": {
+      "Tomato": 5,
+      "Onion": 1,
+      "Garlic": 2,
+      "Vegetable Broth": 1,
+      "Cream": 50
+    }
+  },
+  "716429": {
+    "name": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+    "image": "",
+    "servings": 2,
+    "readyInMinutes": 45,
+    "cookingMinutes": 25,
+    "preparationMinutes": 20,
+    "recipeOutside": false,
+    "steps": [
+      "In a large skillet, melt butter over medium heat until foamy.",
+      "Then add bread crumbs, tossing to coat in butter, until toasted and lightly browned.",
+      "Remove from pan into small bowl; mix in cheese and about a tablespoon of the green scallion tops.",
+      "In the meantime, begin to prepare your pasta according to the directions on the package.",
+      "While the pasta is cooking, put about a tablespoon of olive oil in the same pan you used for the bread crumbs.",
+      "Over medium heat, add the garlic, whites of the scallions, and cauliflower to the skillet.",
+      "Saute until the cauliflower shows some caramelization.",
+      "Then add the wine until the florets are tender-crisp.",
+      "Add salt, pepper, and red pepper flakes.",
+      "When pasta is just shy of al dente, reserve about a cup of the cooking water and drain the pasta.",
+      "Add the drained pasta to the skillet—still over medium heat—with the veggies and toss with some pasta water, as necessary (I added a little at a time; I ended up using about 1/2 cup), till the pasta is coated and turns easily.",
+      "You may want to add another little drizzle of olive oil. Again, taste and season accordingly.",
+      "Put into serving bowls and top with the bread crumb mixture. Sprinkle some more scallion greens on top.",
+      "That's it! There's cauliflower in every bite. And that's a great thing."
+    ],
+    "dishTypes": [
+      "main course",
+      "side dish",
+      "dessert",
+      "appetizer",
+      "salad",
+      "bread",
+      "breakfast",
+      "soup",
+      "beverage",
+      "sauce",
+      "marinade",
+      "fingerfood",
+      "snack",
+      "drink"
+    ],
+    "ingredients": {
+      "Butter": 15,
+      "Cauliflower": 1,
+      "Cheese": 20,
+      "Olive Oil": 1,
+      "Garlic": 5,
+      "Pasta": 170,
+      "Pepper": 2,
+      "Salt": 2,
+      "Green Onion": 3,
+      "Wine": 2,
+      "Crouton": 50
+    },
+    "summary": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire. It is brought to you by fullbellysisters.blogspot.com.  A mixture of scallions, salt and pepper, white wine, and a handful of other ingredients are all it takes to make this recipe so scrumptious. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/cauliflower-gratin-with-garlic-breadcrumbs-318375\">Cauliflower Gratin with Garlic Breadcrumbs</a>, < href=\"https://spoonacular.com/recipes/pasta-with-cauliflower-sausage-breadcrumbs-30437\">Pasta With Cauliflower, Sausage, & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-roasted-cauliflower-parsley-and-breadcrumbs-30738\">Pasta With Roasted Cauliflower, Parsley, And Breadcrumbs</a>."
+  }
+}

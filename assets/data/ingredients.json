@@ -1,0 +1,867 @@
+{
+  "Lemon": {
+    "icon": "lemon",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Tomato": {
+    "icon": "tomato",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Onion": {
+    "icon": "onion",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Green Onion": {
+    "icon": "onion",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Corn": {
+    "icon": "corn",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Garlic": {
+    "icon": "garlic",
+    "unit": "clove",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Potato": {
+    "icon": "potato",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Carrot": {
+    "icon": "carrot",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Cucumber": {
+    "icon": "cucumber",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Bell Pepper": {
+    "icon": "bell_pepper",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Zucchini": {
+    "icon": "cucumber",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Spinach": {
+    "icon": "leafy_green",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Lettuce": {
+    "icon": "leafy_green",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Broccoli": {
+    "icon": "broccoli",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Cauliflower": {
+    "icon": "broccoli",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+  "Mushroom": {
+    "icon": "mushroom",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Produce"
+  },
+
+  "Coconut Milk": {
+    "icon": "milk_glass",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Milk": {
+    "icon": "milk_glass",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Pizza Dough": {
+    "icon": "pizza",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Cheese": {
+    "icon": "cheese_wedge",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Cheddar": {
+    "icon": "cheese_wedge",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Mozzarella": {
+    "icon": "cheese_wedge",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Parmesan": {
+    "icon": "cheese_wedge",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Butter": {
+    "icon": "butter",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Yogurt": {
+    "icon": "milk_glass",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Cream": {
+    "icon": "milk_glass",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Egg": {
+    "icon": "egg",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+
+  "Chicken": {
+    "icon": "chicken",
+    "unit": "g",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Bacon": {
+    "icon": "bacon",
+    "unit": "g",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": false,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Ground Beef": {
+    "icon": "cut_of_meat",
+    "unit": "g",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Fish": {
+    "icon": "fish",
+    "unit": "g",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Shrimp": {
+    "icon": "shrimp",
+    "unit": "g",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+
+  "Bread": {
+    "icon": "bread",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Crouton": {
+    "icon": "bread",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Taco Shell": {
+    "icon": "taco",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Hamburger Bun": {
+    "icon": "bread",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Bagel": {
+    "icon": "bread",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Granola": {
+    "icon": "bowl_with_spoon",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Oatmeal": {
+    "icon": "bowl_with_spoon",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Cereal": {
+    "icon": "bowl_with_spoon",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Rice": {
+    "icon": "rice",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Breads&Grains"
+  },
+  "Pasta": {
+    "icon": "spaghetti",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Spaghetti": {
+    "icon": "spaghetti",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+
+  "Tomato Sauce": {
+    "icon": "tomato",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Canned Goods"
+  },
+  "Cornichon": {
+    "icon": "pickles",
+    "unit": "",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Canned Goods"
+  },
+
+  "Caesar Sauce": {
+    "icon": "wine_glass",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Balsamic Vinegar": {
+    "icon": "wine_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Cider Vinegar": {
+    "icon": "wine_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Olive Oil": {
+    "icon": "tumbler_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Cooking Oil": {
+    "icon": "tumbler_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Sesame Oil": {
+    "icon": "tumbler_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Soy Sauce": {
+    "icon": "tumbler_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Sriracha": {
+    "icon": "hot_pepper",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Salsa": {
+    "icon": "hot_pepper",
+    "unit": "mL",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Ketchup": {
+    "icon": "tomato",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Mustard": {
+    "icon": "hot_pepper",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Salt": {
+    "icon": "salt",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+  "Pepper": {
+    "icon": "bell_pepper",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Sauces&Condiments"
+  },
+
+  "Chocolate": {
+    "icon": "chocolate",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Snacks&Drinks"
+  },
+  "Wine": {
+    "icon": "wine_glass",
+    "unit": "tbsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": false,
+      "glutenfree": true
+    },
+    "category": "Snacks&Drinks"
+  },
+
+  "Sugar": {
+    "icon": "candy",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Wheat Flour": {
+    "icon": "baguette_bread",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Rice Flour": {
+    "icon": "baguette_bread",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Baking Powder": {
+    "icon": "cupcake",
+    "unit": "bag",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Cinnamon": {
+    "icon": "cinnamon",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Oregano": {
+    "icon": "herb",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Basil": {
+    "icon": "herb",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Rosemary": {
+    "icon": "herb",
+    "unit": "branch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Thyme": {
+    "icon": "herb",
+    "unit": "branch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Sesame Seeds": {
+    "icon": "seedling",
+    "unit": "g",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+
+  "Vanilla Extract": {
+    "icon": "vanilla",
+    "unit": "droplet",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Nutmeg": {
+    "icon": "herb",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Paprika": {
+    "icon": "hot_pepper",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Chili Powder": {
+    "icon": "hot_pepper",
+    "unit": "pinch",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Ginger": {
+    "icon": "ginger",
+    "unit": "cm",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Curry Powder": {
+    "icon": "ginger",
+    "unit": "tsp",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Vegetable Broth": {
+    "icon": "soup",
+    "unit": "cube",
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Chicken Broth": {
+    "icon": "soup",
+    "unit": "cube",
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  }
+}
