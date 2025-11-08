@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 Allergies allergiesList = Allergies();
 Groceries listeCourses = Groceries();
 PersonalizedGroceries coursesPersonnelles = PersonalizedGroceries();
+MyRecipes myRecipes = MyRecipes();
 
 class Allergies extends Iterable with Iterator {
   Map<String, bool> _allergiesDict = {};
@@ -40,7 +41,6 @@ class Allergies extends Iterable with Iterator {
   }
 
   Future<void> load() async {
-    print("Loading");
     await ensureFileExists();
     final file = await _localFile;
     // Read the file
@@ -82,13 +82,10 @@ class Allergies extends Iterable with Iterator {
   }
 
   void addIngredient(String ingredient) {
-    print("add $ingredient called");
     if (!_allergiesDict.keys.contains(ingredient)) {
-      print("$ingredient added");
       _allergiesDict[ingredient] = true;
     }
     updateJson();
-    print("json updated with $ingredient");
   }
 
   void setIntensity(String ingredient, bool value) {
@@ -170,7 +167,6 @@ class Groceries extends Iterable with Iterator {
   }
 
   Future<void> load() async {
-    print("Loading");
     await ensureFileExists();
     final file = await _localFile;
     // Read the file
@@ -299,7 +295,6 @@ class PersonalizedGroceries extends Iterable with Iterator {
   }
 
   Future<void> load() async {
-    print("Loading");
     await ensureFileExists();
     final file = await _localFile;
     // Read the file
@@ -393,13 +388,134 @@ class PersonalizedGroceries extends Iterable with Iterator {
   }
 }
 
+class Recipe {
+  String name;
+  String image;
+  int servings;
+  int readyInMinutes;
+  int cookingMinutes;
+  int preparationMinutes;
+  String personalized;
+  String recipeLink;
+  List<String> steps;
+  Map<String, double> ingredients;
+  List<String> dishTypes;
+  String summary;
+
+  Recipe({
+    this.name = "",
+    this.summary = "",
+    this.personalized = "Nope",
+    this.recipeLink = "",
+    this.image = "",
+    this.dishTypes = const ["Meal"],
+    this.servings = 1,
+    this.readyInMinutes = -1,
+    this.preparationMinutes = -1,
+    this.cookingMinutes = -1,
+    this.ingredients = const {},
+    this.steps = const [],
+  }) {
+    if (servings > 1) {
+      ingredients = Map.unmodifiable(
+        ingredients.map((key, value) => MapEntry(key, value / servings)),
+      );
+    }
+  }
+}
+
+class MyRecipes extends Iterable with Iterator {
+  Map<int, Recipe> _recipesDict = {};
+
+  MyRecipes() {
+    _recipesDict = {};
+    load();
+  }
+
+  // Functional overrides
+  // // Use as iterator
+  int get limit => _recipesDict.keys.length;
+  int i = 0;
+  @override
+  int get current => i;
+  @override
+  bool moveNext() {
+    i++;
+    return i <= limit;
+  }
+
+  @override
+  Iterator get iterator => _recipesDict.keys.iterator;
+
+  // // Use as dict
+  Recipe? operator [](int recipe) {
+    return _recipesDict[recipe];
+  }
+
+  // // Copy keys
+  @override
+  List<int> toList({bool growable = true}) {
+    return _recipesDict.keys.toList(growable: growable);
+  }
+
+  // General json handling
+  Future<void> load() async {
+    await ensureFileExists();
+    final file = await _localFile;
+    // Read the file
+    final jsonString = await file.readAsString();
+    final data = jsonDecode(jsonString);
+    for (String key in data.keys) {
+      int id = int.parse(key);
+      _recipesDict[id] = data[key];
+    }
+  }
+
+  Future<bool> isLoaded() async {
+    if (_recipesDict.isEmpty) {
+      await load();
+    }
+    return _recipesDict.isNotEmpty;
+  }
+
+  Future<File> get _localFile async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+    return File('$path/my_recipes.json');
+  }
+
+  Future<void> ensureFileExists() async {
+    final file = await _localFile;
+
+    // Check if the file exists
+    if (!(await file.exists())) {
+      // Create the file with default content
+      await file.writeAsString(jsonEncode({})); // Empty JSON object as default
+    } else {}
+  }
+
+  Future<void> updateJson() async {
+    final filePath = await _localFile;
+    final json = _recipesDict.map((key, value) => MapEntry(key, value));
+    String jsonString = jsonEncode(json);
+    filePath.writeAsString(jsonString);
+  }
+
+  // Data modification
+  void addRecipe(Recipe recipe) {
+    int newKey = _recipesDict.length;
+    _recipesDict[newKey] = recipe;
+    updateJson();
+  }
+}
+
 int defaultPersonNumber = 1;
 
 double patience = 0.5;
 
-List<int> favoriteRecipes = [1, 2, 3, 4, 5];
+List<int> favoriteRecipes = [1, 2, 3, 4, 0];
 
-List<int> mealPlanList = [716429];
+List<int> mealPlanList = [1];
 
 List<List<int>> weekMeals = [
   [-1, -1],

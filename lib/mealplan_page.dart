@@ -47,9 +47,9 @@ class _MealPlanPageState extends State<MealPlanPage> {
     } else {
       nbMeals = nbMeals * defaultPersonNumber;
     }
-    for (String ingredient in recipesDict[recipe]!["ingredients"].keys) {
+    for (String ingredient in recipesDict[recipe]!.ingredients.keys) {
       listeCourses.addIngredient(ingredient,
-          recipesDict[recipe]!["ingredients"][ingredient] / 1.0 * nbMeals);
+          recipesDict[recipe]!.ingredients[ingredient]! / 1.0 * nbMeals);
     }
   }
 
@@ -180,12 +180,12 @@ class MealPlanCarousel extends StatelessWidget {
                 data: recipeKey,
                 feedback: DragDropPreview(
                     recipe: recipeKey,
-                    texte: recipesDict[recipeKey]!["name"],
-                    img: recipesDict[recipeKey]!["image"]),
+                    texte: recipesDict[recipeKey]!.name,
+                    img: recipesDict[recipeKey]!.image),
                 child: RecipePreview(
                     recipe: recipeKey,
-                    texte: recipesDict[recipeKey]!["name"],
-                    img: recipesDict[recipeKey]!["image"],
+                    texte: recipesDict[recipeKey]!.name,
+                    img: recipesDict[recipeKey]!.image,
                     showMealPlanDialog: showMealPlanDialog,
                     padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
               ),
@@ -458,8 +458,8 @@ class CalendarSlot extends StatelessWidget {
                 data: recipeKey,
                 feedback: DragDropPreview(
                   recipe: recipeKey,
-                  texte: recipesDict[recipeKey]!["name"],
-                  img: recipesDict[recipeKey]!["image"],
+                  texte: recipesDict[recipeKey]!.name,
+                  img: recipesDict[recipeKey]!.image,
                 ),
                 onDraggableCanceled: (velocity, offset) {
                   onMealAddedToWeek(-1, (today + i) % 7, time);
@@ -469,8 +469,8 @@ class CalendarSlot extends StatelessWidget {
                     height: 129,
                     child: CalendarRecipePreview(
                       recipe: recipeKey,
-                      texte: recipesDict[recipeKey]!["name"],
-                      img: recipesDict[recipeKey]!["image"],
+                      texte: recipesDict[recipeKey]!.name,
+                      img: recipesDict[recipeKey]!.image,
                       showMealPlanDialog: showMealPlanDialog,
                     )),
               )
@@ -582,7 +582,7 @@ class CalendarDialogBox extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    var imgDisplayed = recipesDict[recipe]!["image"];
+    var imgDisplayed = recipesDict[recipe]!.image;
     if (imgDisplayed.isEmpty) {
       imgDisplayed = "assets/image/meals/placeholder.jpg";
     }
@@ -642,7 +642,7 @@ class CalendarDialogBox extends StatelessWidget {
               Expanded(
                 child: Stack(children: [
                   Text(
-                    recipesDict[recipe]!["name"],
+                    recipesDict[recipe]!.name,
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!

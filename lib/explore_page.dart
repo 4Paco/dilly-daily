@@ -136,8 +136,8 @@ class _ExplorePageState extends State<ExplorePage> {
                             for (var recipe in generateSuggestions()) ...[
                               RecipePreview(
                                 recipe: recipe,
-                                texte: recipesDict[recipe]!["name"],
-                                img: recipesDict[recipe]!["image"],
+                                texte: recipesDict[recipe]!.name,
+                                img: recipesDict[recipe]!.image,
                                 onToggleMealPlan: toggleMealPlan,
                                 onToggleFavorite: toggleFavorite,
                               )
@@ -177,8 +177,8 @@ class FavoriteCarousel extends StatelessWidget {
               width: 150,
               child: RecipePreview(
                   recipe: recipeKey,
-                  texte: recipesDict[recipeKey]!["name"],
-                  img: recipesDict[recipeKey]!["image"],
+                  texte: recipesDict[recipeKey]!.name,
+                  img: recipesDict[recipeKey]!.image,
                   onToggleMealPlan: onToggleMealPlan,
                   onToggleFavorite: onToggleFavorite,
                   padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
@@ -341,7 +341,7 @@ class RecipeDialogBox extends StatelessWidget {
               ],
             ),
             Text(
-              recipesDict[recipe]!["name"] + "\n[Recipe preview]",
+              "${recipesDict[recipe]!.name} \n[Recipe preview]",
               textAlign: TextAlign.center,
             ),
             Row(
