@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:http/http.dart' as http;
 
 Ingredients ingredientsDict = Ingredients();
 
@@ -38,9 +38,25 @@ class Ingredients extends Iterable with Iterator {
     load();
   }
 
+  Future<String> fetchIngredients() async {
+    final response = await http.get(
+        Uri.parse('https://fastapi-example-da0l.onrender.com/ingredients'));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      print("Attention, on a réussi à parler avec le server !");
+      return response.body;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load ingredients');
+    }
+  }
+
   Future<void> load() async {
     final String jsonString =
-        await rootBundle.loadString('assets/data/ingredients.json');
+        await fetchIngredients(); //comment this line when you don't want to use the server
+    //await rootBundle.loadString('assets/data/ingredients.json');
     final data = jsonDecode(jsonString);
     for (String ing in data.keys) {
       Map<String, dynamic> newIng = data[ing];

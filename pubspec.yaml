@@ -22,6 +22,7 @@ dependencies:
   flutter_test: # Moved here
     sdk: flutter
   path_provider: ^2.1.5
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

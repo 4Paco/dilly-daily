@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart'
     show MyRecipes, myRecipes, Recipe;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 
 Recipes recipesDict = Recipes();
 
@@ -46,9 +46,23 @@ class Recipes extends Iterable with Iterator {
     load();
   }
 
+  Future<String> fetchRecipes() async {
+    final response = await http
+        .get(Uri.parse('https://fastapi-example-da0l.onrender.com/recipes'));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return response.body;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
+
   Future<void> load() async {
-    final String jsonString =
-        await rootBundle.loadString('assets/data/recipes.json');
+    final String jsonString = await fetchRecipes();
+    //await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
     Recipe recipe = Recipe();
     for (String key in data.keys) {
@@ -111,6 +125,14 @@ class Recipes extends Iterable with Iterator {
     return _recipesDict.keys.toList(growable: growable);
   }
 
+  void reloadTheirRecipes() {
+    _recipesDict.removeWhere((key, value) => key < 0);
+
+    for (int id in theirRecipes.toList()) {
+      _recipesDict[-(id + 1)] = theirRecipes[id]!;
+    }
+  }
+
   void addRecipe(String name,
       {String image = "",
       int servings = 1,
@@ -137,5 +159,6 @@ class Recipes extends Iterable with Iterator {
         ingredients: ingredients,
         steps: steps);
     theirRecipes.addRecipe(recipe);
+    reloadTheirRecipes();
   }
 }
