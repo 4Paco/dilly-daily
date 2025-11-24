@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart'
     show MyRecipes, myRecipes, Recipe;
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
 Recipes recipesDict = Recipes();
@@ -25,7 +27,7 @@ List<String> dishTypesVal = [
 ];
 
 class Recipes extends Iterable with Iterator {
-  Map<int, Recipe> _recipesDict = {};
+  Map<String, Recipe> _recipesDict = {};
   MyRecipes theirRecipes = myRecipes;
 
   int get limit => _recipesDict.keys.length;
@@ -41,9 +43,11 @@ class Recipes extends Iterable with Iterator {
   @override
   Iterator get iterator => _recipesDict.keys.iterator;
 
-  Recipes() {
+  Recipes({bool fetch = true}) {
     _recipesDict = {};
-    load();
+    if (fetch) {
+      load();
+    }
   }
 
   Future<String> fetchRecipes() async {
@@ -61,12 +65,12 @@ class Recipes extends Iterable with Iterator {
   }
 
   Future<void> load() async {
-    final String jsonString = await fetchRecipes();
-    //await rootBundle.loadString('assets/data/recipes.json');
+    final String jsonString = //await fetchRecipes();
+        await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
     Recipe recipe = Recipe();
     for (String key in data.keys) {
-      int id = int.parse(key);
+      String id = key; //int.parse(key);
       recipe = Recipe();
       for (String valKey in data[key].keys) {
         if (valKey == "name") {
@@ -100,8 +104,8 @@ class Recipes extends Iterable with Iterator {
       _recipesDict[id] = recipe;
     }
 
-    for (int id in theirRecipes.toList()) {
-      _recipesDict[-(id + 1)] = theirRecipes[id]!;
+    for (String id in theirRecipes.toList()) {
+      _recipesDict[id] = theirRecipes[id]!;
     }
   }
 
@@ -112,7 +116,7 @@ class Recipes extends Iterable with Iterator {
     return _recipesDict.isNotEmpty;
   }
 
-  Recipe? operator [](int recipe) {
+  Recipe? operator [](String recipe) {
     if (_recipesDict.containsKey(recipe)) {
       return _recipesDict[recipe];
     } else {
@@ -121,19 +125,27 @@ class Recipes extends Iterable with Iterator {
   }
 
   @override
-  List<int> toList({bool growable = true}) {
+  List<String> toList({bool growable = true}) {
     return _recipesDict.keys.toList(growable: growable);
   }
 
   void reloadTheirRecipes() {
-    _recipesDict.removeWhere((key, value) => key < 0);
+    //_recipesDict.removeWhere((key, value) => key < 0);
 
-    for (int id in theirRecipes.toList()) {
-      _recipesDict[-(id + 1)] = theirRecipes[id]!;
+    for (String id in theirRecipes.toList()) {
+      _recipesDict[id] = theirRecipes[id]!;
     }
   }
 
-  void addRecipe(String name,
+  Recipe getRecipe(String recipeId) {
+    if (_recipesDict.containsKey(recipeId)) {
+      return _recipesDict[recipeId]!;
+    } else {
+      throw ArgumentError('No such recipe with this ID. getRecipe aborted.');
+    }
+  }
+
+  void addRecipe(String recipeKey, String name,
       {String image = "",
       int servings = 1,
       int readyInMinutes = -1,
@@ -145,7 +157,7 @@ class Recipes extends Iterable with Iterator {
       Map<String, double> ingredients = const {},
       List<String> dishTypes = const ["Meal"],
       String summary = ""}) {
-    Recipe recipe = Recipe(
+    Recipe recette = Recipe(
         name: name,
         summary: summary,
         personalized: personalized,
@@ -158,7 +170,7 @@ class Recipes extends Iterable with Iterator {
         servings: servings,
         ingredients: ingredients,
         steps: steps);
-    theirRecipes.addRecipe(recipe);
+    theirRecipes.addRecipe(recette, recipeKey: recipeKey);
     reloadTheirRecipes();
   }
 }

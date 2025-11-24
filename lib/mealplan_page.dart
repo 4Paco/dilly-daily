@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:dilly_daily/account_page.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
@@ -9,13 +11,13 @@ class MealPlanPage extends StatefulWidget {
 }
 
 class _MealPlanPageState extends State<MealPlanPage> {
-  void mealAddedToWeek(int recipe, int day, int time) {
+  void mealAddedToWeek(String recipeKey, int day, int time) {
     setState(() {
-      weekMeals[day][time] = recipe;
+      weekMeals[day][time] = recipeKey;
     });
   }
 
-  void toggleFavorite(int recipeKey) {
+  void toggleFavorite(String recipeKey) {
     setState(() {
       if (favoriteRecipes.contains(recipeKey)) {
         favoriteRecipes.remove(recipeKey);
@@ -25,48 +27,49 @@ class _MealPlanPageState extends State<MealPlanPage> {
     });
   }
 
-  void toggleMealPlan(int recipeKey) {
+  void toggleMealPlan(String recipeKey) {
     setState(() {
-      if (mealPlanList.contains(recipeKey)) {
-        mealPlanList.remove(recipeKey);
+      if (mealPlanRecipes.containsKey(recipeKey)) {
+        mealPlanRecipes.removeRecipe(recipeKey);
 
         for (int day = 0; day < weekMeals.length; day++) {
           //also delete from Timeline
-          if (weekMeals[day][0] == recipeKey) weekMeals[day][0] = -1;
-          if (weekMeals[day][1] == recipeKey) weekMeals[day][1] = -1;
+          if (weekMeals[day][0] == recipeKey) weekMeals[day][0] = "";
+          if (weekMeals[day][1] == recipeKey) weekMeals[day][1] = "";
         }
       } else {
-        mealPlanList.add(recipeKey);
+        mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),
+            recipeKey: recipeKey);
       }
     });
   }
 
-  void toggleGroceries(int recipe, {int nbMeals = 0}) {
+  void toggleGroceries(String recipeKey, {int nbMeals = 0}) {
     if (nbMeals == 0) {
       nbMeals = defaultPersonNumber;
     } else {
       nbMeals = nbMeals * defaultPersonNumber;
     }
-    for (String ingredient in recipesDict[recipe]!.ingredients.keys) {
+    for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
       listeCourses.addIngredient(ingredient,
-          recipesDict[recipe]!.ingredients[ingredient]! / 1.0 * nbMeals);
+          recipesDict[recipeKey]!.ingredients[ingredient]! / 1.0 * nbMeals);
     }
   }
 
-  void startCooking(int recipe, {int nbMeals = 0}) {
+  void startCooking(String recipeKey, {int nbMeals = 0}) {
     if (nbMeals == 0) nbMeals = defaultPersonNumber;
   }
 
-  void showMealPlanDialog(BuildContext context, int recipe) {
+  void showMealPlanDialog(BuildContext context, String recipeKey) {
     showAdaptiveDialog(
       context: context,
       builder: (context) {
         bool addedToGroceries = false;
-        int mealsModifier = 0;
+        int mealsModifier = 1;
         return StatefulBuilder(
           builder: (context, setState) {
             return CalendarDialogBox(
-              recipe: recipe,
+              recipeKey: recipeKey,
               onToggleMealPlan: (recipeKey) {
                 toggleMealPlan(recipeKey);
                 setState(() {});
@@ -126,7 +129,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                if (mealPlanList.isNotEmpty) ...[
+                if (mealPlanRecipes.isNotEmpty) ...[
                   BlocTitle(texte: "Meal Deck"),
                   MealPlanCarousel(showMealPlanDialog: showMealPlanDialog),
                 ],
@@ -163,7 +166,7 @@ class MealPlanCarousel extends StatelessWidget {
     super.key,
     required this.showMealPlanDialog,
   });
-  final void Function(BuildContext, int) showMealPlanDialog;
+  final void Function(BuildContext, String) showMealPlanDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -173,17 +176,16 @@ class MealPlanCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (int recipeKey in mealPlanList) ...[
+          for (String recipeKey in mealPlanRecipes) ...[
             SizedBox(
               width: 150,
-              child: LongPressDraggable<int>(
+              child: LongPressDraggable<String>(
                 data: recipeKey,
                 feedback: DragDropPreview(
-                    recipe: recipeKey,
                     texte: recipesDict[recipeKey]!.name,
                     img: recipesDict[recipeKey]!.image),
                 child: RecipePreview(
-                    recipe: recipeKey,
+                    recipeKey: recipeKey,
                     texte: recipesDict[recipeKey]!.name,
                     img: recipesDict[recipeKey]!.image,
                     showMealPlanDialog: showMealPlanDialog,
@@ -200,16 +202,16 @@ class MealPlanCarousel extends StatelessWidget {
 class RecipePreview extends StatelessWidget {
   const RecipePreview({
     super.key,
-    required this.recipe,
+    required this.recipeKey,
     required this.texte,
     required this.img,
     required this.showMealPlanDialog,
     this.padding = const EdgeInsets.all(15.0),
   });
-  final int recipe;
+  final String recipeKey;
   final String texte;
   final String img;
-  final void Function(BuildContext, int) showMealPlanDialog;
+  final void Function(BuildContext, String) showMealPlanDialog;
 
   final EdgeInsetsGeometry padding;
 
@@ -233,7 +235,7 @@ class RecipePreview extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          showMealPlanDialog(context, recipe);
+          showMealPlanDialog(context, recipeKey);
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -273,14 +275,14 @@ class RecipePreview extends StatelessWidget {
 class CalendarRecipePreview extends StatelessWidget {
   const CalendarRecipePreview({
     super.key,
-    required this.recipe,
+    required this.recipeKey,
     required this.texte,
     required this.img,
     required this.showMealPlanDialog,
   });
 
-  final int recipe;
-  final void Function(BuildContext, int) showMealPlanDialog;
+  final String recipeKey;
+  final void Function(BuildContext, String) showMealPlanDialog;
   final String texte;
   final String img;
 
@@ -306,7 +308,7 @@ class CalendarRecipePreview extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          showMealPlanDialog(context, recipe);
+          showMealPlanDialog(context, recipeKey);
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -379,8 +381,8 @@ class Calendar extends StatelessWidget {
     required this.showMealPlanDialog,
   });
 
-  final void Function(BuildContext, int) showMealPlanDialog;
-  final void Function(int, int, int) onMealAddedToWeek;
+  final void Function(BuildContext, String) showMealPlanDialog;
+  final void Function(String, int, int) onMealAddedToWeek;
   final List<String> weekDays = [
     "Monday",
     "Tuesday",
@@ -442,33 +444,32 @@ class CalendarSlot extends StatelessWidget {
     required this.showMealPlanDialog,
   });
 
-  final void Function(BuildContext, int) showMealPlanDialog;
+  final void Function(BuildContext, String) showMealPlanDialog;
   final int i;
   final int today;
   final int time;
-  final void Function(int p1, int p2, int p3) onMealAddedToWeek;
+  final void Function(String p1, int p2, int p3) onMealAddedToWeek;
 
   @override
   Widget build(BuildContext context) {
-    int recipeKey = weekMeals[(today + i) % 7][time];
+    String recipeKey = weekMeals[(today + i) % 7][time];
     return DragTarget(
       builder: (context, candidateItems, rejectedItems) {
-        return recipeKey != -1
+        return recipeKey.isNotEmpty
             ? LongPressDraggable(
                 data: recipeKey,
                 feedback: DragDropPreview(
-                  recipe: recipeKey,
                   texte: recipesDict[recipeKey]!.name,
                   img: recipesDict[recipeKey]!.image,
                 ),
                 onDraggableCanceled: (velocity, offset) {
-                  onMealAddedToWeek(-1, (today + i) % 7, time);
+                  onMealAddedToWeek("", (today + i) % 7, time);
                 },
                 child: SizedBox(
                     width: i == 0 ? 150 : 100,
                     height: 129,
                     child: CalendarRecipePreview(
-                      recipe: recipeKey,
+                      recipeKey: recipeKey,
                       texte: recipesDict[recipeKey]!.name,
                       img: recipesDict[recipeKey]!.image,
                       showMealPlanDialog: showMealPlanDialog,
@@ -478,7 +479,7 @@ class CalendarSlot extends StatelessWidget {
                 width: i == 0 ? 150 : 100, height: 129, child: EmptyPreview());
       },
       onAcceptWithDetails: (details) {
-        onMealAddedToWeek(details.data as int, (today + i) % 7, time);
+        onMealAddedToWeek(details.data as String, (today + i) % 7, time);
       },
     );
   }
@@ -487,11 +488,9 @@ class CalendarSlot extends StatelessWidget {
 class DragDropPreview extends StatelessWidget {
   const DragDropPreview({
     super.key,
-    required this.recipe,
     required this.texte,
     required this.img,
   });
-  final int recipe;
   final String texte;
   final String img;
 
@@ -538,7 +537,7 @@ class DragDropPreview extends StatelessWidget {
 class CalendarDialogBox extends StatelessWidget {
   CalendarDialogBox({
     super.key,
-    required this.recipe,
+    required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
     required this.onToggleGroceries,
@@ -548,12 +547,12 @@ class CalendarDialogBox extends StatelessWidget {
     this.mealsModifier = 0,
   });
 
-  final int recipe;
-  final void Function(int) onToggleMealPlan;
-  final void Function(int) onToggleFavorite;
-  final void Function(int, {int nbMeals}) onToggleGroceries;
+  final String recipeKey;
+  final void Function(String) onToggleMealPlan;
+  final void Function(String) onToggleFavorite;
+  final void Function(String, {int nbMeals}) onToggleGroceries;
   final void Function(int) onModifyMeals;
-  final void Function(int) onStartCooking;
+  final void Function(String) onStartCooking;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
@@ -566,23 +565,20 @@ class CalendarDialogBox extends StatelessWidget {
     int nbMeals = 1;
 
     //set the default number of meals to cook for the recipe
-    for (List<int> day in weekMeals) {
-      for (int i = 0; i < 2; i++) {
-        if (day[i] == recipe) {
-          nbMeals += 1;
-        }
-      }
-    }
-    nbMeals += mealsModifier;
+    nbMeals = weekMeals.where((day) => day[0] == recipeKey).length +
+        weekMeals.where((day) => day[1] == recipeKey).length;
+    nbMeals = math.max(1, nbMeals);
+
+    nbMeals *= mealsModifier;
 
     IconData icon;
-    if (favoriteRecipes.contains(recipe)) {
+    if (favoriteRecipes.contains(recipeKey)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
     }
 
-    var imgDisplayed = recipesDict[recipe]!.image;
+    var imgDisplayed = recipesDict[recipeKey]!.image;
     if (imgDisplayed.isEmpty) {
       imgDisplayed = "assets/image/meals/placeholder.jpg";
     }
@@ -630,7 +626,7 @@ class CalendarDialogBox extends StatelessWidget {
                   CloseButton(),
                   IconButton(
                       onPressed: () {
-                        onToggleFavorite(recipe);
+                        onToggleFavorite(recipeKey);
                       },
                       icon: Icon(
                         icon,
@@ -642,7 +638,7 @@ class CalendarDialogBox extends StatelessWidget {
               Expanded(
                 child: Stack(children: [
                   Text(
-                    recipesDict[recipe]!.name,
+                    recipesDict[recipeKey]!.name,
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -702,7 +698,7 @@ class CalendarDialogBox extends StatelessWidget {
                                 onPressed: () {
                                   isAddedToGroceries
                                       ? null
-                                      : onToggleGroceries(recipe,
+                                      : onToggleGroceries(recipeKey,
                                           nbMeals: nbMeals);
                                 },
                                 style: isAddedToGroceries
@@ -751,7 +747,7 @@ class CalendarDialogBox extends StatelessWidget {
                     TextButton(
                         onPressed: () {},
                         onLongPress: () {
-                          onToggleMealPlan(recipe);
+                          onToggleMealPlan(recipeKey);
                           Navigator.of(context, rootNavigator: true).pop(true);
                           showDialog(
                               context: context,
@@ -798,7 +794,7 @@ class CalendarDialogBox extends StatelessWidget {
                               side: WidgetStatePropertyAll(BorderSide(
                                   width: 1.5, color: themeScheme.tertiary))),
                           onPressed: () {
-                            onStartCooking(recipe);
+                            onStartCooking(recipeKey);
                           },
                           child: Text(
                             "Let's cook!",

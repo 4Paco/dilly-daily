@@ -3,7 +3,7 @@ import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:flutter/material.dart';
 
-List<int> generateSuggestions() {
+List<String> generateSuggestions() {
   return recipesDict.toList();
 }
 
@@ -21,7 +21,7 @@ class _ExplorePageState extends State<ExplorePage> {
     _loadGroceriesFuture = recipesDict.isLoaded(); // Call load() only once
   }
 
-  void toggleFavorite(int recipeKey) {
+  void toggleFavorite(String recipeKey) {
     setState(() {
       if (favoriteRecipes.contains(recipeKey)) {
         favoriteRecipes.remove(recipeKey);
@@ -31,14 +31,18 @@ class _ExplorePageState extends State<ExplorePage> {
     });
   }
 
-  void toggleMealPlan(int recipeKey) {
+  void toggleMealPlan(String recipeKey) {
     setState(() {
-      if (mealPlanList.contains(recipeKey)) {
-        mealPlanList.remove(recipeKey);
+      if (mealPlanRecipes.containsKey(recipeKey)) {
+        print(
+            "mealPlan contains recipeKey $recipeKey : removing recipe from mealPlan");
+        mealPlanRecipes.removeRecipe(recipeKey);
       } else {
-        mealPlanList.add(recipeKey);
+        print(
+            "mealPlan does not contain recipeKey $recipeKey : adding recipe to mealPlan");
+        mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),
+            recipeKey: recipeKey);
       }
-      print(mealPlanList);
     });
   }
 
@@ -119,11 +123,13 @@ class _ExplorePageState extends State<ExplorePage> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        BlocTitle(texte: "Favoris"),
-                        FavoriteCarousel(
-                          onToggleMealPlan: toggleMealPlan,
-                          onToggleFavorite: toggleFavorite,
-                        ),
+                        if (favoriteRecipes.isNotEmpty) ...[
+                          BlocTitle(texte: "Favoris"),
+                          FavoriteCarousel(
+                            onToggleMealPlan: toggleMealPlan,
+                            onToggleFavorite: toggleFavorite,
+                          )
+                        ],
                         BlocTitle(texte: "Suggestions"),
                         GridView.count(
                           padding: EdgeInsets.zero,
@@ -133,11 +139,11 @@ class _ExplorePageState extends State<ExplorePage> {
                           crossAxisCount: 2,
                           childAspectRatio: 1, // Adjust to control item size
                           children: [
-                            for (var recipe in generateSuggestions()) ...[
+                            for (String recipeKey in generateSuggestions()) ...[
                               RecipePreview(
-                                recipe: recipe,
-                                texte: recipesDict[recipe]!.name,
-                                img: recipesDict[recipe]!.image,
+                                recipeKey: recipeKey,
+                                texte: recipesDict[recipeKey]!.name,
+                                img: recipesDict[recipeKey]!.image,
                                 onToggleMealPlan: toggleMealPlan,
                                 onToggleFavorite: toggleFavorite,
                               )
@@ -161,8 +167,8 @@ class FavoriteCarousel extends StatelessWidget {
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
   });
-  final void Function(int) onToggleMealPlan;
-  final void Function(int) onToggleFavorite; // Callback function type
+  final void Function(String) onToggleMealPlan;
+  final void Function(String) onToggleFavorite; // Callback function type
 
   @override
   Widget build(BuildContext context) {
@@ -172,11 +178,11 @@ class FavoriteCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (int recipeKey in favoriteRecipes) ...[
+          for (String recipeKey in favoriteRecipes) ...[
             SizedBox(
               width: 150,
               child: RecipePreview(
-                  recipe: recipeKey,
+                  recipeKey: recipeKey,
                   texte: recipesDict[recipeKey]!.name,
                   img: recipesDict[recipeKey]!.image,
                   onToggleMealPlan: onToggleMealPlan,
@@ -193,19 +199,19 @@ class FavoriteCarousel extends StatelessWidget {
 class RecipePreview extends StatelessWidget {
   const RecipePreview({
     super.key,
-    required this.recipe,
+    required this.recipeKey,
     required this.texte,
     required this.img,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
     this.padding = const EdgeInsets.all(15.0),
   });
-  final int recipe;
+  final String recipeKey;
   final String texte;
   final String img;
 
-  final void Function(int) onToggleMealPlan;
-  final void Function(int) onToggleFavorite; // Callback function type
+  final void Function(String) onToggleMealPlan;
+  final void Function(String) onToggleFavorite; // Callback function type
   final EdgeInsetsGeometry padding;
 
   @override
@@ -234,7 +240,7 @@ class RecipePreview extends StatelessWidget {
               return StatefulBuilder(
                 builder: (context, setState) {
                   return RecipeDialogBox(
-                    recipe: recipe,
+                    recipeKey: recipeKey,
                     onToggleMealPlan: (recipeKey) {
                       onToggleMealPlan(recipeKey);
                       setState(() {});
@@ -287,14 +293,14 @@ class RecipePreview extends StatelessWidget {
 class RecipeDialogBox extends StatelessWidget {
   const RecipeDialogBox({
     super.key,
-    required this.recipe,
+    required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
   });
 
-  final int recipe;
-  final void Function(int) onToggleMealPlan;
-  final void Function(int) onToggleFavorite;
+  final String recipeKey;
+  final void Function(String) onToggleMealPlan;
+  final void Function(String) onToggleFavorite;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
@@ -304,7 +310,7 @@ class RecipeDialogBox extends StatelessWidget {
     final themeScheme = Theme.of(context).colorScheme;
 
     IconData icon;
-    if (favoriteRecipes.contains(recipe)) {
+    if (favoriteRecipes.contains(recipeKey)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
@@ -332,7 +338,7 @@ class RecipeDialogBox extends StatelessWidget {
                 CloseButton(),
                 IconButton(
                     onPressed: () {
-                      onToggleFavorite(recipe);
+                      onToggleFavorite(recipeKey);
                     },
                     icon: Icon(
                       icon,
@@ -341,7 +347,7 @@ class RecipeDialogBox extends StatelessWidget {
               ],
             ),
             Text(
-              "${recipesDict[recipe]!.name} \n[Recipe preview]",
+              "${recipesDict[recipeKey]!.name} \n[Recipe preview]",
               textAlign: TextAlign.center,
             ),
             Row(
@@ -359,17 +365,17 @@ class RecipeDialogBox extends StatelessWidget {
                           foregroundColor:
                               WidgetStateProperty.all(themeScheme.onPrimary),
                           backgroundColor: WidgetStateProperty.all(
-                              mealPlanList.contains(recipe)
+                              mealPlanRecipes.containsKey(recipeKey)
                                   ? themeScheme.tertiary
                                   : themeScheme.primary)),
                       onPressed: () {
-                        onToggleMealPlan(recipe);
+                        onToggleMealPlan(recipeKey);
                       },
-                      child: mealPlanList.contains(recipe)
+                      child: mealPlanRecipes.containsKey(recipeKey)
                           ? Text("Added to Meal Plan")
                           : Text("Add to Meal Plan")),
                 )),
-                if (mealPlanList.contains(recipe)) ...[
+                if (mealPlanRecipes.containsKey(recipeKey)) ...[
                   Padding(
                     padding: const EdgeInsets.only(right: 20, bottom: 10),
                     child: Container(

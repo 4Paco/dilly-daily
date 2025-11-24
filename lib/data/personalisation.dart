@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 Allergies allergiesList = Allergies();
 Groceries listeCourses = Groceries();
@@ -422,12 +423,110 @@ class Recipe {
       );
     }
   }
+
+  Recipe.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        image = json['image'],
+        servings = json['servings'],
+        readyInMinutes = json['readyInMinutes'],
+        cookingMinutes = json['cookingMinutes'],
+        preparationMinutes = json['preparationMinutes'],
+        personalized = json['personalized'],
+        recipeLink = json['recipeLink'],
+        steps = List<String>.from(json["steps"]),
+        ingredients = Map<String, double>.from(json['ingredients']),
+        dishTypes = List<String>.from(json['dishTypes']),
+        summary = json['summary'];
+
+  Map<String, dynamic> toJson() {
+    print("toJson called");
+    return {
+      'name': name,
+      'image': image,
+      'servings': servings,
+      'readyInMinutes': readyInMinutes,
+      'cookingMinutes': cookingMinutes,
+      'preparationMinutes': preparationMinutes,
+      'personalized': personalized,
+      'recipeLink': recipeLink,
+      'steps': steps,
+      'ingredients': ingredients,
+      'dishTypes': dishTypes,
+      'summary': summary,
+    };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! Recipe) return false;
+    print("full test to compare this $name to ${other.name}");
+    Recipe recette = other;
+    print(
+        "names of this / recette / other : {$name}/{${recette.name}}/{${other.name}}");
+    //if (name == recette.name) {
+    //  print("same name");
+    //  if (image == recette.image) {
+    //    print("same image");
+    //    if (servings == recette.servings) {
+    //      print("same servings");
+    //      if (readyInMinutes == recette.readyInMinutes) {
+    //        print("same readyInMinutes");
+    //        if (cookingMinutes == recette.cookingMinutes) {
+    //          print("same cooking minutes");
+    //          if (preparationMinutes == recette.preparationMinutes) {
+    //            print("same prep min");
+    //            if (personalized == recette.personalized) {
+    //              print("same personalized");
+    //              if (recipeLink == recette.recipeLink) {
+    //                print("same link");
+    //                if (steps.toString() == recette.steps.toString()) {
+    //                  print("same steps");
+    //                  if (ingredients.toString() ==
+    //                      recette.ingredients.toString()) {
+    //                    print("same ingredients");
+    //                    if (dishTypes.toString() ==
+    //                        recette.dishTypes.toString()) {
+    //                      print("same dish types");
+    //                      if (summary == recette.summary) {
+    //                        print("same summary");
+    //                      }
+    //                    }
+    //                  }
+    //                }
+    //              }
+    //            }
+    //          }
+    //        }
+    //      }
+    //    }
+    //  }
+    //}
+
+    return name == recette.name &&
+        image == recette.image &&
+        servings == recette.servings &&
+        readyInMinutes == recette.readyInMinutes &&
+        cookingMinutes == recette.cookingMinutes &&
+        preparationMinutes == recette.preparationMinutes &&
+        personalized == recette.personalized &&
+        recipeLink == recette.recipeLink &&
+        steps.toString() == recette.steps.toString() &&
+        ingredients.toString() == recette.ingredients.toString() &&
+        dishTypes.toString() == recette.dishTypes.toString() &&
+        summary == recette.summary;
+  }
+
+  @override
+  int get hashCode => Object.hash(name, ingredients, summary);
+
+  String get id => Uuid().v4();
 }
 
 class MyRecipes extends Iterable with Iterator {
-  Map<int, Recipe> _recipesDict = {};
+  Map<String, Recipe> _recipesDict = {};
 
-  MyRecipes() {
+  MyRecipes({this.recipeFile = "my_recipes"}) {
     _recipesDict = {};
     load();
   }
@@ -436,6 +535,7 @@ class MyRecipes extends Iterable with Iterator {
   // // Use as iterator
   int get limit => _recipesDict.keys.length;
   int i = 0;
+  String recipeFile;
   @override
   int get current => i;
   @override
@@ -448,13 +548,22 @@ class MyRecipes extends Iterable with Iterator {
   Iterator get iterator => _recipesDict.keys.iterator;
 
   // // Use as dict
-  Recipe? operator [](int recipe) {
-    return _recipesDict[recipe];
+  Recipe? operator [](String key) {
+    return _recipesDict[key];
   }
+
+  bool containsKey(String key) {
+    return _recipesDict.containsKey(key);
+  }
+
+  @override
+  bool get isNotEmpty => _recipesDict.isNotEmpty;
+  @override
+  bool get isEmpty => _recipesDict.isEmpty;
 
   // // Copy keys
   @override
-  List<int> toList({bool growable = true}) {
+  List<String> toList({bool growable = true}) {
     return _recipesDict.keys.toList(growable: growable);
   }
 
@@ -466,8 +575,8 @@ class MyRecipes extends Iterable with Iterator {
     final jsonString = await file.readAsString();
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
-      int id = int.parse(key);
-      _recipesDict[id] = data[key];
+      String id = key; //int.parse(key);
+      _recipesDict[id] = Recipe.fromJson(data[key]);
     }
   }
 
@@ -481,7 +590,7 @@ class MyRecipes extends Iterable with Iterator {
   Future<File> get _localFile async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
-    return File('$path/my_recipes.json');
+    return File('$path/$recipeFile.json');
   }
 
   Future<void> ensureFileExists() async {
@@ -495,16 +604,46 @@ class MyRecipes extends Iterable with Iterator {
   }
 
   Future<void> updateJson() async {
+    print("updating MyRecipes JSON");
     final filePath = await _localFile;
-    final json = _recipesDict.map((key, value) => MapEntry(key, value));
+    final json =
+        _recipesDict.map((key, value) => MapEntry(key, value.toJson()));
     String jsonString = jsonEncode(json);
     filePath.writeAsString(jsonString);
   }
 
-  // Data modification
-  void addRecipe(Recipe recipe) {
-    int newKey = _recipesDict.length;
-    _recipesDict[newKey] = recipe;
+  void addRecipe(Recipe recette, {String recipeKey = ""}) {
+    String key = recipeKey.toString();
+    if (recipeKey.isEmpty) {
+      key = recette.id;
+    }
+    //print(
+    //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
+    //int newKey = recette.hashCode;
+    //_recipesDict[newKey] = recette;
+    //print("${recette.name} has been added to meal plan dict");
+    _recipesDict[key] = recette;
+    updateJson();
+  }
+
+  void removeRecipe(String recipeKey) {
+    //print(
+    //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
+    if (_recipesDict.containsKey(recipeKey)) {
+      print(
+          "${_recipesDict[recipeKey]!.name} has been removed from meal plan dict");
+      _recipesDict.remove(recipeKey);
+    } else {
+      throw ArgumentError(
+          "No such recipe in dict with this ID. Removal aborted");
+    }
+    //if (_recipesDict.containsValue(recette)) {
+    //  _recipesDict.removeWhere((key, value) => value == recette);
+    //  print("${recette.name} has been removed from meal plan dict");
+    //} else {
+    //  throw ArgumentError(
+    //      "No such recipe in dict with this ID. Removal aborted");
+    //}
     updateJson();
   }
 }
@@ -513,16 +652,17 @@ int defaultPersonNumber = 1;
 
 double patience = 0.5;
 
-List<int> favoriteRecipes = [1, 2, 3, 4, 0];
+List<String> favoriteRecipes = [];
 
-List<int> mealPlanList = [1];
+List<String> mealPlanList = [];
+MyRecipes mealPlanRecipes = MyRecipes(recipeFile: "meal_plan_recipes");
 
-List<List<int>> weekMeals = [
-  [-1, -1],
-  [-1, -1],
-  [-1, -1],
-  [-1, -1],
-  [-1, -1],
-  [-1, -1],
-  [-1, -1]
+List<List<String>> weekMeals = [
+  ["", ""],
+  ["", ""],
+  ["", ""],
+  ["", ""],
+  ["", ""],
+  ["", ""],
+  ["", ""]
 ];
