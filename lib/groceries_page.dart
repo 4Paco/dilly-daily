@@ -150,55 +150,41 @@ class _GroceriesPageState extends State<GroceriesPage> {
                 child: Text("Error loading allergies: ${snapshot.error}"));
           } else {
             return Scaffold(
-              body: Stack(children: [
-                CustomScrollView(slivers: [
-                  // Fixed AppBar
-                  SliverAppBar(
-                      backgroundColor: themeScheme.primary,
-                      foregroundColor: themeScheme.tertiaryFixed,
-                      pinned: true,
-                      centerTitle: true,
-                      title: Text(
-                        "Wanted \n-fresh or canned-",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w900),
-                      )),
-                  PinnedHeaderSliver(
-                    child: Divider(
-                      thickness: 5,
-                      color: themeScheme.tertiaryFixedDim,
-                      height: 5,
-                    ),
+              body: CustomScrollView(slivers: [
+                // Fixed AppBar
+                SliverAppBar(
+                    backgroundColor: themeScheme.primary,
+                    foregroundColor: themeScheme.tertiaryFixed,
+                    pinned: true,
+                    centerTitle: true,
+                    title: Text(
+                      "Wanted \n-fresh or canned-",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.w900),
+                    )),
+                PinnedHeaderSliver(
+                  child: Divider(
+                    thickness: 5,
+                    color: themeScheme.tertiaryFixedDim,
+                    height: 5,
                   ),
+                ),
 
-                  // Scrollable Content
-                  SliverList(
-                    delegate: GroceryList(
-                      onToggleGroceryList: toggleGroceryList,
-                    ),
+                // Scrollable Content
+                SliverList(
+                  delegate: GroceryList(
+                    onToggleGroceryList: toggleGroceryList,
                   ),
-                ]),
-                Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: IconButton.filled(
-                          onPressed: () {
-                            showAddGroceryDialog(context);
-                          },
-                          icon: Icon(
-                            Icons.add,
-                            size: 40,
-                          ),
-                          padding: EdgeInsets.all(10),
-                        ),
-                      )
-                    ],
-                  )
-                ]),
+                ),
               ]),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: themeScheme.primary,
+                foregroundColor: themeScheme.onPrimary,
+                onPressed: () {
+                  showAddGroceryDialog(context);
+                },
+                child: const Icon(Icons.add, size: 40),
+              ),
             );
           }
         });
