@@ -654,7 +654,6 @@ double patience = 0.5;
 
 List<String> favoriteRecipes = [];
 
-List<String> mealPlanList = [];
 MyRecipes mealPlanRecipes = MyRecipes(recipeFile: "meal_plan_recipes");
 
 List<List<String>> weekMeals = [

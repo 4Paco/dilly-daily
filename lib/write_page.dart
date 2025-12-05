@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:dilly_daily/account_page.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
@@ -38,28 +36,10 @@ class _WritePageState extends State<WritePage> {
     });
   }
 
-  void toggleGroceries(String recipeKey, {int nbMeals = 0}) {
-    if (nbMeals == 0) {
-      nbMeals = defaultPersonNumber;
-    } else {
-      nbMeals = nbMeals * defaultPersonNumber;
-    }
-    for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
-      listeCourses.addIngredient(ingredient,
-          recipesDict[recipeKey]!.ingredients[ingredient]! / 1.0 * nbMeals);
-    }
-  }
-
-  void startCooking(String recipeKey, {int nbMeals = 0}) {
-    if (nbMeals == 0) nbMeals = defaultPersonNumber;
-  }
-
   void showMealPlanDialog(BuildContext context, String recipeKey) {
     showAdaptiveDialog(
       context: context,
       builder: (context) {
-        bool addedToGroceries = false;
-        int mealsModifier = 1;
         return StatefulBuilder(
           builder: (context, setState) {
             return CalendarDialogBox(
@@ -70,21 +50,6 @@ class _WritePageState extends State<WritePage> {
               },
               onToggleFavorite: (recipeKey) {
                 toggleFavorite(recipeKey);
-                setState(() {}); // Rebuild the dialog to update the icon
-              },
-              onToggleGroceries: (recipeKey, {int? nbMeals}) {
-                toggleGroceries(recipeKey, nbMeals: nbMeals ?? 0);
-                addedToGroceries = true;
-                setState(() {}); // Rebuild the dialog to update the icon
-              },
-              onModifyMeals: (delta) {
-                mealsModifier = mealsModifier + delta;
-                setState(() {});
-              },
-              mealsModifier: mealsModifier,
-              isAddedToGroceries: addedToGroceries,
-              onStartCooking: (recipeKey) {
-                startCooking(recipeKey);
                 setState(() {}); // Rebuild the dialog to update the icon
               },
             );
@@ -123,7 +88,7 @@ class _WritePageState extends State<WritePage> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                if (mealPlanRecipes.isNotEmpty) ...[
+                if (myRecipes.isNotEmpty) ...[
                   BlocTitle(texte: "Your original recipes"),
                   WriteCarousel(showMealPlanDialog: showMealPlanDialog),
                 ],
@@ -140,8 +105,15 @@ class _WritePageState extends State<WritePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: themeScheme.primary,
-        tooltip: 'Increment',
-        onPressed: () {},
+        tooltip: 'Create new recipe',
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (context) => EditSubPage(),
+            ),
+          );
+        },
         child: const Icon(Icons.add, size: 28),
       ),
     );
@@ -319,36 +291,18 @@ class CalendarDialogBox extends StatelessWidget {
     required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
-    required this.onToggleGroceries,
-    required this.onModifyMeals,
-    required this.onStartCooking,
-    this.isAddedToGroceries = false,
-    this.mealsModifier = 0,
   });
 
   final String recipeKey;
   final void Function(String) onToggleMealPlan;
   final void Function(String) onToggleFavorite;
-  final void Function(String, {int nbMeals}) onToggleGroceries;
-  final void Function(int) onModifyMeals;
-  final void Function(String) onStartCooking;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
-  final bool isAddedToGroceries;
-  final int mealsModifier;
 
   @override
   Widget build(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
-    int nbMeals = 1;
-
-    //set the default number of meals to cook for the recipe
-    nbMeals = weekMeals.where((day) => day[0] == recipeKey).length +
-        weekMeals.where((day) => day[1] == recipeKey).length;
-    nbMeals = math.max(1, nbMeals);
-
-    nbMeals *= mealsModifier;
 
     IconData icon;
     if (favoriteRecipes.contains(recipeKey)) {
@@ -424,98 +378,6 @@ class CalendarDialogBox extends StatelessWidget {
                         .copyWith(color: themeScheme.tertiaryContainer),
                     textAlign: TextAlign.center,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: themeScheme.tertiaryFixedDim
-                                      .withAlpha(200),
-                                  border: BoxBorder.all(
-                                      width: 2,
-                                      color: Color.fromARGB(10, 0, 0, 0))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text("$nbMeals ",
-                                            textScaler: TextScaler.linear(1.4)),
-                                        Text(
-                                          nbMeals > 1 ? "meals" : "meal",
-                                          textScaler: TextScaler.linear(1.4),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        PlusMinusButton(
-                                          val: -1,
-                                          icondata: Icons.remove,
-                                          function: (nbMeals == 1)
-                                              ? (_) {}
-                                              : onModifyMeals,
-                                        ),
-                                        PlusMinusButton(
-                                          val: 1,
-                                          icondata: Icons.add,
-                                          function: onModifyMeals,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  isAddedToGroceries
-                                      ? null
-                                      : onToggleGroceries(recipeKey,
-                                          nbMeals: nbMeals);
-                                },
-                                style: isAddedToGroceries
-                                    ? ButtonStyle(
-                                        foregroundColor: WidgetStatePropertyAll(
-                                            themeScheme.primary))
-                                    : ButtonStyle(
-                                        foregroundColor: WidgetStatePropertyAll(
-                                            themeScheme.tertiaryFixedDim)),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          isAddedToGroceries
-                                              ? Icons.shopping_cart_outlined
-                                              : Icons.shopping_cart_checkout,
-                                          size: 20,
-                                        ),
-                                        if (isAddedToGroceries) ...[
-                                          Text("x$nbMeals")
-                                        ]
-                                      ],
-                                    ),
-                                    isAddedToGroceries
-                                        ? Text("Added to")
-                                        : Text("Add to"),
-                                    Text("groceries"),
-                                  ],
-                                ))
-                          ]),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  ),
                 ]),
               ),
               Padding(
@@ -523,64 +385,16 @@ class CalendarDialogBox extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextButton(
-                        onPressed: () {},
-                        onLongPress: () {
-                          onToggleMealPlan(recipeKey);
-                          Navigator.of(context, rootNavigator: true).pop(true);
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                Future.delayed(Duration(seconds: 2), () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                });
-                                return AlertDialog(
-                                  title: Text(
-                                      "You successfully deleted the recipe from your meal plan !",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium),
-                                );
-                              });
-                        },
-                        style: ButtonStyle(
-                            padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-                        child: Tooltip(
-                          message:
-                              "Long press to remove from \nyour Deck and your Timeline",
-                          triggerMode: TooltipTriggerMode.tap,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Icon(
-                              Icons.delete_outline,
-                              size: 20,
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => EditSubPage(),
                             ),
-                          ),
-                        )),
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: TextButton(
-                          style: ButtonStyle(
-                              shadowColor:
-                                  WidgetStateProperty.all(themeScheme.shadow),
-                              elevation: WidgetStateProperty.all(2),
-                              foregroundColor: WidgetStateProperty.all(
-                                  themeScheme.onPrimary),
-                              backgroundColor:
-                                  WidgetStateProperty.all(themeScheme.primary),
-                              side: WidgetStatePropertyAll(BorderSide(
-                                  width: 1.5, color: themeScheme.tertiary))),
-                          onPressed: () {
-                            onStartCooking(recipeKey);
-                          },
-                          child: Text(
-                            "Let's cook!",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            textScaler: TextScaler.linear(1.5),
-                          )),
-                    )),
+                          );
+                        },
+                        icon: Icon(Icons.edit)),
                   ],
                 ),
               ),
@@ -589,5 +403,83 @@ class CalendarDialogBox extends StatelessWidget {
         ]),
       ),
     );
+  }
+}
+
+class EditSubPage extends StatefulWidget {
+  EditSubPage({
+    super.key,
+    Recipe? recipe,
+  }) : recette = recipe ?? Recipe();
+
+  Recipe recette;
+
+  @override
+  State<EditSubPage> createState() => _EditSubPageState();
+}
+
+class _EditSubPageState extends State<EditSubPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme themeScheme = Theme.of(context).colorScheme;
+    return Scaffold(
+        body: CustomScrollView(slivers: [
+      // Fixed AppBar
+      SliverAppBar(
+          backgroundColor: themeScheme.primary,
+          foregroundColor: themeScheme.tertiaryFixed,
+          pinned: true,
+          centerTitle: true,
+          title: Text(
+            "${widget.recette.name == "" ? 'Edit' : 'Create'} Recipe",
+            style: TextStyle(fontWeight: FontWeight.w900),
+          )),
+      PinnedHeaderSliver(
+        child: Divider(
+          thickness: 5,
+          color: themeScheme.tertiaryFixedDim,
+          height: 5,
+        ),
+      ),
+
+      // Scrollable Content
+      SliverList(
+          delegate: SliverChildListDelegate([
+        Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFormField(
+                initialValue: widget.recette.name,
+                decoration:
+                    const InputDecoration(hintText: 'Name of the recipe'),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState!.validate()) {
+                      // Process data.
+                    }
+                  },
+                  child: const Text('Submit'),
+                ),
+              ),
+            ],
+          ),
+        )
+      ]))
+    ]));
   }
 }

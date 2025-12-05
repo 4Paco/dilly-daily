@@ -331,6 +331,7 @@ class _SpecialDietPageState extends State<SpecialDietPage> {
   }
 }
 
+// ignore: must_be_immutable
 class AutofillIngredient extends StatelessWidget {
   AutofillIngredient({
     super.key,
