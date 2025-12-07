@@ -9,16 +9,31 @@
     }
   },
   "2": {
-    "name": "Spaghetti Carbonara",
+    "name": "Pasta Carbonara",
+    "image": "https://example.com/pasta.jpg",
     "personalized": "Nope",
-    "image": "",
     "ingredients": {
-      "Spaghetti": 250.0,
-      "Egg": 2.0,
-      "Bacon": 100.0,
-      "Parmesan": 50.0,
-      "Pepper": 2.0
-    }
+      "Chicken": 300.0,
+      "Coconut Milk": 200.0,
+      "Curry Powder": 2.0,
+      "Onion": 1.0,
+      "Garlic": 2.0
+    },
+    "summary": "A quick and delicious Italian pasta dish.",
+    "steps": [
+      {
+        "description": "Boil water and cook pasta.",
+        "duration": 10
+      },
+      {
+        "description": "Cook bacon in pan.",
+        "duration": 5
+      },
+      {
+        "description": "Mix pasta with eggs and bacon.",
+        "duration": null
+      }
+    ]
   },
   "3": {
     "name": "Chicken Curry",
@@ -126,20 +141,62 @@
     "preparationMinutes": 20,
     "recipeOutside": false,
     "steps": [
-      "In a large skillet, melt butter over medium heat until foamy.",
-      "Then add bread crumbs, tossing to coat in butter, until toasted and lightly browned.",
-      "Remove from pan into small bowl; mix in cheese and about a tablespoon of the green scallion tops.",
-      "In the meantime, begin to prepare your pasta according to the directions on the package.",
-      "While the pasta is cooking, put about a tablespoon of olive oil in the same pan you used for the bread crumbs.",
-      "Over medium heat, add the garlic, whites of the scallions, and cauliflower to the skillet.",
-      "Saute until the cauliflower shows some caramelization.",
-      "Then add the wine until the florets are tender-crisp.",
-      "Add salt, pepper, and red pepper flakes.",
-      "When pasta is just shy of al dente, reserve about a cup of the cooking water and drain the pasta.",
-      "Add the drained pasta to the skillet—still over medium heat—with the veggies and toss with some pasta water, as necessary (I added a little at a time; I ended up using about 1/2 cup), till the pasta is coated and turns easily.",
-      "You may want to add another little drizzle of olive oil. Again, taste and season accordingly.",
-      "Put into serving bowls and top with the bread crumb mixture. Sprinkle some more scallion greens on top.",
-      "That's it! There's cauliflower in every bite. And that's a great thing."
+      {
+        "description": "In a large skillet, melt butter over medium heat until foamy.",
+        "duration": 2
+      },
+      {
+        "description": "Then add bread crumbs, tossing to coat in butter, until toasted and lightly browned.",
+        "duration": 3
+      },
+      {
+        "description": "Remove from pan into small bowl; mix in cheese and about a tablespoon of the green scallion tops.",
+        "duration": 2
+      },
+      {
+        "description": "In the meantime, begin to prepare your pasta according to the directions on the package.",
+        "duration": 10
+      },
+      {
+        "description": "While the pasta is cooking, put about a tablespoon of olive oil in the same pan you used for the bread crumbs.",
+        "duration": 1
+      },
+      {
+        "description": "Over medium heat, add the garlic, whites of the scallions, and cauliflower to the skillet.",
+        "duration": 3
+      },
+      {
+        "description": "Saute until the cauliflower shows some caramelization.",
+        "duration": 5
+      },
+      {
+        "description": "Then add the wine until the florets are tender-crisp.",
+        "duration": 3
+      },
+      {
+        "description": "Add salt, pepper, and red pepper flakes.",
+        "duration": 1
+      },
+      {
+        "description": "When pasta is just shy of al dente, reserve about a cup of the cooking water and drain the pasta.",
+        "duration": 2
+      },
+      {
+        "description": "Add the drained pasta to the skillet—still over medium heat—with the veggies and toss with some pasta water, as necessary (I added a little at a time; I ended up using about 1/2 cup), till the pasta is coated and turns easily.",
+        "duration": 3
+      },
+      {
+        "description": "You may want to add another little drizzle of olive oil. Again, taste and season accordingly.",
+        "duration": 1
+      },
+      {
+        "description": "Put into serving bowls and top with the bread crumb mixture. Sprinkle some more scallion greens on top.",
+        "duration": 1
+      },
+      {
+        "description": "That's it! There's cauliflower in every bite. And that's a great thing.",
+        "duration": 1
+      }
     ],
     "dishTypes": [
       "main course",

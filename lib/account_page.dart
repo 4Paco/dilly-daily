@@ -265,7 +265,7 @@ class _SpecialDietPageState extends State<SpecialDietPage> {
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
-                child: Text("Error loading allergies: ${snapshot.error}"));
+                child: Text( "Error: ${snapshot.error}\n${snapshot.stackTrace}",));
           } else {
             // Show the actual content once loading is complete
 

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dilly_daily/models/Recipie.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
 
 Allergies allergiesList = Allergies();
 Groceries listeCourses = Groceries();
@@ -47,9 +47,9 @@ class Allergies extends Iterable with Iterator {
     // Read the file
     final jsonString = await file.readAsString();
     final json = jsonDecode(jsonString);
-    for (String key in json.keys) {
-      _allergiesDict[key] = json[key] as bool;
-    }
+    // for (String key in json.keys) {
+    //   _allergiesDict[key] = json[key] as bool;
+    // }
   }
 
   Future<bool> isLoaded() async {
@@ -389,140 +389,6 @@ class PersonalizedGroceries extends Iterable with Iterator {
   }
 }
 
-class Recipe {
-  String name;
-  String image;
-  int servings;
-  int readyInMinutes;
-  int cookingMinutes;
-  int preparationMinutes;
-  String personalized;
-  String recipeLink;
-  List<String> steps;
-  Map<String, double> ingredients;
-  List<String> dishTypes;
-  String summary;
-
-  Recipe({
-    this.name = "",
-    this.summary = "",
-    this.personalized = "Nope",
-    this.recipeLink = "",
-    this.image = "",
-    this.dishTypes = const ["Meal"],
-    this.servings = 1,
-    this.readyInMinutes = -1,
-    this.preparationMinutes = -1,
-    this.cookingMinutes = -1,
-    this.ingredients = const {},
-    this.steps = const [],
-  }) {
-    if (servings > 1) {
-      ingredients = Map.unmodifiable(
-        ingredients.map((key, value) => MapEntry(key, value / servings)),
-      );
-    }
-  }
-
-  Recipe.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        image = json['image'],
-        servings = json['servings'],
-        readyInMinutes = json['readyInMinutes'],
-        cookingMinutes = json['cookingMinutes'],
-        preparationMinutes = json['preparationMinutes'],
-        personalized = json['personalized'],
-        recipeLink = json['recipeLink'],
-        steps = List<String>.from(json["steps"]),
-        ingredients = Map<String, double>.from(json['ingredients']),
-        dishTypes = List<String>.from(json['dishTypes']),
-        summary = json['summary'];
-
-  Map<String, dynamic> toJson() {
-    print("toJson called");
-    return {
-      'name': name,
-      'image': image,
-      'servings': servings,
-      'readyInMinutes': readyInMinutes,
-      'cookingMinutes': cookingMinutes,
-      'preparationMinutes': preparationMinutes,
-      'personalized': personalized,
-      'recipeLink': recipeLink,
-      'steps': steps,
-      'ingredients': ingredients,
-      'dishTypes': dishTypes,
-      'summary': summary,
-    };
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! Recipe) return false;
-    print("full test to compare this $name to ${other.name}");
-    Recipe recette = other;
-    print(
-        "names of this / recette / other : {$name}/{${recette.name}}/{${other.name}}");
-    //if (name == recette.name) {
-    //  print("same name");
-    //  if (image == recette.image) {
-    //    print("same image");
-    //    if (servings == recette.servings) {
-    //      print("same servings");
-    //      if (readyInMinutes == recette.readyInMinutes) {
-    //        print("same readyInMinutes");
-    //        if (cookingMinutes == recette.cookingMinutes) {
-    //          print("same cooking minutes");
-    //          if (preparationMinutes == recette.preparationMinutes) {
-    //            print("same prep min");
-    //            if (personalized == recette.personalized) {
-    //              print("same personalized");
-    //              if (recipeLink == recette.recipeLink) {
-    //                print("same link");
-    //                if (steps.toString() == recette.steps.toString()) {
-    //                  print("same steps");
-    //                  if (ingredients.toString() ==
-    //                      recette.ingredients.toString()) {
-    //                    print("same ingredients");
-    //                    if (dishTypes.toString() ==
-    //                        recette.dishTypes.toString()) {
-    //                      print("same dish types");
-    //                      if (summary == recette.summary) {
-    //                        print("same summary");
-    //                      }
-    //                    }
-    //                  }
-    //                }
-    //              }
-    //            }
-    //          }
-    //        }
-    //      }
-    //    }
-    //  }
-    //}
-
-    return name == recette.name &&
-        image == recette.image &&
-        servings == recette.servings &&
-        readyInMinutes == recette.readyInMinutes &&
-        cookingMinutes == recette.cookingMinutes &&
-        preparationMinutes == recette.preparationMinutes &&
-        personalized == recette.personalized &&
-        recipeLink == recette.recipeLink &&
-        steps.toString() == recette.steps.toString() &&
-        ingredients.toString() == recette.ingredients.toString() &&
-        dishTypes.toString() == recette.dishTypes.toString() &&
-        summary == recette.summary;
-  }
-
-  @override
-  int get hashCode => Object.hash(name, ingredients, summary);
-
-  String get id => Uuid().v4();
-}
-
 class MyRecipes extends Iterable with Iterator {
   Map<String, Recipe> _recipesDict = {};
 
@@ -576,7 +442,7 @@ class MyRecipes extends Iterable with Iterator {
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
       String id = key; //int.parse(key);
-      _recipesDict[id] = Recipe.fromJson(data[key]);
+      _recipesDict[id] = Recipe.fromJson(int.parse(key), data[key]);
     }
   }
 
@@ -613,16 +479,16 @@ class MyRecipes extends Iterable with Iterator {
   }
 
   void addRecipe(Recipe recette, {String recipeKey = ""}) {
-    String key = recipeKey.toString();
+    int key = int.parse(recipeKey);
     if (recipeKey.isEmpty) {
-      key = recette.id;
+      key = recette.id ;
     }
     //print(
     //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
     //int newKey = recette.hashCode;
     //_recipesDict[newKey] = recette;
     //print("${recette.name} has been added to meal plan dict");
-    _recipesDict[key] = recette;
+    _recipesDict[key.toString()] = recette;
     updateJson();
   }
 

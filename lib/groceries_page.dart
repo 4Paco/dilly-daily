@@ -147,7 +147,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
-                child: Text("Error loading allergies: ${snapshot.error}"));
+                child: Text( "Error: ${snapshot.error}\n${snapshot.stackTrace}",));
           } else {
             return Scaffold(
               body: Stack(children: [
