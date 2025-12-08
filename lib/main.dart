@@ -1,7 +1,7 @@
-import 'package:dilly_daily/account_page.dart';
-import 'package:dilly_daily/explore_page.dart';
-import 'package:dilly_daily/groceries_page.dart';
-import 'package:dilly_daily/mealplan_page.dart';
+import 'package:dilly_daily/pages/Explore/explore_page.dart';
+import 'package:dilly_daily/pages/Account/account_page.dart';
+import 'package:dilly_daily/pages/Groceries/groceries_page.dart';
+import 'package:dilly_daily/pages/MealPlan/mealplan_page.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "/home",
       routes: {
         "/home": (context) => MainPage(),
-        "/specialdiet": (context) => SpecialDietPage(),
       },
       theme: ThemeData(
         useMaterial3: true,
