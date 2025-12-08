@@ -11,6 +11,13 @@ class MealPlanPage extends StatefulWidget {
 }
 
 class _MealPlanPageState extends State<MealPlanPage> {
+  Future<void>? _loadMealPlanFuture; //= Future.value();
+  @override
+  void initState() {
+    super.initState();
+    _loadMealPlanFuture = mealPlanRecipes.isLoaded();
+  }
+
   void mealAddedToWeek(String recipeKey, int day, int time) {
     setState(() {
       weekMeals[day][time] = recipeKey;
@@ -104,60 +111,103 @@ class _MealPlanPageState extends State<MealPlanPage> {
   Widget build(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // Fixed AppBar
-          SliverAppBar(
-              backgroundColor: themeScheme.primary,
-              foregroundColor: themeScheme.tertiaryFixed,
-              pinned: true,
-              centerTitle: true,
-              title: Text(
-                "Your Meal Plan",
-                style: TextStyle(fontWeight: FontWeight.w900),
-              )),
-          PinnedHeaderSliver(
-            child: Divider(
-              thickness: 5,
-              color: themeScheme.tertiaryFixedDim,
-              height: 5,
-            ),
-          ),
-
-          // Scrollable Content
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                if (mealPlanRecipes.isNotEmpty) ...[
-                  BlocTitle(texte: "Meal Deck"),
-                  MealPlanCarousel(showMealPlanDialog: showMealPlanDialog),
-                ],
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BlocTitle(texte: "Menu Timeline"),
-                    Tooltip(
-                        message: 'Drag and drop recipes to fill your Timeline!',
-                        preferBelow: false,
-                        //decoration: Decoration,
-                        triggerMode: TooltipTriggerMode.tap,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Icon(Icons.info_outline_rounded),
-                        ))
-                  ],
+    return FutureBuilder(
+        future: _loadMealPlanFuture, // Wait for allergiesList to load
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting
+            return Scaffold(
+                body: CustomScrollView(slivers: [
+              SliverAppBar(
+                  backgroundColor: themeScheme.primary,
+                  foregroundColor: themeScheme.tertiaryFixed,
+                  pinned: true,
+                  centerTitle: true,
+                  title: Text(
+                    "Your Meal Plan",
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  )),
+              PinnedHeaderSliver(
+                child: Divider(
+                  thickness: 5,
+                  color: themeScheme.tertiaryFixedDim,
+                  height: 5,
                 ),
+              ),
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                SizedBox(
+                    height: 140,
+                    child: Center(child: CircularProgressIndicator())),
                 Calendar(
                   onMealAddedToWeek: mealAddedToWeek,
                   showMealPlanDialog: showMealPlanDialog,
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+              ]))
+            ]));
+          } else if (snapshot.hasError) {
+            // Handle errors
+            return Center(
+                child: Text("Error loading allergies: ${snapshot.error}"));
+          } else {
+            return Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  // Fixed AppBar
+                  SliverAppBar(
+                      backgroundColor: themeScheme.primary,
+                      foregroundColor: themeScheme.tertiaryFixed,
+                      pinned: true,
+                      centerTitle: true,
+                      title: Text(
+                        "Your Meal Plan",
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      )),
+                  PinnedHeaderSliver(
+                    child: Divider(
+                      thickness: 5,
+                      color: themeScheme.tertiaryFixedDim,
+                      height: 5,
+                    ),
+                  ),
+
+                  // Scrollable Content
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        if (mealPlanRecipes.isNotEmpty) ...[
+                          BlocTitle(texte: "Meal Deck"),
+                          MealPlanCarousel(
+                              showMealPlanDialog: showMealPlanDialog),
+                        ],
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BlocTitle(texte: "Menu Timeline"),
+                            Tooltip(
+                                message:
+                                    'Drag and drop recipes to fill your Timeline!',
+                                preferBelow: false,
+                                //decoration: Decoration,
+                                triggerMode: TooltipTriggerMode.tap,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Icon(Icons.info_outline_rounded),
+                                ))
+                          ],
+                        ),
+                        Calendar(
+                          onMealAddedToWeek: mealAddedToWeek,
+                          showMealPlanDialog: showMealPlanDialog,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        });
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:dilly_daily/account_page.dart';
-import 'package:dilly_daily/data/personalisation.dart';
+import 'package:dilly_daily/data/personalisation.dart' hide Recipe;
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Recipie.dart';
 import 'package:flutter/material.dart';
 
 class WritePage extends StatefulWidget {
@@ -9,6 +10,14 @@ class WritePage extends StatefulWidget {
 }
 
 class _WritePageState extends State<WritePage> {
+  Future<void>? _loadGroceriesFuture; //= Future.value();
+  @override
+  void initState() {
+    super.initState();
+    _loadGroceriesFuture = myRecipes.isLoaded();
+    _loadGroceriesFuture = recipesDict.isLoaded(); // Call load() only once
+  }
+
   void toggleFavorite(String recipeKey) {
     setState(() {
       if (favoriteRecipes.contains(recipeKey)) {
@@ -63,60 +72,74 @@ class _WritePageState extends State<WritePage> {
   Widget build(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // Fixed AppBar
-          SliverAppBar(
-              backgroundColor: themeScheme.primary,
-              foregroundColor: themeScheme.tertiaryFixed,
-              pinned: true,
-              centerTitle: true,
-              title: Text(
-                "Your Recipes",
-                style: TextStyle(fontWeight: FontWeight.w900),
-              )),
-          PinnedHeaderSliver(
-            child: Divider(
-              thickness: 5,
-              color: themeScheme.tertiaryFixedDim,
-              height: 5,
-            ),
-          ),
+    return FutureBuilder(
+        future: _loadGroceriesFuture, // Wait for allergiesList to load
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // Handle errors
+            return Center(
+                child: Text("Error loading allergies: ${snapshot.error}"));
+          } else {
+            return Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  // Fixed AppBar
+                  SliverAppBar(
+                      backgroundColor: themeScheme.primary,
+                      foregroundColor: themeScheme.tertiaryFixed,
+                      pinned: true,
+                      centerTitle: true,
+                      title: Text(
+                        "Your Recipes",
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      )),
+                  PinnedHeaderSliver(
+                    child: Divider(
+                      thickness: 5,
+                      color: themeScheme.tertiaryFixedDim,
+                      height: 5,
+                    ),
+                  ),
 
-          // Scrollable Content
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                if (myRecipes.isNotEmpty) ...[
-                  BlocTitle(texte: "Your original recipes"),
-                  WriteCarousel(showMealPlanDialog: showMealPlanDialog),
+                  // Scrollable Content
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        if (myRecipes.isNotEmpty) ...[
+                          BlocTitle(texte: "Your original recipes"),
+                          WriteCarousel(showMealPlanDialog: showMealPlanDialog),
+                        ],
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BlocTitle(texte: "Your edited recipes"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BlocTitle(texte: "Your edited recipes"),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: themeScheme.primary,
-        tooltip: 'Create new recipe',
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => EditSubPage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add, size: 28),
-      ),
-    );
+              ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: themeScheme.primary,
+                tooltip: 'Create new recipe',
+                onPressed: () async {
+                  final value = await Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => EditSubPage(),
+                    ),
+                  );
+                  setState(() {});
+                },
+                child: const Icon(Icons.add, size: 28),
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -135,13 +158,13 @@ class WriteCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (String recipeKey in mealPlanRecipes) ...[
+          for (String recipeKey in myRecipes) ...[
             SizedBox(
               width: 150,
               child: RecipePreview(
                   recipeKey: recipeKey,
-                  texte: recipesDict[recipeKey]!.name,
-                  img: recipesDict[recipeKey]!.image,
+                  texte: myRecipes[recipeKey]!.name,
+                  img: myRecipes[recipeKey]!.image,
                   showMealPlanDialog: showMealPlanDialog,
                   padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
             )
@@ -311,7 +334,7 @@ class CalendarDialogBox extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    var imgDisplayed = recipesDict[recipeKey]!.image;
+    var imgDisplayed = myRecipes[recipeKey]!.image;
     if (imgDisplayed.isEmpty) {
       imgDisplayed = "assets/image/meals/placeholder.jpg";
     }
@@ -371,7 +394,7 @@ class CalendarDialogBox extends StatelessWidget {
               Expanded(
                 child: Stack(children: [
                   Text(
-                    recipesDict[recipeKey]!.name,
+                    myRecipes[recipeKey]!.name,
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -406,6 +429,7 @@ class CalendarDialogBox extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class EditSubPage extends StatefulWidget {
   EditSubPage({
     super.key,
@@ -446,40 +470,72 @@ class _EditSubPageState extends State<EditSubPage> {
 
       // Scrollable Content
       SliverList(
-          delegate: SliverChildListDelegate([
-        Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                initialValue: widget.recette.name,
-                decoration:
-                    const InputDecoration(hintText: 'Name of the recipe'),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate will return true if the form is valid, or false if
-                    // the form is invalid.
-                    if (_formKey.currentState!.validate()) {
-                      // Process data.
-                    }
-                  },
-                  child: const Text('Submit'),
-                ),
-              ),
-            ],
-          ),
-        )
-      ]))
+          delegate: SliverChildListDelegate(
+              [RecipeForm(formKey: _formKey, widget: widget)]))
     ]));
+  }
+}
+
+class RecipeForm extends StatefulWidget {
+  const RecipeForm({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required this.widget,
+  }) : _formKey = formKey;
+
+  final GlobalKey<FormState> _formKey;
+  final EditSubPage widget;
+
+  @override
+  State<RecipeForm> createState() => _RecipeFormState();
+}
+
+class _RecipeFormState extends State<RecipeForm> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: widget._formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            controller: myController,
+            //initialValue: widget.widget.recette.name,
+            decoration: const InputDecoration(hintText: 'Name of the recipe'),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate will return true if the form is valid, or false if
+                // the form is invalid.
+                if (widget._formKey.currentState!.validate()) {
+                  Recipe nouvelleRecette = Recipe(name: myController.text);
+                  myRecipes.addRecipe(nouvelleRecette);
+                  print("Attention :  ${nouvelleRecette.name}");
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

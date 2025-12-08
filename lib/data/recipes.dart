@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart'
-    show MyRecipes, myRecipes, Recipe;
+    show MyRecipes, myRecipes;
+import 'package:dilly_daily/models/Recipie.dart';
+import 'package:dilly_daily/models/Step.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -79,18 +81,14 @@ class Recipes extends Iterable with Iterator {
           recipe.image = data[key][valKey];
         } else if (valKey == "servings") {
           recipe.servings = data[key][valKey];
-        } else if (valKey == "readyInMinutes") {
-          recipe.readyInMinutes = data[key][valKey];
-        } else if (valKey == "cookingMinutes") {
-          recipe.cookingMinutes = data[key][valKey];
-        } else if (valKey == "preparationMinutes") {
-          recipe.preparationMinutes = data[key][valKey];
         } else if (valKey == "personalized") {
           recipe.personalized = data[key][valKey];
         } else if (valKey == "recipeLink") {
           recipe.recipeLink = data[key][valKey];
         } else if (valKey == "steps") {
-          recipe.steps = List<String>.from(data[key][valKey]);
+          recipe.steps = (data[key][valKey] as List)
+              .map((stepJson) => Step.fromJson(stepJson))
+              .toList();
         } else if (valKey == "ingredients") {
           recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
               .map((key, value) => MapEntry(key, value as double));
@@ -148,12 +146,9 @@ class Recipes extends Iterable with Iterator {
   void addRecipe(String recipeKey, String name,
       {String image = "",
       int servings = 1,
-      int readyInMinutes = -1,
-      int cookingMinutes = -1,
-      int preparationMinutes = -1,
       String personalized = "Created",
       String recipeLink = "",
-      List<String> steps = const [],
+      List<Step> steps = const [],
       Map<String, double> ingredients = const {},
       List<String> dishTypes = const ["Meal"],
       String summary = ""}) {
@@ -164,9 +159,6 @@ class Recipes extends Iterable with Iterator {
         recipeLink: recipeLink,
         image: image,
         dishTypes: dishTypes,
-        readyInMinutes: readyInMinutes,
-        preparationMinutes: preparationMinutes,
-        cookingMinutes: cookingMinutes,
         servings: servings,
         ingredients: ingredients,
         steps: steps);
