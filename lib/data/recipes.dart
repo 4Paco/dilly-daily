@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart'
     show MyRecipes, myRecipes, Recipe;
+import 'package:dilly_daily/models/Recipie.dart';
+import 'package:dilly_daily/models/Step.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -68,34 +70,25 @@ class Recipes extends Iterable with Iterator {
     final String jsonString = //await fetchRecipes();
         await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
-    Recipe recipe = Recipe();
+    // Recipe recipe = Recipe.fromJson(data);
     for (String key in data.keys) {
       String id = key; //int.parse(key);
-      recipe = Recipe();
+      Recipe recipe = Recipe.fromJson(int.parse(key), data[key]);
+      // TODO: improve
       for (String valKey in data[key].keys) {
         if (valKey == "name") {
           recipe.name = data[key][valKey];
         } else if (valKey == "image") {
           recipe.image = data[key][valKey];
-        } else if (valKey == "servings") {
-          recipe.servings = data[key][valKey];
-        } else if (valKey == "readyInMinutes") {
-          recipe.readyInMinutes = data[key][valKey];
-        } else if (valKey == "cookingMinutes") {
-          recipe.cookingMinutes = data[key][valKey];
-        } else if (valKey == "preparationMinutes") {
-          recipe.preparationMinutes = data[key][valKey];
         } else if (valKey == "personalized") {
           recipe.personalized = data[key][valKey];
-        } else if (valKey == "recipeLink") {
-          recipe.recipeLink = data[key][valKey];
         } else if (valKey == "steps") {
-          recipe.steps = List<String>.from(data[key][valKey]);
+recipe.steps = (data[key][valKey] as List)
+    .map((stepJson) => Step.fromJson(stepJson))
+    .toList();
         } else if (valKey == "ingredients") {
           recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
               .map((key, value) => MapEntry(key, value as double));
-        } else if (valKey == "dishTypes") {
-          recipe.dishTypes = List<String>.from(data[key][valKey]);
         } else if (valKey == "summary") {
           recipe.summary = data[key][valKey];
         }
@@ -153,21 +146,16 @@ class Recipes extends Iterable with Iterator {
       int preparationMinutes = -1,
       String personalized = "Created",
       String recipeLink = "",
-      List<String> steps = const [],
+      List<Step> steps = const [],
       Map<String, double> ingredients = const {},
       List<String> dishTypes = const ["Meal"],
       String summary = ""}) {
     Recipe recette = Recipe(
+        id: 0,
         name: name,
         summary: summary,
         personalized: personalized,
-        recipeLink: recipeLink,
         image: image,
-        dishTypes: dishTypes,
-        readyInMinutes: readyInMinutes,
-        preparationMinutes: preparationMinutes,
-        cookingMinutes: cookingMinutes,
-        servings: servings,
         ingredients: ingredients,
         steps: steps);
     theirRecipes.addRecipe(recette, recipeKey: recipeKey);
