@@ -1,30 +1,21 @@
-import 'package:dilly_daily/models/ui/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class AccountSubPage extends StatelessWidget {
-  const AccountSubPage({
-    super.key,
-    required this.item,
-  });
-
   final Map<String, dynamic> item;
+  const AccountSubPage({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final themeScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
     return Scaffold(
-        body: Column(
-      children: [
-        CustomAppBar(
-          height: 60,
-          themeScheme: themeScheme,
-          child: Text(
-            item["title"],
-            style: TextStyle(fontWeight: FontWeight.w800),
-          ),
-        ),
-        item["page"],
-      ],
-    ));
+      appBar: AppBar(
+        title: Text(item['title'] ?? ''),
+      ),
+      body: SafeArea(
+        // The fragment page becomes the body
+        child: item['page'],
+      ),
+    );
   }
 }
+

@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:dilly_daily/data/personalisation.dart';
-import 'package:dilly_daily/models/ui/bloc_title.dart';
-import 'package:dilly_daily/models/ui/plus_minus_button.dart';
+import 'package:dilly_daily/pages/Account/account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_slider/gradient_slider.dart';
 
