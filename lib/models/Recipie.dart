@@ -47,4 +47,14 @@ class Recipe {
       'summary': summary,
     };
   }
+
+  /// Returns total duration of recipe by summing durations of all steps
+  Duration duration() {
+    final totalMinutes = steps.fold<int>(
+      0,
+      (prev, step) => prev + (step.duration?.inMinutes ?? 0),
+    );
+
+    return Duration(minutes: totalMinutes);
+  }
 }

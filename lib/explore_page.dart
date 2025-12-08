@@ -327,114 +327,112 @@ class RecipeDialogBox extends StatelessWidget {
           border: Border.all(width: 2, color: Color.fromARGB(100, 0, 0, 0)),
         ),
         child: Column(
-          children: [
-            // Top row: Close button + Favorite
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CloseButton(),
-                IconButton(
-                  onPressed: () => onToggleFavorite(recipeKey),
-                  icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
-                      size: 30),
-                )
-              ],
-            ),
+  children: [
+    // Top row: Close button + Favorite
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CloseButton(),
+        IconButton(
+          onPressed: () => onToggleFavorite(recipeKey),
+          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, size: 30),
+        )
+      ],
+    ),
 
-            // Recipe title
+    // Recipe title
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: [
+          Text(
+            recipe.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+
+          /// NEW LINE FOR RECIPE DURATION
+          if (recipe.duration().inMinutes > 0)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.only(top: 4),
               child: Text(
-                recipe.name,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-
-            // Steps list
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ListView.separated(
-                  itemCount: recipe.steps.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 8),
-                  itemBuilder: (context, index) {
-                    final step = recipe.steps[index];
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${index + 1}. ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Expanded(
-                          child: Text(
-                            step.description,
-                          ),
-                        ),
-                        if (step.duration != null)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              "${step.duration} min",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic,
-                                  color: themeScheme.onTertiary),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
+                recipe.duration().inMinutes < 60
+                    ? "${recipe.duration().inMinutes} min"
+                    : "${recipe.duration().inHours}h${recipe.duration().inMinutes % 60 == 0 ? '' : '${recipe.duration().inMinutes % 60}'}",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black, // ✔ duration text black
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
+        ],
+      ),
+    ),
 
-            // Meal plan button row
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextButton(
-                        style: ButtonStyle(
-                          shadowColor:
-                              MaterialStateProperty.all(themeScheme.shadow),
-                          elevation: MaterialStateProperty.all(2),
-                          foregroundColor:
-                              MaterialStateProperty.all(themeScheme.onPrimary),
-                          backgroundColor: MaterialStateProperty.all(
-                            isInMealPlan ? themeScheme.tertiary : themeScheme.primary,
+    // Steps list
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ListView.separated(
+          itemCount: recipe.steps.length,
+          separatorBuilder: (_, __) => SizedBox(height: 8),
+          itemBuilder: (context, index) {
+            final step = recipe.steps[index];
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${index + 1}. ",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(step.description),
+
+                      /// NEW → Step type added under description
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          step.type.name[0].toUpperCase() + step.type.name.substring(1),
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black87,
                           ),
                         ),
-                        onPressed: () => onToggleMealPlan(recipeKey),
-                        child: Text(isInMealPlan
-                            ? "Added to Meal Plan"
-                            : "Add to Meal Plan"),
+                      ),
+                    ],
+                  ),
+                ),
+
+                /// Duration shown right aligned
+                if (step.duration != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      step.formattedDuration(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black, // ✔ specifically BLACK
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  if (isInMealPlan)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: themeScheme.tertiaryFixedDim,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.check, color: themeScheme.secondaryFixed),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+              ],
+            );
+          },
+        ),
+      ),
+    ),
+
           ],
         ),
+      
+      
+      
       ),
     );
   }

@@ -23,15 +23,18 @@
     "steps": [
       {
         "description": "Boil water and cook pasta.",
-        "duration": 10
+        "duration": 10,
+        "type": "cooking"
       },
       {
         "description": "Cook bacon in pan.",
-        "duration": 5
+        "duration": 5,
+        "type": "cooking"
       },
       {
         "description": "Mix pasta with eggs and bacon.",
-        "duration": null
+        "duration": null,
+        "type": "preparation"
       }
     ]
   },
