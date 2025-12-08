@@ -6,18 +6,17 @@ class Step {
   final StepType type;
 
   Step({
-    required this.description,
+    this.description = "",
     this.duration,
-    required this.type,
+    this.type = StepType.preparation,
   });
 
   /// JSON parsing
   factory Step.fromJson(Map<String, dynamic> json) {
     return Step(
       description: json['description'] as String,
-      duration: json['duration'] != null
-          ? Duration(minutes: json['duration'])
-          : null,
+      duration:
+          json['duration'] != null ? Duration(minutes: json['duration']) : null,
       type: StepType.values.firstWhere(
         (e) => e.name == json['type'],
         orElse: () => StepType.preparation,

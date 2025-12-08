@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dilly_daily/models/Recipie.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -93,7 +94,7 @@ class MyRecipes extends Iterable with Iterator {
   }
 
   void addRecipe(Recipe recette, {String recipeKey = ""}) {
-    int key = int.parse(recipeKey);
+    String key = recipeKey;
     if (recipeKey.isEmpty) {
       key = recette.id;
     }
@@ -102,7 +103,7 @@ class MyRecipes extends Iterable with Iterator {
     //int newKey = recette.hashCode;
     //_recipesDict[newKey] = recette;
     //print("${recette.name} has been added to meal plan dict");
-    _recipesDict[key.toString()] = recette;
+    _recipesDict[key] = recette;
     updateJson();
   }
 

@@ -1,28 +1,36 @@
+import 'package:uuid/uuid.dart';
+
 import 'Step.dart';
 
 class Recipe {
-  int id;
+  String id;
   String name;
   String image;
   String personalized;
   List<Step> steps;
   Map<String, double> ingredients;
   String summary;
+  int servings;
+  String recipeLink;
+  List<String> dishTypes;
 
   // main constructor
-  Recipe({
-    required this.id,
-    required this.name,
-    required this.summary,
-    required this.steps,
-    required this.ingredients,
-    this.personalized = "Nope",
-    this.image = ""
-  });
+  Recipe(
+      {this.name = "",
+      String? id,
+      this.summary = "",
+      this.steps = const [],
+      this.ingredients = const {},
+      this.personalized = "Nope",
+      this.recipeLink = "",
+      this.dishTypes = const ["Meal"],
+      this.servings = 1,
+      this.image = ""})
+      : id = id ?? Uuid().v4();
 
   // named constructor
   Recipe.fromJson(int jsonId, Map<String, dynamic> json)
-      : id = jsonId,
+      : id = jsonId.toString(),
         name = json['name'],
         image = json['image'] ?? "",
         personalized = json['personalized'] ?? "Nope",
@@ -34,7 +42,10 @@ class Recipe {
             ? (json['steps'] as List)
                 .map((item) => Step.fromJson(item))
                 .toList()
-            : [];
+            : [],
+        servings = json['servings'] ?? 1,
+        recipeLink = json['recipeLink'] ?? "",
+        dishTypes = List<String>.from(json['dishTypes']);
 
   Map<String, dynamic> toJson() {
     return {

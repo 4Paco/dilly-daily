@@ -131,7 +131,6 @@ class RecipesDico extends Iterable with Iterator {
       List<String> dishTypes = const ["Meal"],
       String summary = ""}) {
     Recipe recette = Recipe(
-        id: 0,
         name: name,
         summary: summary,
         personalized: personalized,
