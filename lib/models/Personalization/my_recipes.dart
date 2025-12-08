@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dilly_daily/models/Recipie.dart';
+import 'package:dilly_daily/models/Recipe.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyRecipes extends Iterable with Iterator {

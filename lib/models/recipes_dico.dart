@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart' show myRecipes;
 import 'package:dilly_daily/models/Personalization/my_recipes.dart';
-import 'package:dilly_daily/models/Recipie.dart';
+import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/Step.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';

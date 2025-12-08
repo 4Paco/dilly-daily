@@ -45,7 +45,7 @@ class Recipe {
             : [],
         servings = json['servings'] ?? 1,
         recipeLink = json['recipeLink'] ?? "",
-        dishTypes = List<String>.from(json['dishTypes']);
+        dishTypes = List<String>.from(json['dishTypes'] ?? []);
 
   Map<String, dynamic> toJson() {
     return {

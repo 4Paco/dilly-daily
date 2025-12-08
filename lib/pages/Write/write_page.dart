@@ -1,6 +1,6 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
-import 'package:dilly_daily/models/Recipie.dart';
+import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:flutter/material.dart';
 
