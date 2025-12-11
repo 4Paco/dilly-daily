@@ -2,6 +2,7 @@ import 'package:dilly_daily/pages/Account/CookingProfile/cooking_profile_page.da
 import 'package:dilly_daily/pages/Account/Kitchen/KitchenPage.dart';
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
+import 'package:dilly_daily/pages/Account/NavigationTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 
@@ -37,45 +38,38 @@ class AccountPage extends StatelessWidget {
   {
     "title": 'Special diet',
     "icon": Icons.star,
-    "page": SpecialDietPage(),
-    "fullScreen": false
+    "page": SpecialDietPage()
   },
   {
     "title": "My cooking profile",
     "icon": Icons.restaurant_menu,
-    "page": CookingProfilePage(),
-    "fullScreen": false
+    "page": CookingProfilePage()
   },
   {
     "title": "My favorite meals",
     "icon": Icons.favorite_border,
-    "page": const Text("My favorite meals"),
-    "fullScreen": false
+    "page": const Text("My favorite meals")
   },
   {
     "title": "My kitchen",
     "icon": Icons.blender_rounded,
-    "page": const KitchenPage(),
-    "fullScreen": true // full screen because KitchenPage has its own Scaffold
+    "page": const KitchenPage()
   },
   {
     "title": "My friends",
     "icon": Icons.handshake_outlined,
-    "page": const Text("My friends"),
-    "fullScreen": false
+    "page": const Text("My friends")
   },
   {
     "title": "Notifications",
     "icon": Icons.notifications_outlined,
-    "page": const Text("Notifications"),
-    "fullScreen": false
+    "page": const Text("Notifications")
   },
   {"title": "Help", "icon": Icons.help_outline, "page": const Text("Help"), "fullScreen": false},
   {
     "title": "About",
     "icon": Icons.info_outline_rounded,
-    "page": const Text("About"),
-    "fullScreen": false
+    "page": const Text("About")
   },
 ];
 
@@ -134,32 +128,13 @@ class AccountPage extends StatelessWidget {
         ),
         Expanded(
   child: ListView(
-    padding: EdgeInsets.zero,
-    children: [
-      for (var item in accountSubmenus) ...[
-        ListTile(
-          leading: Icon(item["icon"]),
-          title: Text(item["title"]),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            if (item["fullScreen"] == true) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => item["page"]),
-              );
-            } else {
-              // Fragment page (CookingProfilePage etc.)
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => AccountSubPage(item: item)),
-              );
-            }
-          },
-        ),
-        Divider(thickness: 1, color: Theme.of(context).dividerColor),
-      ]
-    ],
-  ),
+  children: accountSubmenus.map((item) {
+    return NavigationTile(
+      item: item,
+      leading: Icon(item['icon'] as IconData ),
+    );
+  }).toList(),
+)
 ),
       ],
     );
@@ -198,33 +173,7 @@ class AccountAppBar extends StatelessWidget {
   }
 }
 
-class AccountSubPage extends StatelessWidget {
-  const AccountSubPage({
-    super.key,
-    required this.item,
-  });
 
-  final Map<String, dynamic> item;
-
-  @override
-  Widget build(BuildContext context) {
-    final themeScheme = Theme.of(context).colorScheme;
-    return Scaffold(
-        body: Column(
-      children: [
-        AccountAppBar(
-          height: 60,
-          themeScheme: themeScheme,
-          child: Text(
-            item["title"],
-            style: TextStyle(fontWeight: FontWeight.w800),
-          ),
-        ),
-        item["page"],
-      ],
-    ));
-  }
-}
 
 class SpecialDietPage extends StatefulWidget {
   const SpecialDietPage({

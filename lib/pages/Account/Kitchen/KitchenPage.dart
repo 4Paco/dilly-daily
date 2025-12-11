@@ -43,40 +43,28 @@ class _KitchenPageState extends State<KitchenPage> {
     }
   }
 
-  // Function to update user profile with selected gear
-void _updateUserProfile() async {
-  final selectedGear = _hasGear.entries
-      .where((entry) => entry.value)
-      .map((entry) => entry.key)
-      .toList();
+  void _updateUserProfile() async {
+    final selectedGear = _hasGear.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
 
-  // Create UserProfile object
-  final profile = UserProfile(kitchenGear: selectedGear);
+    final profile = UserProfile(kitchenGear: selectedGear);
+    await profile.save();
 
-  // Save to user.json
-  await profile.save();
-
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text("Profile updated and saved!")),
-  );
-
-  print("Saved gear: $selectedGear");
-}
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Profile updated and saved!")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Kitchen Gear"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _updateUserProfile,
-          ),
-        ],
-      ),
+      // ❌ NO APP BAR
+      // appBar: AppBar(... removed ...)
+
       body: ListView.builder(
         padding: const EdgeInsets.all(12),
         itemCount: kitchenGear.length,
@@ -89,11 +77,18 @@ void _updateUserProfile() async {
               borderRadius: BorderRadius.circular(12),
               boxShadow: const [
                 BoxShadow(
-                    color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                )
               ],
             ),
             child: ListTile(
-              leading: Icon(gear.icon, size: 32, color: theme.colorScheme.primary),
+              leading: Icon(
+                gear.icon,
+                size: 32,
+                color: theme.colorScheme.primary,
+              ),
               title: Text(
                 gear.name,
                 style: TextStyle(
@@ -103,7 +98,9 @@ void _updateUserProfile() async {
               ),
               subtitle: Text(
                 gear.description,
-                style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                style: TextStyle(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
               trailing: Checkbox(
                 value: _hasGear[gear.name],
@@ -118,6 +115,13 @@ void _updateUserProfile() async {
           );
         },
       ),
+
+floatingActionButton: FloatingActionButton(
+  onPressed: _updateUserProfile,
+  backgroundColor: Colors.white,
+  child: const Icon(Icons.save),
+),
+
     );
   }
 }
