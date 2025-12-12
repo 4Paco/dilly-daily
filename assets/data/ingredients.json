@@ -2,6 +2,7 @@
   "Lemon": {
     "icon": "lemon",
     "unit": "",
+    "price": 0.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -13,6 +14,7 @@
   "Tomato": {
     "icon": "tomato",
     "unit": "g",
+    "price": 0.003,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -24,6 +26,7 @@
   "Onion": {
     "icon": "onion",
     "unit": "",
+    "price": 0.40,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -35,6 +38,7 @@
   "Green Onion": {
     "icon": "onion",
     "unit": "",
+    "price": 0.30,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -46,6 +50,7 @@
   "Corn": {
     "icon": "corn",
     "unit": "g",
+    "price": 0.004,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -57,6 +62,7 @@
   "Garlic": {
     "icon": "garlic",
     "unit": "clove",
+    "price": 0.10,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -68,6 +74,7 @@
   "Potato": {
     "icon": "potato",
     "unit": "",
+    "price": 0.30,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -79,6 +86,7 @@
   "Carrot": {
     "icon": "carrot",
     "unit": "",
+    "price": 0.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -90,6 +98,7 @@
   "Cucumber": {
     "icon": "cucumber",
     "unit": "",
+    "price": 0.80,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -101,6 +110,7 @@
   "Bell Pepper": {
     "icon": "bell_pepper",
     "unit": "",
+    "price": 1.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -112,6 +122,7 @@
   "Zucchini": {
     "icon": "cucumber",
     "unit": "",
+    "price": 0.90,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -123,6 +134,7 @@
   "Spinach": {
     "icon": "leafy_green",
     "unit": "g",
+    "price": 0.010,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -134,6 +146,7 @@
   "Lettuce": {
     "icon": "leafy_green",
     "unit": "",
+    "price": 1.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -145,6 +158,7 @@
   "Broccoli": {
     "icon": "broccoli",
     "unit": "",
+    "price": 2.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -156,6 +170,7 @@
   "Cauliflower": {
     "icon": "broccoli",
     "unit": "",
+    "price": 2.80,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -167,6 +182,7 @@
   "Mushroom": {
     "icon": "mushroom",
     "unit": "",
+    "price": 1.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -179,6 +195,7 @@
   "Coconut Milk": {
     "icon": "milk_glass",
     "unit": "mL",
+    "price": 0.005,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -190,6 +207,7 @@
   "Milk": {
     "icon": "milk_glass",
     "unit": "mL",
+    "price": 0.001,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -201,6 +219,7 @@
   "Pizza Dough": {
     "icon": "pizza",
     "unit": "",
+    "price": 2.00,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -212,6 +231,7 @@
   "Cheese": {
     "icon": "cheese_wedge",
     "unit": "g",
+    "price": 0.015,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -223,6 +243,7 @@
   "Cheddar": {
     "icon": "cheese_wedge",
     "unit": "g",
+    "price": 0.018,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -234,6 +255,7 @@
   "Mozzarella": {
     "icon": "cheese_wedge",
     "unit": "",
+    "price": 3.50,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -245,6 +267,7 @@
   "Parmesan": {
     "icon": "cheese_wedge",
     "unit": "g",
+    "price": 0.025,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -256,6 +279,7 @@
   "Butter": {
     "icon": "butter",
     "unit": "g",
+    "price": 0.008,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -267,6 +291,7 @@
   "Yogurt": {
     "icon": "milk_glass",
     "unit": "",
+    "price": 0.50,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -278,6 +303,7 @@
   "Cream": {
     "icon": "milk_glass",
     "unit": "mL",
+    "price": 0.008,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -289,6 +315,7 @@
   "Egg": {
     "icon": "egg",
     "unit": "",
+    "price": 0.25,
     "diet": {
       "vegetarian": true,
       "vegan": false,
@@ -301,6 +328,7 @@
   "Chicken": {
     "icon": "chicken",
     "unit": "g",
+    "price": 0.012,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -312,6 +340,7 @@
   "Bacon": {
     "icon": "bacon",
     "unit": "g",
+    "price": 0.020,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -323,6 +352,7 @@
   "Ground Beef": {
     "icon": "cut_of_meat",
     "unit": "g",
+    "price": 0.015,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -334,6 +364,7 @@
   "Fish": {
     "icon": "fish",
     "unit": "g",
+    "price": 0.018,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -345,6 +376,7 @@
   "Shrimp": {
     "icon": "shrimp",
     "unit": "g",
+    "price": 0.030,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -357,6 +389,7 @@
   "Bread": {
     "icon": "bread",
     "unit": "g",
+    "price": 0.005,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -368,6 +401,7 @@
   "Crouton": {
     "icon": "bread",
     "unit": "g",
+    "price": 0.012,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -378,6 +412,7 @@
   },
   "Taco Shell": {
     "icon": "taco",
+    "price": 0.40,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -389,6 +424,7 @@
   "Hamburger Bun": {
     "icon": "bread",
     "unit": "",
+    "price": 0.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -400,6 +436,7 @@
   "Bagel": {
     "icon": "bread",
     "unit": "",
+    "price": 0.60,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -411,6 +448,7 @@
   "Granola": {
     "icon": "bowl_with_spoon",
     "unit": "g",
+    "price": 0.010,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -422,6 +460,7 @@
   "Oatmeal": {
     "icon": "bowl_with_spoon",
     "unit": "g",
+    "price": 0.003,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -433,6 +472,7 @@
   "Cereal": {
     "icon": "bowl_with_spoon",
     "unit": "g",
+    "price": 0.008,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -444,6 +484,7 @@
   "Rice": {
     "icon": "rice",
     "unit": "g",
+    "price": 0.002,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -455,6 +496,7 @@
   "Pasta": {
     "icon": "spaghetti",
     "unit": "g",
+    "price": 0.003,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -466,6 +508,7 @@
   "Spaghetti": {
     "icon": "spaghetti",
     "unit": "g",
+    "price": 0.003,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -478,6 +521,7 @@
   "Tomato Sauce": {
     "icon": "tomato",
     "unit": "mL",
+    "price": 0.005,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -489,6 +533,7 @@
   "Cornichon": {
     "icon": "pickles",
     "unit": "",
+    "price": 0.15,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -501,6 +546,7 @@
   "Caesar Sauce": {
     "icon": "wine_glass",
     "unit": "mL",
+    "price": 0.010,
     "diet": {
       "vegetarian": false,
       "vegan": false,
@@ -512,6 +558,7 @@
   "Balsamic Vinegar": {
     "icon": "wine_glass",
     "unit": "tbsp",
+    "price": 0.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -523,6 +570,7 @@
   "Cider Vinegar": {
     "icon": "wine_glass",
     "unit": "tbsp",
+    "price": 0.10,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -534,6 +582,7 @@
   "Olive Oil": {
     "icon": "tumbler_glass",
     "unit": "tbsp",
+    "price": 0.15,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -545,6 +594,7 @@
   "Cooking Oil": {
     "icon": "tumbler_glass",
     "unit": "tbsp",
+    "price": 0.05,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -556,6 +606,7 @@
   "Sesame Oil": {
     "icon": "tumbler_glass",
     "unit": "tbsp",
+    "price": 0.25,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -567,6 +618,7 @@
   "Soy Sauce": {
     "icon": "tumbler_glass",
     "unit": "tbsp",
+    "price": 0.10,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -578,6 +630,7 @@
   "Sriracha": {
     "icon": "hot_pepper",
     "unit": "mL",
+    "price": 0.008,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -589,6 +642,7 @@
   "Salsa": {
     "icon": "hot_pepper",
     "unit": "mL",
+    "price": 0.006,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -600,6 +654,7 @@
   "Ketchup": {
     "icon": "tomato",
     "unit": "tbsp",
+    "price": 0.05,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -611,6 +666,7 @@
   "Mustard": {
     "icon": "hot_pepper",
     "unit": "tbsp",
+    "price": 0.08,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -622,6 +678,7 @@
   "Salt": {
     "icon": "salt",
     "unit": "pinch",
+    "price": 0.01,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -633,6 +690,7 @@
   "Pepper": {
     "icon": "bell_pepper",
     "unit": "pinch",
+    "price": 0.02,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -645,6 +703,7 @@
   "Chocolate": {
     "icon": "chocolate",
     "unit": "g",
+    "price": 0.015,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -656,6 +715,7 @@
   "Wine": {
     "icon": "wine_glass",
     "unit": "tbsp",
+    "price": 0.30,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -668,6 +728,7 @@
   "Sugar": {
     "icon": "candy",
     "unit": "g",
+    "price": 0.002,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -679,6 +740,7 @@
   "Wheat Flour": {
     "icon": "baguette_bread",
     "unit": "g",
+    "price": 0.001,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -690,6 +752,7 @@
   "Rice Flour": {
     "icon": "baguette_bread",
     "unit": "g",
+    "price": 0.003,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -701,6 +764,7 @@
   "Baking Powder": {
     "icon": "cupcake",
     "unit": "bag",
+    "price": 1.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -712,6 +776,7 @@
   "Cinnamon": {
     "icon": "cinnamon",
     "unit": "pinch",
+    "price": 0.05,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -723,6 +788,7 @@
   "Oregano": {
     "icon": "herb",
     "unit": "pinch",
+    "price": 0.03,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -734,6 +800,7 @@
   "Basil": {
     "icon": "herb",
     "unit": "pinch",
+    "price": 0.03,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -745,6 +812,7 @@
   "Rosemary": {
     "icon": "herb",
     "unit": "branch",
+    "price": 0.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -756,6 +824,7 @@
   "Thyme": {
     "icon": "herb",
     "unit": "branch",
+    "price": 0.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -767,6 +836,7 @@
   "Sesame Seeds": {
     "icon": "seedling",
     "unit": "g",
+    "price": 0.010,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -779,6 +849,7 @@
   "Vanilla Extract": {
     "icon": "vanilla",
     "unit": "droplet",
+    "price": 0.50,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -790,6 +861,7 @@
   "Nutmeg": {
     "icon": "herb",
     "unit": "pinch",
+    "price": 0.05,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -801,6 +873,7 @@
   "Paprika": {
     "icon": "hot_pepper",
     "unit": "pinch",
+    "price": 0.03,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -812,6 +885,7 @@
   "Chili Powder": {
     "icon": "hot_pepper",
     "unit": "pinch",
+    "price": 0.03,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -823,6 +897,7 @@
   "Ginger": {
     "icon": "ginger",
     "unit": "cm",
+    "price": 0.20,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -834,6 +909,7 @@
   "Curry Powder": {
     "icon": "ginger",
     "unit": "tsp",
+    "price": 0.10,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -845,6 +921,7 @@
   "Vegetable Broth": {
     "icon": "soup",
     "unit": "cube",
+    "price": 0.30,
     "diet": {
       "vegetarian": true,
       "vegan": true,
@@ -856,6 +933,7 @@
   "Chicken Broth": {
     "icon": "soup",
     "unit": "cube",
+    "price": 0.30,
     "diet": {
       "vegetarian": false,
       "vegan": false,

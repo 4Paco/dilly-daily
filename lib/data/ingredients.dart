@@ -64,6 +64,7 @@ class Ingredients extends Iterable with Iterator {
       newIng['icon'] = EmojiParser().hasName(data[ing]["icon"])
           ? EmojiParser().get(data[ing]["icon"]).code
           : "";
+      newIng['price'] = (data[ing]["price"] ?? 0.0).toDouble();
       _dico[ing] = newIng;
     }
   }

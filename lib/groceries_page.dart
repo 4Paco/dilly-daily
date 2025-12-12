@@ -36,6 +36,21 @@ class _GroceriesPageState extends State<GroceriesPage> {
     });
   }
 
+  double calculateGroceriesPrice() {
+    double total = 0.0;
+    var groceries = listeCourses.getExtended();
+    
+    groceries.forEach((ingredient, quantity) {
+      if (ingredientsDict.contains(ingredient)) {
+        double pricePerUnit = ingredientsDict[ingredient]?['price'] ?? 0.0;
+        double qtt = quantity;
+        total += pricePerUnit * qtt;
+      }
+    });
+    
+    return total;
+  }
+
   void selectIngredient(String ingredient, double? qtt) {
     listeCourses.addIngredient(ingredient, qtt);
     setState(() {});
@@ -170,6 +185,39 @@ class _GroceriesPageState extends State<GroceriesPage> {
                       height: 5,
                     ),
                   ),
+
+                  if (!listeCourses.isEmpty)
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: themeScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(15),
+                        ),                                                                                                        
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Estimated total:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: themeScheme.onPrimaryContainer,
+                              ),
+                            ),
+                            Text(
+                              "${calculateGroceriesPrice().toStringAsFixed(2)} €",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: themeScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
 
                   // Scrollable Content
                   SliverList(

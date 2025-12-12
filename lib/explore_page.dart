@@ -2,6 +2,7 @@ import 'package:dilly_daily/account_page.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:flutter/material.dart';
+import 'package:dilly_daily/data/ingredients.dart';
 
 List<String> generateSuggestions() {
   return recipesDict.toList();
@@ -276,17 +277,16 @@ class RecipePreview extends StatelessWidget {
               child: Text(
                 texte,
                 softWrap: true,
+                maxLines: 1,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
+    )));
   }
 }
 
@@ -304,6 +304,17 @@ class RecipeDialogBox extends StatelessWidget {
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
+
+  double calculateTotalPrice() {
+    double total = 0.0;
+    Recipe recette = recipesDict[recipeKey]!;
+    recette.ingredients.forEach((ingredient, quantity) {
+      double priceperunit = ingredientsDict[ingredient]?['price'] ?? 0.0;
+      total += priceperunit * quantity;
+    });
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -346,17 +357,40 @@ class RecipeDialogBox extends StatelessWidget {
                     ))
               ],
             ),
-            Text(
-              "${recipesDict[recipeKey]!.name} \n[Recipe preview]",
-              textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    recipesDict[recipeKey]!.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    (recipesDict[recipeKey]?.summary ?? "No description available.") +"${calculateTotalPrice().toStringAsFixed(2)} €",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                    
+                  ),
+
+                ],
+              ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
+                    flex: 6,
                     child: Padding(
                   padding:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                      const EdgeInsets.only(left: 20, right: 10, bottom: 10),
                   child: TextButton(
                       style: ButtonStyle(
                           shadowColor:
@@ -372,9 +406,28 @@ class RecipeDialogBox extends StatelessWidget {
                         onToggleMealPlan(recipeKey);
                       },
                       child: mealPlanRecipes.containsKey(recipeKey)
-                          ? Text("Added to Meal Plan")
-                          : Text("Add to Meal Plan")),
+                          ? Text("Remove")
+                          : Text("Add")),
                 )),
+
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                  padding: 
+                      const EdgeInsets.only(right: 20, bottom: 10),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: themeScheme.primary, width: 2),
+                      foregroundColor: themeScheme.primary, 
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); 
+                    },
+                    child: Text("Close"),
+                  ),
+                ), 
+                ),
+
                 if (mealPlanRecipes.containsKey(recipeKey)) ...[
                   Padding(
                     padding: const EdgeInsets.only(right: 20, bottom: 10),

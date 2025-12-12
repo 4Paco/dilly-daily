@@ -5,8 +5,12 @@
     "image": "",
     "ingredients": {
       "Ground Beef": 200.0,
-      "Cucumber": 2.0
-    }
+      "Cucumber": 2.0,
+      "Cheese": 100.0,
+      "Cream": 100.0
+    },
+    "summary": "This recipe serves 2 and takes around 30min to make.\nOne portion of this dish costs about :"
+    
   },
   "2": {
     "name": "Spaghetti Carbonara",
@@ -18,7 +22,9 @@
       "Bacon": 100.0,
       "Parmesan": 50.0,
       "Pepper": 2.0
-    }
+    },
+    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :"
+    
   },
   "3": {
     "name": "Chicken Curry",
@@ -30,7 +36,9 @@
       "Curry Powder": 2.0,
       "Onion": 1.0,
       "Garlic": 2.0
-    }
+    },
+    "summary": "This recipe serves 4 and takes around 40min to make.\nOne portion of this dish costs about :"
+    
   },
   "4": {
     "name": "Vegetable Stir Fry",
@@ -41,8 +49,11 @@
       "Carrot": 2.0,
       "Bell Pepper": 1.0,
       "Soy Sauce": 2.0,
-      "Ginger": 0.5
-    }
+      "Ginger": 0.5,
+      "Garlic": 2.0
+    },
+    "summary": "This recipe serves 2 and takes around 15min to make.\nOne portion of this dish costs about :"
+    
   },
   "5": {
     "name": "Pancakes",
@@ -54,7 +65,9 @@
       "Egg": 1.0,
       "Sugar": 25.0,
       "Butter": 50.0
-    }
+    },
+    "summary": "This recipe serves 4 and takes around 20min to make.\nOne portion of this dish costs about :"
+    
   },
   "6": {
     "name": "Beef Tacos",
@@ -66,7 +79,9 @@
       "Lettuce": 0.25,
       "Cheddar": 100.0,
       "Salsa": 100.0
-    }
+    },
+    "summary": "This recipe serves 3 and takes around 25min to make.\nOne portion of this dish costs about :"
+    
   },
   "7": {
     "name": "Margarita Pizza",
@@ -78,7 +93,9 @@
       "Mozzarella": 1.0,
       "Basil": 3.0,
       "Olive Oil": 1.0
-    }
+    },
+    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    
   },
   "8": {
     "name": "Caesar Salad",
@@ -90,7 +107,8 @@
       "Parmesan": 30.0,
       "Caesar Sauce": 50.0,
       "Chicken": 150.0
-    }
+    },
+    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :"
   },
   "9": {
     "name": "Chocolate Cake",
@@ -102,7 +120,9 @@
       "Chocolate": 100.0,
       "Butter": 100.0,
       "Egg": 2.0
-    }
+    },
+    "summary": "This recipe serves 8 and takes around 60min to make.\nOne portion of this dish costs about :"
+
   },
   "10": {
     "name": "Tomato Soup",
@@ -114,7 +134,9 @@
       "Garlic": 2.0,
       "Vegetable Broth": 1.0,
       "Cream": 50.0
-    }
+      },
+    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    
   },
   "0": {
     "name": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
@@ -170,6 +192,6 @@
       "Wine": 2.0,
       "Crouton": 50.0
     },
-    "summary": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire. It is brought to you by fullbellysisters.blogspot.com.  A mixture of scallions, salt and pepper, white wine, and a handful of other ingredients are all it takes to make this recipe so scrumptious. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/cauliflower-gratin-with-garlic-breadcrumbs-318375\">Cauliflower Gratin with Garlic Breadcrumbs</a>, < href=\"https://spoonacular.com/recipes/pasta-with-cauliflower-sausage-breadcrumbs-30437\">Pasta With Cauliflower, Sausage, & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-roasted-cauliflower-parsley-and-breadcrumbs-30738\">Pasta With Roasted Cauliflower, Parsley, And Breadcrumbs</a>."
+    "summary": "This recipe serves 2 and takes around 45min to make.\nOne portion of this dish costs about :"
   }
 }
