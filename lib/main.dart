@@ -5,8 +5,19 @@ import 'package:dilly_daily/pages/MealPlan/mealplan_page.dart';
 import 'package:dilly_daily/pages/Write/write_page.dart';
 import 'package:flutter/material.dart';
 
+import 'package:clarity_flutter/clarity_flutter.dart';
+
 void main() {
-  runApp(MyApp());
+  final config = ClarityConfig(
+      projectId: "ukbsxmz277",
+      logLevel: LogLevel
+          .None // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
+      );
+
+  runApp(ClarityWidget(
+    app: MyApp(),
+    clarityConfig: config,
+  ));
 }
 
 class MyApp extends StatefulWidget {
