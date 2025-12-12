@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/pages/MealPlan/RecipieStepScreens.dart';
 import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,7 @@ class CalendarDialogBox extends StatelessWidget {
   final double verticalOffset = 50;
   final bool isAddedToGroceries;
   final int mealsModifier;
+
 
   @override
   Widget build(BuildContext context) {
@@ -251,27 +253,25 @@ class CalendarDialogBox extends StatelessWidget {
                         )),
                     Expanded(
                         child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: TextButton(
-                          style: ButtonStyle(
-                              shadowColor:
-                                  WidgetStateProperty.all(themeScheme.shadow),
-                              elevation: WidgetStateProperty.all(2),
-                              foregroundColor: WidgetStateProperty.all(
-                                  themeScheme.onPrimary),
-                              backgroundColor:
-                                  WidgetStateProperty.all(themeScheme.primary),
-                              side: WidgetStatePropertyAll(BorderSide(
-                                  width: 1.5, color: themeScheme.tertiary))),
-                          onPressed: () {
-                            onStartCooking(recipeKey);
-                          },
-                          child: Text(
-                            "Let's cook!",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            textScaler: TextScaler.linear(1.5),
-                          )),
-                    )),
+                            padding: const EdgeInsets.only(right: 15),
+                            child: FilledButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RecipeStepsScreen(
+                                      recipe: recipesDict[recipeKey]!
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Let's cook!",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textScaler: TextScaler.linear(1.5),
+                              ),
+                            ))),
                   ],
                 ),
               ),

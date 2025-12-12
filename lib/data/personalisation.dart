@@ -17,7 +17,7 @@ List<String> favoriteRecipes = [];
 MyRecipes mealPlanRecipes = MyRecipes(recipeFile: "meal_plan_recipes");
 
 List<List<String>> weekMeals = [
-  ["", ""],
+  ["1", "2"],
   ["", ""],
   ["", ""],
   ["", ""],
