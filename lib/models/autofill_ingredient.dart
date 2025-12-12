@@ -1,0 +1,62 @@
+import 'package:dilly_daily/data/ingredients.dart';
+import 'package:flutter/material.dart';
+
+class AutofillIngredient extends StatelessWidget {
+  AutofillIngredient({
+    super.key,
+    required this.add,
+    //required this.valueKey,
+  });
+  final Function(String) add;
+  var valueKey = UniqueKey();
+
+  @override
+  Widget build(BuildContext context) {
+    var themeScheme = Theme.of(context).colorScheme;
+    return Container(
+      //Ingredients search bar
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: themeScheme.tertiaryFixed,
+        borderRadius: BorderRadius.circular(25), // Rounded corners
+      ),
+      child: Autocomplete<String>(
+        key: valueKey,
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          if (textEditingValue.text == '') {
+            return const Iterable<String>.empty();
+          }
+          return ingredientsDict.where((option) {
+            return option
+                .toLowerCase()
+                .startsWith(textEditingValue.text.toLowerCase());
+          }).cast<String>();
+        },
+        onSelected: (String selection) {
+          valueKey =
+              UniqueKey(); //reset the widget to make the typed-in content disappear
+          add(selection);
+        },
+        fieldViewBuilder: (BuildContext context,
+            TextEditingController textEditingController,
+            FocusNode focusNode,
+            VoidCallback onFieldSubmitted) {
+          return TextField(
+            controller: textEditingController,
+            focusNode: focusNode,
+            decoration: InputDecoration(
+              border: InputBorder.none, // Removes the bottom line
+              icon:
+                  Icon(Icons.search, color: themeScheme.onPrimaryFixedVariant),
+              hintText: 'Search ingredients...',
+              hintStyle: TextStyle(
+                  color:
+                      themeScheme.onPrimaryFixedVariant), // Placeholder style
+            ), // Text style
+          );
+        },
+      ),
+    );
+  }
+}
