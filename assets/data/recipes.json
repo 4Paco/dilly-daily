@@ -10,7 +10,7 @@
   },
   "2": {
     "name": "Pasta Carbonara",
-    "image": "https://example.com/pasta.jpg",
+    "image": "https://external-content.duckduckgo.com/iu/?u=https%253A%252F%252Fcasualepicure.com%252Fwp-content%252Fuploads%252F2022%252F09%252Fpasta-carbonara-with-guanciale-10.jpg",
     "personalized": "Nope",
     "ingredients": {
       "Chicken": 300.0,
@@ -24,17 +24,27 @@
       {
         "description": "Boil water and cook pasta.",
         "duration": 10,
-        "type": "cooking"
+        "type": "cooking",
+        "ingredients": [
+          { "name": "Pasta", "quantity": 200, "unit": "gram" },
+          { "name": "Salt", "quantity": 5, "unit": "gram" }
+        ]
       },
       {
         "description": "Cook bacon in pan.",
         "duration": 5,
-        "type": "cooking"
+        "type": "cooking",
+        "ingredients": [
+          { "name": "Bacon", "quantity": 100, "unit": "gram" }
+        ]
       },
       {
         "description": "Mix pasta with eggs and bacon.",
         "duration": null,
-        "type": "preparation"
+        "type": "preparation",
+        "ingredients": [
+          { "name": "Eggs", "quantity": 2, "unit": "piece" }
+        ]
       }
     ]
   },
