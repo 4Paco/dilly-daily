@@ -75,18 +75,18 @@ class _WritePageState extends State<WritePage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Show a loading indicator while waiting
-            return pageContent(context);
+            return writePageContent(context);
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
                 child: Text("Error loading recipes: ${snapshot.error}"));
           } else {
-            return pageContent(context);
+            return writePageContent(context);
           }
         });
   }
 
-  Scaffold pageContent(BuildContext context) {
+  Scaffold writePageContent(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
     bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
@@ -134,6 +134,7 @@ class _WritePageState extends State<WritePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: themeScheme.primary,
+        foregroundColor: themeScheme.onPrimary,
         tooltip: 'Create new recipe',
         onPressed: () async {
           final value = await Navigator.push(
@@ -144,7 +145,7 @@ class _WritePageState extends State<WritePage> {
           );
           setState(() {});
         },
-        child: const Icon(Icons.add, size: 28),
+        child: const Icon(Icons.add, size: 40),
       ),
     );
   }

@@ -54,7 +54,6 @@ class _RecipeFormState extends State<RecipeForm> {
                 if (widget._formKey.currentState!.validate()) {
                   Recipe nouvelleRecette = Recipe(name: myController.text);
                   myRecipes.addRecipe(nouvelleRecette);
-                  print("Attention :  ${nouvelleRecette.name}");
                   Navigator.pop(context);
                 }
               },

@@ -29,8 +29,8 @@ class Recipe {
       : id = id ?? Uuid().v4();
 
   // named constructor
-  Recipe.fromJson(int jsonId, Map<String, dynamic> json)
-      : id = jsonId.toString(),
+  Recipe.fromJson(String jsonId, Map<String, dynamic> json)
+      : id = jsonId,
         name = json['name'],
         image = json['image'] ?? "",
         personalized = json['personalized'] ?? "Nope",

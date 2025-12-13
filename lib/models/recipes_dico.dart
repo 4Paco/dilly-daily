@@ -54,7 +54,7 @@ class RecipesDico extends Iterable with Iterator {
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
       String id = key;
-      Recipe recipe = Recipe.fromJson(int.parse(key), data[key]);
+      Recipe recipe = Recipe.fromJson(key, data[key]);
       for (String valKey in data[key].keys) {
         if (valKey == "name") {
           recipe.name = data[key][valKey];
