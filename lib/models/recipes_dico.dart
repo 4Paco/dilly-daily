@@ -13,6 +13,22 @@ class RecipesDico extends Iterable with Iterator {
   MyRecipes theirRecipes = myRecipes;
 
   bool _isLoaded = false;
+  static List<String> dishTypes = [
+    "main course",
+    "side dish",
+    "dessert",
+    "appetizer",
+    "salad",
+    "bread",
+    "breakfast",
+    "soup",
+    "beverage",
+    "sauce",
+    "marinade",
+    "fingerfood",
+    "snack",
+    "drink"
+  ];
 
   int get limit => _recipesDict.keys.length;
   int i = 0;

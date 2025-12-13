@@ -2,6 +2,7 @@ import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
+import 'package:dilly_daily/pages/Write/photo_picker.dart';
 import 'package:flutter/material.dart';
 
 class WritePage extends StatefulWidget {
@@ -169,8 +170,8 @@ class _WritePageState extends State<WritePage> {
           final value = await Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (context) => EditSubPage(),
-            ),
+                builder: (context) => ImagePickerPage() //EditSubPage(),
+                ),
           );
           setState(() {});
         },

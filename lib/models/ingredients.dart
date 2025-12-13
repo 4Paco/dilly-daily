@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +23,9 @@ class Ingredients extends Iterable with Iterator {
   int i = 0;
   @override
   int get current => i;
+
+  Map<String, dynamic> get dicoo => _dico;
+
   @override
   bool moveNext() {
     i++;
@@ -61,7 +65,7 @@ class Ingredients extends Iterable with Iterator {
       newIng['icon'] = EmojiParser().hasName(data[ing]["icon"])
           ? EmojiParser().get(data[ing]["icon"]).code
           : "";
-         newIng['price'] = (data[ing]["price"] ?? 0.0).toDouble();
+      newIng['price'] = (data[ing]["price"] ?? 0.0).toDouble();
       _dico[ing] = newIng;
     }
   }
@@ -90,7 +94,11 @@ class Ingredients extends Iterable with Iterator {
   bool isNotDiet(String diet, String ingredient) {
     return !_dico[ingredient]["diet"][diet];
   }
+
   //bool matchesCat(String ingredient, )
+  Iterable<String> keys() {
+    return _dico.keys;
+  }
 }
 
 // https://emojipedia.org/smileys
