@@ -45,13 +45,34 @@ class _WritePageState extends State<WritePage> {
     });
   }
 
+  void deleteRecipe(String recipeKey) {
+    setState(() {
+      if (myRecipes.containsKey(recipeKey)) {
+        myRecipes.removeRecipe(recipeKey);
+      }
+    });
+  }
+
+  void editRecipe({String recipeKey = ""}) async {
+    Navigator.pop(context);
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => recipeKey.isEmpty
+            ? EditSubPage()
+            : EditSubPage(recipe: myRecipes[recipeKey]),
+      ),
+    );
+    setState(() {});
+  }
+
   void showMealPlanDialog(BuildContext context, String recipeKey) {
     showAdaptiveDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return CalendarDialogBox(
+            return OriginalRecipeDialogBox(
               recipeKey: recipeKey,
               onToggleMealPlan: (recipeKey) {
                 toggleMealPlan(recipeKey);
@@ -59,6 +80,14 @@ class _WritePageState extends State<WritePage> {
               },
               onToggleFavorite: (recipeKey) {
                 toggleFavorite(recipeKey);
+                setState(() {}); // Rebuild the dialog to update the icon
+              },
+              onEditRecipe: ([recipeKey]) {
+                editRecipe(recipeKey: recipeKey ?? "");
+                setState(() {}); // Rebuild the dialog to update the icon
+              },
+              onDeleteRecipe: (recipeKey) {
+                deleteRecipe(recipeKey);
                 setState(() {}); // Rebuild the dialog to update the icon
               },
             );
@@ -316,17 +345,21 @@ class PlusMinusButton extends StatelessWidget {
   }
 }
 
-class CalendarDialogBox extends StatelessWidget {
-  CalendarDialogBox({
+class OriginalRecipeDialogBox extends StatelessWidget {
+  OriginalRecipeDialogBox({
     super.key,
     required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
+    required this.onDeleteRecipe,
   });
 
   final String recipeKey;
   final void Function(String) onToggleMealPlan;
   final void Function(String) onToggleFavorite;
+  final void Function([String?]) onEditRecipe;
+  final void Function(String) onDeleteRecipe;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
@@ -387,7 +420,9 @@ class CalendarDialogBox extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CloseButton(),
+                  CloseButton(
+                    color: themeScheme.onPrimary,
+                  ),
                   IconButton(
                       onPressed: () {
                         onToggleFavorite(recipeKey);
@@ -414,18 +449,58 @@ class CalendarDialogBox extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
+                        color: themeScheme.onPrimary,
                         onPressed: () {
+                          onEditRecipe(recipeKey);
+                        },
+                        onLongPress: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (context) => EditSubPage(),
+                              builder: (context) => EditSubPage(
+                                recipe: myRecipes[recipeKey],
+                              ),
                             ),
                           );
                         },
                         icon: Icon(Icons.edit)),
+                    TextButton(
+                        onPressed: () {},
+                        onLongPress: () {
+                          onDeleteRecipe(recipeKey);
+                          Navigator.of(context, rootNavigator: true).pop(true);
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                Future.delayed(Duration(seconds: 2), () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                });
+                                return AlertDialog(
+                                  title: Text(
+                                      "You successfully deleted the recipe !",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium),
+                                );
+                              });
+                        },
+                        child: Tooltip(
+                          message:
+                              "Long press to definitely delete this recipe",
+                          triggerMode: TooltipTriggerMode.tap,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Icon(
+                              Icons.delete_outline,
+                              size: 20,
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
