@@ -10,12 +10,12 @@ class WritePage extends StatefulWidget {
 }
 
 class _WritePageState extends State<WritePage> {
-  Future<void>? _loadGroceriesFuture; //= Future.value();
+  Future<void>? _loadRecipesFuture; //= Future.value();
   @override
   void initState() {
     super.initState();
-    _loadGroceriesFuture = myRecipes.isLoaded();
-    _loadGroceriesFuture = recipesDict.isLoaded(); // Call load() only once
+    _loadRecipesFuture = myRecipes.isLoaded();
+    _loadRecipesFuture = recipesDict.isLoaded(); // Call load() only once
   }
 
   void toggleFavorite(String recipeKey) {
@@ -73,7 +73,7 @@ class _WritePageState extends State<WritePage> {
     final themeScheme = Theme.of(context).colorScheme;
 
     return FutureBuilder(
-        future: _loadGroceriesFuture, // Wait for allergiesList to load
+        future: _loadRecipesFuture, // Wait for allergiesList to load
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Show a loading indicator while waiting
@@ -81,8 +81,9 @@ class _WritePageState extends State<WritePage> {
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
-                child: Text("Error loading allergies: ${snapshot.error}"));
+                child: Text("Error loading recipes: ${snapshot.error}"));
           } else {
+            bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
             return Scaffold(
               body: CustomScrollView(
                 slivers: [
@@ -111,13 +112,16 @@ class _WritePageState extends State<WritePage> {
                         if (myRecipes.isNotEmpty) ...[
                           BlocTitle(texte: "Your original recipes"),
                           WriteCarousel(showMealPlanDialog: showMealPlanDialog),
-                        ],
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            BlocTitle(texte: "Your edited recipes"),
-                          ],
-                        ),
+                        ] else
+                          BlocTitle(
+                              texte:
+                                  "You haven't added any custom ${isSmallScreen ? "\n" : ""}recipe yet !"),
+                        //Row(
+                        //  mainAxisSize: MainAxisSize.min,
+                        //  children: [
+                        //    BlocTitle(texte: "Your edited recipes"),
+                        //  ],
+                        //),
                       ],
                     ),
                   ),

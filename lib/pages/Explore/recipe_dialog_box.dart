@@ -21,7 +21,7 @@ class RecipeDialogBox extends StatelessWidget {
 
   double calculateTotalPrice() {
     double total = 0.0;
-      Recipe recette = recipesDict[recipeKey]!;
+    Recipe recette = recipesDict[recipeKey]!;
     recette.ingredients.forEach((ingredient, quantity) {
       double priceperunit = ingredientsDict[ingredient]?['price'] ?? 0.0;
       total += priceperunit * quantity;
@@ -40,6 +40,7 @@ class RecipeDialogBox extends StatelessWidget {
     } else {
       icon = Icons.favorite_border;
     }
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -86,14 +87,12 @@ class RecipeDialogBox extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    (recipesDict[recipeKey]?.summary ?? "No description available.") +"${calculateTotalPrice().toStringAsFixed(2)} €",
+                    "${(recipesDict[recipeKey]?.summary ?? "No description available.")} ${calculateTotalPrice().toStringAsFixed(2)} €",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
                     ),
-                    
                   ),
-
                 ],
               ),
             ),
@@ -103,45 +102,44 @@ class RecipeDialogBox extends StatelessWidget {
                 Expanded(
                     flex: 6,
                     child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 10, bottom: 10),
-                  child: TextButton(
-                      style: ButtonStyle(
-                          shadowColor:
-                              WidgetStateProperty.all(themeScheme.shadow),
-                          elevation: WidgetStateProperty.all(2),
-                          foregroundColor:
-                              WidgetStateProperty.all(themeScheme.onPrimary),
-                          backgroundColor: WidgetStateProperty.all(
-                              mealPlanRecipes.containsKey(recipeKey)
-                                  ? themeScheme.tertiary
-                                  : themeScheme.primary)),
-                      onPressed: () {
-                        onToggleMealPlan(recipeKey);
-                      },
-                      child: mealPlanRecipes.containsKey(recipeKey)
-                          ? Text("Remove")
-                          : Text("Add")),
-                )),
-
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                  padding: 
-                      const EdgeInsets.only(right: 20, bottom: 10),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: themeScheme.primary, width: 2),
-                      foregroundColor: themeScheme.primary, 
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 10, bottom: 10),
+                      child: TextButton(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  WidgetStateProperty.all(themeScheme.shadow),
+                              elevation: WidgetStateProperty.all(2),
+                              foregroundColor: WidgetStateProperty.all(
+                                  themeScheme.onPrimary),
+                              backgroundColor: WidgetStateProperty.all(
+                                  mealPlanRecipes.containsKey(recipeKey)
+                                      ? themeScheme.tertiary
+                                      : themeScheme.primary)),
+                          onPressed: () {
+                            onToggleMealPlan(recipeKey);
+                          },
+                          child: mealPlanRecipes.containsKey(recipeKey)
+                              ? Text("Remove")
+                              : Text("Add")),
+                    )),
+                if (!isSmallScreen) //Close button is less relevent on phone+problematic displaying of the text 'Close', so simpler to just remove it on 'small screens'
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20, bottom: 10),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side:
+                              BorderSide(color: themeScheme.primary, width: 2),
+                          foregroundColor: themeScheme.primary,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Close"),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(); 
-                    },
-                    child: Text("Close"),
                   ),
-                ), 
-                ),
-
                 if (mealPlanRecipes.containsKey(recipeKey)) ...[
                   Padding(
                     padding: const EdgeInsets.only(right: 20, bottom: 10),

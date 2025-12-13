@@ -1,3 +1,4 @@
+import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
@@ -21,7 +22,8 @@ class _ExplorePageState extends State<ExplorePage> {
   void initState() {
     super.initState();
     _loadGroceriesFuture = listeCourses.isLoaded();
-    _loadGroceriesFuture = recipesDict.isLoaded(); // Call load() only once
+    _loadGroceriesFuture = recipesDict.isLoaded();
+    _loadGroceriesFuture = ingredientsDict.isLoaded(); // Call load() only once
   }
 
   void toggleFavorite(String recipeKey) {

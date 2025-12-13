@@ -96,9 +96,9 @@ class AccountPage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              Text("We improve our product by using Microsoft Clarity to see how you use our app. By using our app, you agree that we and Microsoft can collect and use this data." +
-                  "We use Microsoft Clarity to capture how you use and interact with our app through behavioral metrics, heatmaps, and session replay to improve our app." +
-                  "App usage data is captured using first-party cookies and other tracking technologies for site optimization. For more information about how Microsoft collects and uses your data, visit the Microsoft Privacy Statement."),
+              //Text("We improve our product by using Microsoft Clarity to see how you use our app. By using our app, you agree that we and Microsoft can collect and use this data." +
+              //    "We use Microsoft Clarity to capture how you use and interact with our app through behavioral metrics, heatmaps, and session replay to improve our app." +
+              //    "App usage data is captured using first-party cookies and other tracking technologies for site optimization. For more information about how Microsoft collects and uses your data, visit the Microsoft Privacy Statement."),
               for (var item in accountSubmenus) ...[
                 ListTile(
                   leading: Icon(item["icon"]),
