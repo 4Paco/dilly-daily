@@ -12,6 +12,8 @@ class RecipesDico extends Iterable with Iterator {
   Map<String, Recipe> _recipesDict = {};
   MyRecipes theirRecipes = myRecipes;
 
+  bool _isLoaded = false;
+
   int get limit => _recipesDict.keys.length;
   int i = 0;
   @override
@@ -50,11 +52,9 @@ class RecipesDico extends Iterable with Iterator {
     final String jsonString = //await fetchRecipes();
         await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
-    // Recipe recipe = Recipe.fromJson(data);
     for (String key in data.keys) {
-      String id = key; //int.parse(key);
+      String id = key;
       Recipe recipe = Recipe.fromJson(int.parse(key), data[key]);
-      // TODO: improve
       for (String valKey in data[key].keys) {
         if (valKey == "name") {
           recipe.name = data[key][valKey];
@@ -80,13 +80,14 @@ class RecipesDico extends Iterable with Iterator {
     for (String id in theirRecipes.toList()) {
       _recipesDict[id] = theirRecipes[id]!;
     }
+
+    _isLoaded = true;
   }
 
-  Future<bool> isLoaded() async {
-    if (_recipesDict.isEmpty) {
+  Future<void> isLoaded() async {
+    if (!_isLoaded) {
       await load();
     }
-    return _recipesDict.isNotEmpty;
   }
 
   Recipe? operator [](String recipe) {

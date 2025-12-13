@@ -53,14 +53,12 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   Widget build(BuildContext context) {
-    final themeScheme = Theme.of(context).colorScheme;
-
     return FutureBuilder(
         future: _loadGroceriesFuture, // Wait for allergiesList to load
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Show a loading indicator while waiting
-            return Center(child: CircularProgressIndicator());
+            return explorePageContent();
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
@@ -68,87 +66,89 @@ class _ExplorePageState extends State<ExplorePage> {
               "Error: ${snapshot.error}\n${snapshot.stackTrace}",
             ));
           } else {
-            return Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  // Fixed AppBar
-                  CustomSliverAppBar(title: "Explore"),
-
-                  PinnedHeaderSliver(
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: themeScheme.tertiaryFixed,
-                        borderRadius:
-                            BorderRadius.circular(25), // Rounded corners
-                      ),
-                      child: Autocomplete<String>(
-                        optionsBuilder: (TextEditingValue textEditingValue) {
-                          return const Iterable<String>.empty();
-                        },
-                        fieldViewBuilder: (BuildContext context,
-                            TextEditingController textEditingController,
-                            FocusNode focusNode,
-                            VoidCallback onFieldSubmitted) {
-                          return TextField(
-                            controller: textEditingController,
-                            focusNode: focusNode,
-                            decoration: InputDecoration(
-                              border:
-                                  InputBorder.none, // Removes the bottom line
-                              icon: Icon(Icons.search,
-                                  color: themeScheme.onPrimaryFixedVariant),
-                              hintText: 'Search ideas...',
-                              hintStyle: TextStyle(
-                                  color: themeScheme
-                                      .onPrimaryFixedVariant), // Placeholder style
-                            ), // Text style
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-
-                  // Scrollable Content
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        if (favoriteRecipes.isNotEmpty) ...[
-                          BlocTitle(texte: "Favoris"),
-                          FavoriteCarousel(
-                            onToggleMealPlan: toggleMealPlan,
-                            onToggleFavorite: toggleFavorite,
-                          )
-                        ],
-                        BlocTitle(texte: "Suggestions"),
-                        GridView.count(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics:
-                              NeverScrollableScrollPhysics(), // Disable GridView scrolling
-                          crossAxisCount: 2,
-                          childAspectRatio: 1, // Adjust to control item size
-                          children: [
-                            for (String recipeKey in generateSuggestions()) ...[
-                              RecipePreview(
-                                recipeKey: recipeKey,
-                                texte: recipesDict[recipeKey]!.name,
-                                img: recipesDict[recipeKey]!.image,
-                                onToggleMealPlan: toggleMealPlan,
-                                onToggleFavorite: toggleFavorite,
-                              )
-                            ]
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
+            return explorePageContent();
           }
         });
+  }
+
+  Scaffold explorePageContent() {
+    final themeScheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          // Fixed AppBar
+          CustomSliverAppBar(title: "Explore"),
+
+          PinnedHeaderSliver(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: themeScheme.tertiaryFixed,
+                borderRadius: BorderRadius.circular(25), // Rounded corners
+              ),
+              child: Autocomplete<String>(
+                optionsBuilder: (TextEditingValue textEditingValue) {
+                  return const Iterable<String>.empty();
+                },
+                fieldViewBuilder: (BuildContext context,
+                    TextEditingController textEditingController,
+                    FocusNode focusNode,
+                    VoidCallback onFieldSubmitted) {
+                  return TextField(
+                    controller: textEditingController,
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      border: InputBorder.none, // Removes the bottom line
+                      icon: Icon(Icons.search,
+                          color: themeScheme.onPrimaryFixedVariant),
+                      hintText: 'Search ideas...',
+                      hintStyle: TextStyle(
+                          color: themeScheme
+                              .onPrimaryFixedVariant), // Placeholder style
+                    ), // Text style
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // Scrollable Content
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                if (favoriteRecipes.isNotEmpty) ...[
+                  BlocTitle(texte: "Favoris"),
+                  FavoriteCarousel(
+                    onToggleMealPlan: toggleMealPlan,
+                    onToggleFavorite: toggleFavorite,
+                  )
+                ],
+                BlocTitle(texte: "Suggestions"),
+                GridView.count(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics:
+                      NeverScrollableScrollPhysics(), // Disable GridView scrolling
+                  crossAxisCount: 2,
+                  childAspectRatio: 1, // Adjust to control item size
+                  children: [
+                    for (String recipeKey in generateSuggestions()) ...[
+                      RecipePreview(
+                        recipeKey: recipeKey,
+                        texte: recipesDict[recipeKey]!.name,
+                        img: recipesDict[recipeKey]!.image,
+                        onToggleMealPlan: toggleMealPlan,
+                        onToggleFavorite: toggleFavorite,
+                      )
+                    ]
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

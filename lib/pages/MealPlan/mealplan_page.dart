@@ -13,6 +13,13 @@ class MealPlanPage extends StatefulWidget {
 }
 
 class _MealPlanPageState extends State<MealPlanPage> {
+  Future<void>? _loadMealPlanFuture; //= Future.value();
+  @override
+  void initState() {
+    super.initState();
+    _loadMealPlanFuture = mealPlanRecipes.isLoaded(); // Call load() only once
+  }
+
   void mealAddedToWeek(String recipeKey, int day, int time) {
     setState(() {
       weekMeals[day][time] = recipeKey;
@@ -104,11 +111,29 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _loadMealPlanFuture, // Wait for allergiesList to load
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting
+            return createMealPlanPageContent();
+          } else if (snapshot.hasError) {
+            // Handle errors
+            return Center(
+                child: Text("Error loading recipes: ${snapshot.error}"));
+          } else {
+            return createMealPlanPageContent();
+          }
+        });
+  }
+
+  Scaffold createMealPlanPageContent() {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           // Fixed AppBar
-          CustomSliverAppBar(title: "You Meal Plan"),
+          CustomSliverAppBar(title: "Your Meal Plan"),
 
           // Scrollable Content
           SliverList(
