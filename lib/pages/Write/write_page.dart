@@ -1,8 +1,9 @@
+import 'dart:io' show File;
+
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
-import 'package:dilly_daily/pages/Write/photo_picker.dart';
 import 'package:flutter/material.dart';
 
 class WritePage extends StatefulWidget {
@@ -170,8 +171,8 @@ class _WritePageState extends State<WritePage> {
           final value = await Navigator.push(
             context,
             MaterialPageRoute<void>(
-                builder: (context) => ImagePickerPage() //EditSubPage(),
-                ),
+              builder: (context) => EditSubPage(),
+            ),
           );
           setState(() {});
         },
@@ -261,9 +262,14 @@ class RecipePreview extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    imgDisplayed, // Ensures the image covers the button
-                  ),
+                  child: img.isEmpty
+                      ? Image.asset(
+                          imgDisplayed //imgDisplayed, // Ensures the image covers the button
+                          )
+                      : Image.file(
+                          File(imgDisplayed),
+                          height: 200,
+                        ),
                 ),
               ),
             ),
@@ -362,7 +368,7 @@ class OriginalRecipeDialogBox extends StatelessWidget {
   final void Function([String?]) onEditRecipe;
   final void Function(String) onDeleteRecipe;
   final double horizontalPadding = 50.0;
-  final double verticalPadding = 150;
+  final double verticalPadding = 166;
   final double verticalOffset = 50;
 
   @override
@@ -377,9 +383,9 @@ class OriginalRecipeDialogBox extends StatelessWidget {
     }
 
     var imgDisplayed = myRecipes[recipeKey]!.image;
-    if (imgDisplayed.isEmpty) {
-      imgDisplayed = "assets/image/meals/placeholder.jpg";
-    }
+    //if (imgDisplayed.isEmpty) {
+    //  imgDisplayed = "assets/image/meals/placeholder.jpg";
+    //}
 
     return Padding(
       padding: EdgeInsets.only(
@@ -398,22 +404,28 @@ class OriginalRecipeDialogBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               child: SizedBox(
                   height: 800, //overflowing, but no error so it works
-                  child: FittedBox(
-                    fit: BoxFit.fill,
-                    clipBehavior: Clip.hardEdge,
-                    child: Stack(children: [
-                      Image.asset(
-                        imgDisplayed, // Ensures the image covers the button
+                  child: Stack(children: [
+                    imgDisplayed.isEmpty
+                        ? FittedBox(
+                            fit: BoxFit.fill,
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(
+                                "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
+                                ),
+                          )
+                        : Expanded(
+                            child: Image.file(
+                              File(imgDisplayed),
+                            ),
+                          ),
+                    Center(
+                      child: Container(
+                        width: 3535,
+                        height: 5300,
+                        color: Color.fromARGB(100, 0, 0, 0),
                       ),
-                      Center(
-                        child: Container(
-                          width: 3535,
-                          height: 5300,
-                          color: Color.fromARGB(100, 0, 0, 0),
-                        ),
-                      )
-                    ]),
-                  ))),
+                    )
+                  ]))),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

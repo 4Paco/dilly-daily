@@ -1,9 +1,14 @@
+import 'dart:io' show Directory, File;
+
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/recipes_dico.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
+import 'package:dilly_daily/pages/Write/photo_cropper.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RecipeForm extends StatefulWidget {
   const RecipeForm({
@@ -24,6 +29,10 @@ class _RecipeFormState extends State<RecipeForm> {
   late final TextEditingController descriptionController;
   late final TextEditingController linkController;
 
+  XFile? _pickedFile;
+  CroppedFile? _croppedFile;
+  String? _savedImagePath; // Chemin permanent de l'image sauvegardée
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +41,12 @@ class _RecipeFormState extends State<RecipeForm> {
         TextEditingController(text: widget.widget.recette.summary);
     linkController =
         TextEditingController(text: widget.widget.recette.recipeLink);
+    // Charger l'image existante si en mode édition
+    if (widget.widget.recette.image.isNotEmpty) {
+      _savedImagePath = widget.widget.recette.image;
+      _croppedFile = CroppedFile(widget.widget.recette.image);
+      _pickedFile = XFile(widget.widget.recette.image);
+    }
   }
 
   @override
@@ -42,6 +57,7 @@ class _RecipeFormState extends State<RecipeForm> {
     linkController.dispose();
     super.dispose();
   }
+
   //Recipe(
   //    {this.name = "",
   //    String? id,
@@ -54,6 +70,83 @@ class _RecipeFormState extends State<RecipeForm> {
   //    this.servings = 1,
   //    this.image = ""})
   //    : id = id ?? Uuid().v4();
+  Future<String> _saveImagePermanently(String sourcePath) async {
+    // Obtenir le répertoire de documents de l'application
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+
+    // Créer un sous-dossier pour les images de recettes
+    final Directory recipeImagesDir =
+        Directory('${appDocDir.path}/recipe_images');
+    if (!await recipeImagesDir.exists()) {
+      await recipeImagesDir.create(recursive: true);
+    }
+
+    // Générer un nom de fichier unique (utilise l'ID de la recette ou timestamp)
+    final String fileName = '${widget.widget.recette.id}.jpg';
+    final String permanentPath = '${recipeImagesDir.path}/$fileName';
+
+    // Copier le fichier vers le répertoire permanent
+    final File sourceFile = File(sourcePath);
+    await sourceFile.copy(permanentPath);
+
+    return permanentPath;
+  }
+
+  Future<void> _cropImage() async {
+    ColorScheme themeScheme = Theme.of(context).colorScheme;
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: _pickedFile!.path,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 100,
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: themeScheme.primary,
+            toolbarWidgetColor: themeScheme.onPrimary,
+            initAspectRatio: CropAspectRatioPresetCustom(),
+            lockAspectRatio: true,
+            aspectRatioPresets: [
+              CropAspectRatioPresetCustom(),
+            ],
+            hideBottomControls: true),
+        IOSUiSettings(
+            title: 'Cropper',
+            aspectRatioLockEnabled: true,
+            aspectRatioPresets: [
+              CropAspectRatioPresetCustom(),
+            ],
+            aspectRatioPickerButtonHidden: true),
+        WebUiSettings(
+          context: context,
+          presentStyle: WebPresentStyle.dialog,
+          size: const CropperSize(
+            width: 520,
+            height: 780,
+          ),
+        ),
+      ],
+    );
+    if (croppedFile != null) {
+      final String permanentPath =
+          await _saveImagePermanently(croppedFile.path);
+
+      setState(() {
+        _croppedFile = croppedFile;
+        _savedImagePath = permanentPath; // Stocker le chemin permanent
+      });
+    }
+  }
+
+  Future<void> _uploadImage({String source = "gallery"}) async {
+    final pickedFile = await ImagePicker().pickImage(
+        source: source == "gallery" ? ImageSource.gallery : ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        _pickedFile = pickedFile;
+      });
+    }
+    _cropImage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +214,10 @@ class _RecipeFormState extends State<RecipeForm> {
               },
               child: const Text('Upload Image'),
             ),
+            CropperBody(
+                croppedFile: _croppedFile,
+                onUploadFromGallery: () => _uploadImage(source: "gallery"),
+                onUploadFromCamera: () => _uploadImage(source: "camera")),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
@@ -131,6 +228,9 @@ class _RecipeFormState extends State<RecipeForm> {
                     Recipe nouvelleRecette = Recipe(
                       id: widget.widget.recette.id,
                       name: nameController.text,
+                      image: _savedImagePath ??
+                          widget.widget.recette
+                              .image, // Utiliser le chemin permanent
                       summary: descriptionController.text,
                       recipeLink: linkController.text,
                       servings: widget.widget.recette.servings,

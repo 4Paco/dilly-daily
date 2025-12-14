@@ -1,3 +1,5 @@
+import 'dart:io' show File;
+
 import 'package:flutter/material.dart';
 
 class CalendarRecipePreview extends StatelessWidget {
@@ -48,9 +50,14 @@ class CalendarRecipePreview extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    imgDisplayed, // Ensures the image covers the button
-                  ),
+                  child: img.isEmpty
+                      ? Image.asset(
+                          imgDisplayed //imgDisplayed, // Ensures the image covers the button
+                          )
+                      : Image.file(
+                          File(imgDisplayed),
+                          height: 200,
+                        ),
                 ),
               ),
             ),

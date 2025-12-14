@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:http/http.dart' as http;
 
-class Ingredients extends Iterable with Iterator {
+class Ingredients extends Iterable implements Iterator {
   Map<String, dynamic> _dico = {};
   final List<String> ingredientCategories = [
     "Produce",

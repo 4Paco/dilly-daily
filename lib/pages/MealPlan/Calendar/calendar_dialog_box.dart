@@ -1,4 +1,6 @@
+import 'dart:io' show File;
 import 'dart:math' as math;
+
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
@@ -49,9 +51,9 @@ class CalendarDialogBox extends StatelessWidget {
     }
 
     var imgDisplayed = recipesDict[recipeKey]!.image;
-    if (imgDisplayed.isEmpty) {
-      imgDisplayed = "assets/image/meals/placeholder.jpg";
-    }
+    //if (imgDisplayed.isEmpty) {
+    //  imgDisplayed = "assets/image/meals/placeholder.jpg";
+    //}
 
     return Padding(
       padding: EdgeInsets.only(
@@ -74,9 +76,14 @@ class CalendarDialogBox extends StatelessWidget {
                     fit: BoxFit.fill,
                     clipBehavior: Clip.hardEdge,
                     child: Stack(children: [
-                      Image.asset(
-                        imgDisplayed, // Ensures the image covers the button
-                      ),
+                      imgDisplayed.isEmpty
+                          ? Image.asset(
+                              "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
+                              )
+                          : Image.file(
+                              File(imgDisplayed),
+                              height: 200,
+                            ),
                       Center(
                         child: Container(
                           width: 3535,

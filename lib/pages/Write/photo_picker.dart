@@ -22,7 +22,6 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
   }
 
   dynamic _pickImageError;
-  bool isVideo = false;
 
   String? _retrieveDataError;
 
@@ -101,33 +100,48 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
       return retrieveError;
     }
     if (_mediaFileList != null) {
-      return Semantics(
-        label: 'image_picker_example_picked_images',
-        child: ListView.builder(
-          key: UniqueKey(),
-          itemBuilder: (BuildContext context, int index) {
-            // Why network for web?
-            // See https://pub.dev/packages/image_picker_for_web#limitations-on-the-web-platform
-            return Semantics(
-              label: 'image_picker_example_picked_image',
-              child: kIsWeb
-                  ? Image.network(_mediaFileList![index].path)
-                  : Image.file(
-                      File(_mediaFileList![index].path),
-                      errorBuilder: (
-                        BuildContext context,
-                        Object error,
-                        StackTrace? stackTrace,
-                      ) {
-                        return const Center(
-                          child: Text('This image type is not supported'),
-                        );
-                      },
-                    ),
-            );
-          },
-          itemCount: _mediaFileList!.length,
-        ),
+      return Column(
+        children: [
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: kIsWeb
+                ? Image.network(_mediaFileList![0].path)
+                : Image.file(
+                    File(_mediaFileList![0].path),
+                    errorBuilder: (
+                      BuildContext context,
+                      Object error,
+                      StackTrace? stackTrace,
+                    ) {
+                      return const Center(
+                        child: Text('This image type is not supported'),
+                      );
+                    },
+                  ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _onImageButtonPressed(ImageSource.gallery,
+                        context: context);
+                  },
+                  child: Icon(Icons.photo),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _onImageButtonPressed(ImageSource.camera, context: context);
+                },
+                child: const Icon(Icons.camera_alt),
+              ),
+            ],
+          )
+        ],
       );
     } else if (_pickImageError != null) {
       return Text(
@@ -135,15 +149,36 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
         textAlign: TextAlign.center,
       );
     } else {
-      return const Text(
-        'You have not yet picked an image.',
-        textAlign: TextAlign.center,
+      return Column(
+        children: [
+          const Text(
+            'You have not yet picked an image.',
+            textAlign: TextAlign.center,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _onImageButtonPressed(ImageSource.gallery,
+                        context: context);
+                  },
+                  child: Icon(Icons.photo),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _onImageButtonPressed(ImageSource.camera, context: context);
+                },
+                child: const Icon(Icons.camera_alt),
+              ),
+            ],
+          )
+        ],
       );
     }
-  }
-
-  Widget _handlePreview() {
-    return _previewImages();
   }
 
   Future<void> retrieveLostData() async {
@@ -152,7 +187,6 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
       return;
     }
     if (response.file != null) {
-      isVideo = false;
       setState(() {
         if (response.files == null) {
           _setImageFileListFromFile(response.file);
@@ -169,86 +203,38 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title!)),
-      body: Center(
-        child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
-            ? FutureBuilder<void>(
-                future: retrieveLostData(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<void> snapshot,
-                ) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
+      body: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+          ? FutureBuilder<void>(
+              future: retrieveLostData(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<void> snapshot,
+              ) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return const Text(
+                      'You have not yet picked an image.',
+                      textAlign: TextAlign.center,
+                    );
+                  case ConnectionState.done:
+                    return _previewImages();
+                  case ConnectionState.active:
+                    if (snapshot.hasError) {
+                      return Text(
+                        'Pick image/video error: ${snapshot.error}}',
+                        textAlign: TextAlign.center,
+                      );
+                    } else {
                       return const Text(
                         'You have not yet picked an image.',
                         textAlign: TextAlign.center,
                       );
-                    case ConnectionState.done:
-                      return _handlePreview();
-                    case ConnectionState.active:
-                      if (snapshot.hasError) {
-                        return Text(
-                          'Pick image/video error: ${snapshot.error}}',
-                          textAlign: TextAlign.center,
-                        );
-                      } else {
-                        return const Text(
-                          'You have not yet picked an image.',
-                          textAlign: TextAlign.center,
-                        );
-                      }
-                  }
-                },
-              )
-            : _handlePreview(),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Semantics(
-            label: 'image_picker_example_from_gallery',
-            child: FloatingActionButton(
-              onPressed: () {
-                isVideo = false;
-                _onImageButtonPressed(ImageSource.gallery, context: context);
+                    }
+                }
               },
-              heroTag: 'image0',
-              tooltip: 'Pick image from gallery',
-              child: const Icon(Icons.photo),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                isVideo = false;
-                _onImageButtonPressed(
-                  ImageSource.gallery,
-                  context: context,
-                  allowMultiple: true,
-                );
-              },
-              heroTag: 'image1',
-              tooltip: 'Pick multiple images',
-              child: const Icon(Icons.photo_library),
-            ),
-          ),
-          if (_picker.supportsImageSource(ImageSource.camera))
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  isVideo = false;
-                  _onImageButtonPressed(ImageSource.camera, context: context);
-                },
-                heroTag: 'image2',
-                tooltip: 'Take a photo',
-                child: const Icon(Icons.camera_alt),
-              ),
-            ),
-        ],
-      ),
+            )
+          : _previewImages(),
     );
   }
 

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:path_provider/path_provider.dart';
 
-class MyRecipes extends Iterable with Iterator {
+class MyRecipes extends Iterable implements Iterator {
   Map<String, Recipe> _recipesDict = {};
   String _name = "";
   String recipeFile;
