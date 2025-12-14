@@ -1,8 +1,10 @@
 import 'dart:io' show Directory, File;
+import 'dart:ui' show lerpDouble;
 
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/Recipe.dart';
+import 'package:dilly_daily/models/Step.dart' show Step, StepType;
 import 'package:dilly_daily/models/recipes_dico.dart';
 import 'package:dilly_daily/models/ui/category_title_bloc.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
@@ -10,7 +12,8 @@ import 'package:dilly_daily/pages/Write/ingredient_element.dart';
 import 'package:dilly_daily/pages/Write/input_ingredient.dart'
     show InputIngredient;
 import 'package:dilly_daily/pages/Write/photo_cropper.dart';
-import 'package:flutter/material.dart';
+import 'package:dilly_daily/pages/Write/step_editor.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,8 +45,12 @@ class _RecipeFormState extends State<RecipeForm> {
   late final TextEditingController linkController;
 
   late bool isDishTypeExpanded;
-  bool isIngredientExpanded = true; // Track whether the section is expanded
-  bool _isAddingIngredient = false; // Nouvel état pour contrôler l'affichage
+  late bool isIngredientExpanded;
+  late bool isStepExpanded; // Track whether the section is expanded
+
+  bool _isAddingIngredient = false;
+  bool _isAddingStep = false; // Nouvel état pour contrôler l'affichage
+  int? _editingStepIndex;
 
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
@@ -51,6 +58,7 @@ class _RecipeFormState extends State<RecipeForm> {
 
   late Map<String, double> _tempIngredients;
   late List<String> _tempDishTypes;
+  late List<Step> _tempSteps;
 
   @override
   void initState() {
@@ -65,7 +73,16 @@ class _RecipeFormState extends State<RecipeForm> {
     _tempIngredients =
         Map<String, double>.from(widget.widget.recette.ingredients);
     _tempDishTypes = List<String>.from(widget.widget.recette.dishTypes);
+    _tempSteps = widget.widget.recette.steps
+        .map((step) => Step(
+              description: step.description,
+              duration: step.duration,
+              type: step.type,
+            ))
+        .toList();
     isDishTypeExpanded = _tempDishTypes.isEmpty;
+    isIngredientExpanded = _tempIngredients.isEmpty;
+    isStepExpanded = _tempSteps.isEmpty;
     //
     // Charger l'image existante si en mode édition
     if (widget.widget.recette.image.isNotEmpty) {
@@ -89,7 +106,7 @@ class _RecipeFormState extends State<RecipeForm> {
   //    String? id,
   //    ok this.summary = "",
   //    this.steps = const [],
-  //    this.ingredients = const {},
+  //    ok this.ingredients = const {},
   //    this.personalized = "Nope", //maybe mettre le "globalDict" id ici
   //    ok this.recipeLink = "",
   //    ok this.dishTypes = const ["Meal"],
@@ -184,6 +201,8 @@ class _RecipeFormState extends State<RecipeForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            //
+            // Title Display
             TextField(
               controller: nameController,
               themeScheme: themeScheme,
@@ -195,7 +214,7 @@ class _RecipeFormState extends State<RecipeForm> {
               validation: true,
             ),
             //
-            //Photo + title + brief + link display
+            //Photo + brief + link display
             Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,55 +377,57 @@ class _RecipeFormState extends State<RecipeForm> {
                                 }
                                 setState(() {});
                               }),
-                        if (!_isAddingIngredient)
-                          (TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _isAddingIngredient = true;
-                              });
-                            },
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.add_circle_outline,
-                                size: 25,
-                              ),
-                              title: Row(
-                                children: [
-                                  Text("Add ingredient"),
-                                ],
-                              ),
-                            ),
-                          ))
-                        else
-                          Column(
-                            children: [
-                              InputIngredient(
-                                add: (String selection) {
-                                  _tempIngredients[selection] = 0;
-                                  setState(() {
-                                    _isAddingIngredient =
-                                        false; // Retour au bouton après ajout
-                                  });
-                                },
-                                onCancel: () {
-                                  setState(() {
-                                    _isAddingIngredient = false;
-                                  });
-                                },
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isAddingIngredient = false;
-                                  });
-                                },
-                                child: Text("Cancel",
-                                    style: TextStyle(color: themeScheme.error)),
-                              ),
-                            ],
-                          ),
                       ]),
                 ],
+                if (!_isAddingIngredient)
+                  (TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _isAddingIngredient = true;
+                      });
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.add_circle_outline,
+                        size: 25,
+                      ),
+                      title: Row(
+                        children: [
+                          Text("Add ingredient"),
+                        ],
+                      ),
+                      iconColor: themeScheme.onTertiaryFixedVariant,
+                      textColor: themeScheme.onTertiaryFixedVariant,
+                    ),
+                  ))
+                else
+                  Column(
+                    children: [
+                      InputIngredient(
+                        add: (String selection) {
+                          _tempIngredients[selection] = 0;
+                          setState(() {
+                            _isAddingIngredient =
+                                false; // Retour au bouton après ajout
+                          });
+                        },
+                        onCancel: () {
+                          setState(() {
+                            _isAddingIngredient = false;
+                          });
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _isAddingIngredient = false;
+                          });
+                        },
+                        child: Text("Cancel",
+                            style: TextStyle(color: themeScheme.error)),
+                      ),
+                    ],
+                  ),
               ]),
             ] else
               Wrap(
@@ -422,6 +443,257 @@ class _RecipeFormState extends State<RecipeForm> {
                 }).toList(),
               ),
             //
+            // Section Steps
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isStepExpanded = !isStepExpanded;
+                });
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CategoryTitleBloc(cat: "Steps"),
+                  Icon(
+                    isStepExpanded
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    size: 30,
+                    color: themeScheme.tertiary,
+                  ),
+                ],
+              ),
+            ),
+
+            if (isStepExpanded) ...[
+              // Liste des steps avec réorganisation
+              if (_tempSteps.isNotEmpty)
+                ReorderableListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _tempSteps.length,
+                  proxyDecorator: (child, index, animation) {
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (BuildContext context, Widget? child) {
+                        final double animValue =
+                            Curves.easeInOut.transform(animation.value);
+                        final double elevation = lerpDouble(0, 6, animValue)!;
+                        final double scale = lerpDouble(1, 1.02, animValue)!;
+
+                        return Transform.scale(
+                          scale: scale,
+                          child: Material(
+                            elevation: elevation,
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(
+                                  (themeScheme.tertiary.r * 255).floor(),
+                                  (themeScheme.tertiary.g * 255).floor(),
+                                  (themeScheme.tertiary.b * 255).floor(),
+                                  0.7,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: themeScheme.primary,
+                                  width: 2,
+                                ),
+                              ),
+                              child: child,
+                            ),
+                          ),
+                        );
+                      },
+                      child: child,
+                    );
+                  },
+                  onReorder: (oldIndex, newIndex) {
+                    setState(() {
+                      if (newIndex > oldIndex) {
+                        newIndex -= 1;
+                      }
+                      final step = _tempSteps.removeAt(oldIndex);
+                      _tempSteps.insert(newIndex, step);
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    final step = _tempSteps[index];
+                    if (_editingStepIndex == index) {
+                      return Container(
+                        key: ValueKey(step.hashCode),
+                        child: StepEditor(
+                          step: step, // Passer le step existant
+                          onSave: (editedStep) {
+                            setState(() {
+                              _tempSteps[index] =
+                                  editedStep; // Remplacer le step
+                              _editingStepIndex = null; // Fermer l'éditeur
+                            });
+                          },
+                          onCancel: () {
+                            setState(() {
+                              _editingStepIndex =
+                                  null; // Fermer sans sauvegarder
+                            });
+                          },
+                        ),
+                      );
+                    }
+
+                    return Card(
+                      key: ValueKey(
+                          step.hashCode), // Important pour ReorderableListView
+                      margin: EdgeInsets.fromLTRB(5, 4, 16, 4),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(4, 4, 0, 4),
+                        selectedTileColor: themeScheme.onTertiaryFixed,
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.drag_handle), // Icône pour drag
+                            SizedBox(width: 6),
+                            CircleAvatar(
+                              backgroundColor: step.type == StepType.preparation
+                                  ? themeScheme.primaryContainer
+                                  : themeScheme.tertiaryContainer,
+                              child: Text('${index + 1}'),
+                            ),
+                          ],
+                        ),
+                        title: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _editingStepIndex = index;
+                              });
+                            },
+                            child: Text(step.description)),
+                        subtitle: Text(
+                            '${step.type.name} • ${step.duration!.inMinutes} min'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: themeScheme.error),
+                          onPressed: () {
+                            setState(() {
+                              _tempSteps.removeAt(index);
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+
+              // Bouton ou formulaire d'ajout
+              if (_editingStepIndex == null) ...[
+                if (!_isAddingStep)
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _isAddingStep = true;
+                      });
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.add_circle_outline, size: 25),
+                      title: Text("Add step"),
+                    ),
+                  )
+                else
+                  StepEditor(
+                    onSave: (step) {
+                      setState(() {
+                        _tempSteps.add(step);
+                        _isAddingStep = false;
+                      });
+                    },
+                    onCancel: () {
+                      setState(() {
+                        _isAddingStep = false;
+                      });
+                    },
+                  ),
+              ],
+            ],
+
+            //
+            // Steps display
+            //TextButton(
+            //  onPressed: () {
+            //    setState(() {
+            //      isStepExpanded = !isStepExpanded; // Toggle visibility
+            //    });
+            //  },
+            //  child: Row(
+            //    crossAxisAlignment: CrossAxisAlignment.end,
+            //    children: [
+            //      CategoryTitleBloc(cat: "Steps"),
+            //      Icon(
+            //        isStepExpanded
+            //            ? Icons.keyboard_arrow_down_rounded
+            //            : Icons.keyboard_arrow_up_rounded,
+            //        size: 30,
+            //        color: themeScheme.tertiary,
+            //      ),
+            //    ],
+            //  ),
+            //),
+            //if (isStepExpanded) ...[
+            //  Column(children: [
+            //    if (_tempSteps.isNotEmpty) ...[
+            //      Column(
+            //          //Forbidden ingredients bloc
+            //          mainAxisSize: MainAxisSize.min,
+            //          children: [
+            //            for (var step in _tempSteps)
+            //              StepElement(
+            //                  initialStep: step,
+            //                  ingredient: "",
+            //                  onPressed: () =>
+            //                      {_tempSteps.remove(step), setState(() {})},
+            //                  onChanged: (val) {
+            //                    step = step.copy(description: val);
+            //                    setState(() {});
+            //                  }),
+            //          ]),
+            //    ],
+            //    if (!_isAddingIngredient)
+            //      (TextButton(
+            //        onPressed: () {
+            //          setState(() {
+            //            _isAddingIngredient = true;
+            //          });
+            //        },
+            //        child: ListTile(
+            //          leading: Icon(
+            //            Icons.add_circle_outline,
+            //            size: 25,
+            //          ),
+            //          title: Row(
+            //            children: [
+            //              Text("Add step"),
+            //            ],
+            //          ),
+            //          iconColor: themeScheme.onTertiaryFixedVariant,
+            //          textColor: themeScheme.onTertiaryFixedVariant,
+            //        ),
+            //      ))
+            //    else
+            //      Column(
+            //        children: [
+            //          ListTile(title: Text("Empty")),
+            //          TextButton(
+            //            onPressed: () {
+            //              setState(() {
+            //                _isAddingIngredient = false;
+            //              });
+            //            },
+            //            child: Text("Cancel",
+            //                style: TextStyle(color: themeScheme.error)),
+            //          ),
+            //        ],
+            //      ),
+            //  ]),
+            //],
+            ////
             //Save Button
             //
             Padding(
@@ -441,6 +713,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         summary: descriptionController.text,
                         recipeLink: linkController.text,
                         ingredients: _tempIngredients,
+                        steps: _tempSteps,
                         servings: widget.widget.recette.servings,
                         dishTypes: _tempDishTypes,
                         personalized: widget.widget.recette.personalized,

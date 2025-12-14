@@ -51,7 +51,10 @@ class Recipe {
     return {
       'id': id,
       'name': name,
+      'recipeLink': recipeLink,
       'image': image,
+      'servings': servings,
+      'dishTypes': dishTypes,
       'personalized': personalized,
       'steps': steps.map((s) => s.toJson()).toList(),
       'ingredients': ingredients,

@@ -92,7 +92,6 @@ class MyRecipes extends Iterable implements Iterator {
   }
 
   Future<void> updateJson() async {
-    print("updating $_name JSON");
     final filePath = await _localFile;
     final json =
         _recipesDict.map((key, value) => MapEntry(key, value.toJson()));
@@ -111,6 +110,7 @@ class MyRecipes extends Iterable implements Iterator {
     //int newKey = recette.hashCode;
     //_recipesDict[newKey] = recette;
     _recipesDict[key] = recette;
+    print(_recipesDict[key]!.toJson());
     updateJson();
     print("${recette.name} has been added to $_name");
   }

@@ -29,7 +29,7 @@ class _EditSubPageState extends State<EditSubPage> {
           pinned: true,
           centerTitle: true,
           title: Text(
-            "${widget.recette.name == "" ? 'Edit' : 'Create'} Recipe",
+            "${widget.recette.name == "" ? 'Create' : 'Edit'} Recipe",
             style: TextStyle(fontWeight: FontWeight.w900),
           )),
       PinnedHeaderSliver(
