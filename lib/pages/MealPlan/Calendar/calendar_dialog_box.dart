@@ -26,7 +26,7 @@ class CalendarDialogBox extends StatelessWidget {
   final void Function(int) onModifyMeals;
   final void Function(String) onStartCooking;
   final double horizontalPadding = 50.0;
-  final double verticalPadding = 150;
+  final double verticalPadding = 166.5;
   final double verticalOffset = 50;
   final bool isAddedToGroceries;
   final int mealsModifier;
@@ -72,27 +72,28 @@ class CalendarDialogBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               child: SizedBox(
                   height: 800, //overflowing, but no error so it works
-                  child: FittedBox(
-                    fit: BoxFit.fill,
-                    clipBehavior: Clip.hardEdge,
-                    child: Stack(children: [
-                      imgDisplayed.isEmpty
-                          ? Image.asset(
-                              "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
-                              )
-                          : Image.file(
+                  child: Stack(children: [
+                    imgDisplayed.isEmpty
+                        ? FittedBox(
+                            fit: BoxFit.fill,
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(
+                                "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
+                                ),
+                          )
+                        : Expanded(
+                            child: Image.file(
                               File(imgDisplayed),
-                              height: 200,
                             ),
-                      Center(
-                        child: Container(
-                          width: 3535,
-                          height: 5300,
-                          color: Color.fromARGB(100, 0, 0, 0),
-                        ),
-                      )
-                    ]),
-                  ))),
+                          ),
+                    Center(
+                      child: Container(
+                        width: 3535,
+                        height: 5300,
+                        color: Color.fromARGB(100, 0, 0, 0),
+                      ),
+                    )
+                  ]))),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -28,6 +28,10 @@ class Recipe {
       this.image = ""})
       : id = id ?? Uuid().v4();
 
+  static String generateId() {
+    return Uuid().v4();
+  }
+
   // named constructor
   Recipe.fromJson(String jsonId, Map<String, dynamic> json)
       : id = jsonId,

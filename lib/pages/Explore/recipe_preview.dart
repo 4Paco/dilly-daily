@@ -11,6 +11,7 @@ class RecipePreview extends StatelessWidget {
     required this.img,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
     this.padding = const EdgeInsets.all(15.0),
   });
   final String recipeKey;
@@ -18,7 +19,8 @@ class RecipePreview extends StatelessWidget {
   final String img;
 
   final void Function(String) onToggleMealPlan;
-  final void Function(String) onToggleFavorite; // Callback function type
+  final void Function(String) onToggleFavorite;
+  final void Function(String) onEditRecipe; // Callback function type
   final EdgeInsetsGeometry padding;
 
   @override
@@ -55,6 +57,10 @@ class RecipePreview extends StatelessWidget {
                     onToggleFavorite: (recipeKey) {
                       onToggleFavorite(recipeKey);
                       setState(() {}); // Rebuild the dialog to update the icon
+                    },
+                    onEditRecipe: (recipeKey) {
+                      onEditRecipe(recipeKey);
+                      setState(() {});
                     },
                   );
                 },

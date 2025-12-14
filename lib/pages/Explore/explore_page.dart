@@ -5,10 +5,12 @@ import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Explore/favorite_carousel.dart';
 import 'package:dilly_daily/pages/Explore/recipe_preview.dart';
+import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
 List<String> generateSuggestions() {
-  return recipesDict.toList();
+  print("Suggestioooon");
+  return recipesDict.toList().take(6).toList();
 }
 
 class ExplorePage extends StatefulWidget {
@@ -49,6 +51,17 @@ class _ExplorePageState extends State<ExplorePage> {
             recipeKey: recipeKey);
       }
     });
+  }
+
+  void editRecipe(String recipeKey) async {
+    Navigator.pop(context);
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => EditSubPage(recipe: recipesDict[recipeKey]),
+      ),
+    );
+    setState(() {});
   }
 
   @override
@@ -122,6 +135,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   FavoriteCarousel(
                     onToggleMealPlan: toggleMealPlan,
                     onToggleFavorite: toggleFavorite,
+                    onEditRecipe: editRecipe,
                   )
                 ],
                 BlocTitle(texte: "Suggestions"),
@@ -140,6 +154,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         img: recipesDict[recipeKey]!.image,
                         onToggleMealPlan: toggleMealPlan,
                         onToggleFavorite: toggleFavorite,
+                        onEditRecipe: editRecipe,
                       )
                     ]
                   ],

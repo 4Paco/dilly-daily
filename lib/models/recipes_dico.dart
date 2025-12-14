@@ -9,8 +9,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
 class RecipesDico extends Iterable implements Iterator {
-  Map<String, Recipe> _recipesDict = {};
+  Map<String, Recipe> databaseDict = {};
   MyRecipes theirRecipes = myRecipes;
+
+  Function? onMyRecipesChanged;
+
+  RecipesDico({bool fetch = true}) {
+    _bigDict = {};
+    if (fetch) {
+      load();
+    }
+    theirRecipes.addListener(() {
+      _bigDict = {};
+      for (String id in databaseDict.keys) {
+        _bigDict[id] = databaseDict[id]!;
+      }
+      reloadTheirRecipes();
+    });
+  }
+
+  Map<String, Recipe> _bigDict = {};
 
   bool _isLoaded = false;
   static List<String> dishTypes = [
@@ -30,7 +48,7 @@ class RecipesDico extends Iterable implements Iterator {
     "drink"
   ];
 
-  int get limit => _recipesDict.keys.length;
+  int get limit => _bigDict.keys.length;
   int i = 0;
   @override
   int get current => i;
@@ -41,14 +59,7 @@ class RecipesDico extends Iterable implements Iterator {
   }
 
   @override
-  Iterator get iterator => _recipesDict.keys.iterator;
-
-  RecipesDico({bool fetch = true}) {
-    _recipesDict = {};
-    if (fetch) {
-      load();
-    }
-  }
+  Iterator get iterator => _bigDict.keys.iterator;
 
   Future<String> fetchRecipes() async {
     final response = await http
@@ -90,12 +101,14 @@ class RecipesDico extends Iterable implements Iterator {
         }
       }
 
-      _recipesDict[id] = recipe;
+      databaseDict[id] = recipe;
     }
 
-    for (String id in theirRecipes.toList()) {
-      _recipesDict[id] = theirRecipes[id]!;
+    for (String id in databaseDict.keys) {
+      _bigDict[id] = databaseDict[id]!;
     }
+    await theirRecipes.isLoaded();
+    reloadTheirRecipes();
 
     _isLoaded = true;
   }
@@ -107,8 +120,8 @@ class RecipesDico extends Iterable implements Iterator {
   }
 
   Recipe? operator [](String recipe) {
-    if (_recipesDict.containsKey(recipe)) {
-      return _recipesDict[recipe];
+    if (_bigDict.containsKey(recipe)) {
+      return _bigDict[recipe];
     } else {
       return null;
     }
@@ -116,23 +129,32 @@ class RecipesDico extends Iterable implements Iterator {
 
   @override
   List<String> toList({bool growable = true}) {
-    return _recipesDict.keys.toList(growable: growable);
+    return _bigDict.keys.toList(growable: growable);
   }
 
   void reloadTheirRecipes() {
     //_recipesDict.removeWhere((key, value) => key < 0);
-
-    for (String id in theirRecipes.toList()) {
-      _recipesDict[id] = theirRecipes[id]!;
+    print("myRecipe reload in bigDict");
+    for (String id in theirRecipes.keys) {
+      _bigDict[id] = theirRecipes[id]!;
     }
+    theirRecipes.values
+        .where((recipe) => recipe.personalized != 'Nope')
+        .forEach((recipe) {
+      _bigDict[recipe.personalized] = recipe;
+    });
   }
 
   Recipe getRecipe(String recipeId) {
-    if (_recipesDict.containsKey(recipeId)) {
-      return _recipesDict[recipeId]!;
+    if (_bigDict.containsKey(recipeId)) {
+      return _bigDict[recipeId]!;
     } else {
       throw ArgumentError('No such recipe with this ID. getRecipe aborted.');
     }
+  }
+
+  bool databaseContains(String recipeId) {
+    return databaseDict.keys.contains(recipeId);
   }
 
   void addRecipe(String recipeKey, String name,

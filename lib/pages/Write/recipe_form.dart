@@ -3,16 +3,17 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
+import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/Step.dart' show Step, StepType;
 import 'package:dilly_daily/models/recipes_dico.dart';
 import 'package:dilly_daily/models/ui/category_title_bloc.dart';
-import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
-import 'package:dilly_daily/pages/Write/ingredient_element.dart';
-import 'package:dilly_daily/pages/Write/input_ingredient.dart'
+import 'package:dilly_daily/pages/Write/Modules/ingredient_element.dart';
+import 'package:dilly_daily/pages/Write/Modules/input_ingredient.dart'
     show InputIngredient;
-import 'package:dilly_daily/pages/Write/photo_cropper.dart';
-import 'package:dilly_daily/pages/Write/step_editor.dart';
+import 'package:dilly_daily/pages/Write/Modules/photo_cropper.dart';
+import 'package:dilly_daily/pages/Write/Modules/step_editor.dart';
+import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -718,7 +719,9 @@ class _RecipeFormState extends State<RecipeForm> {
                         dishTypes: _tempDishTypes,
                         personalized: widget.widget.recette.personalized,
                       );
+
                       myRecipes.addRecipe(nouvelleRecette);
+                      recipesDict.reloadTheirRecipes();
                       Navigator.pop(context);
                     }
                   },

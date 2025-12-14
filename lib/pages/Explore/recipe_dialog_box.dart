@@ -10,11 +10,13 @@ class RecipeDialogBox extends StatelessWidget {
     required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
   });
 
   final String recipeKey;
   final void Function(String) onToggleMealPlan;
   final void Function(String) onToggleFavorite;
+  final void Function(String) onEditRecipe;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
@@ -62,6 +64,14 @@ class RecipeDialogBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CloseButton(),
+                IconButton(
+                    onPressed: () {
+                      onEditRecipe(recipeKey);
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      size: 30,
+                    )),
                 IconButton(
                     onPressed: () {
                       onToggleFavorite(recipeKey);

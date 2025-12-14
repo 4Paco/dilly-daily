@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dilly_daily/models/Recipe.dart';
+import 'package:flutter/material.dart' show VoidCallback;
 import 'package:path_provider/path_provider.dart';
 
 class MyRecipes extends Iterable implements Iterator {
@@ -52,6 +53,25 @@ class MyRecipes extends Iterable implements Iterator {
   List<String> toList({bool growable = true}) {
     return _recipesDict.keys.toList(growable: growable);
   }
+
+  final List<VoidCallback> _listeners = [];
+
+  void addListener(VoidCallback listener) {
+    _listeners.add(listener);
+  }
+
+  void removeListener(VoidCallback listener) {
+    _listeners.remove(listener);
+  }
+
+  void _notifyListeners() {
+    for (final listener in _listeners) {
+      listener();
+    }
+  }
+
+  Iterable<String> get keys => _recipesDict.keys;
+  Iterable<Recipe> get values => _recipesDict.values;
 
   // General json handling
   Future<void> load() async {
@@ -116,22 +136,14 @@ class MyRecipes extends Iterable implements Iterator {
   }
 
   void removeRecipe(String recipeKey) {
-    //print(
-    //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
     if (_recipesDict.containsKey(recipeKey)) {
       print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
       _recipesDict.remove(recipeKey);
+      _notifyListeners();
     } else {
       throw ArgumentError(
           "No such recipe in $_name with this ID $recipeKey: . Removal aborted");
     }
-    //if (_recipesDict.containsValue(recette)) {
-    //  _recipesDict.removeWhere((key, value) => value == recette);
-    //  print("${recette.name} has been removed from meal plan dict");
-    //} else {
-    //  throw ArgumentError(
-    //      "No such recipe in dict with this ID. Removal aborted");
-    //}
     updateJson();
   }
 }

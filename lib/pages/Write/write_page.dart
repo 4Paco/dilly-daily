@@ -3,6 +3,7 @@ import 'dart:io' show File;
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
+import 'package:dilly_daily/pages/Write/Modules/write_recipe_dialog_box.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,12 @@ class _WritePageState extends State<WritePage> {
 
   void toggleFavorite(String recipeKey) {
     setState(() {
-      if (favoriteRecipes.contains(recipeKey)) {
+      String keyFavourite = recipeKey;
+      //if (myRecipes.contains(recipeKey) &&
+      //    myRecipes[recipeKey]?.personalized != "Nope") {
+      //  keyFavourite = myRecipes[recipeKey]!.personalized;
+      //}
+      if (favoriteRecipes.contains(keyFavourite)) {
         favoriteRecipes.remove(recipeKey);
       } else {
         favoriteRecipes.add(recipeKey);
@@ -74,7 +80,7 @@ class _WritePageState extends State<WritePage> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return OriginalRecipeDialogBox(
+            return WriteRecipeDialogBox(
               recipeKey: recipeKey,
               onToggleMealPlan: (recipeKey) {
                 toggleMealPlan(recipeKey);
@@ -147,11 +153,22 @@ class _WritePageState extends State<WritePage> {
               [
                 if (myRecipes.isNotEmpty) ...[
                   BlocTitle(texte: "Your original recipes"),
-                  WriteCarousel(showMealPlanDialog: showMealPlanDialog),
+                  WriteCarousel(
+                      showMealPlanDialog: showMealPlanDialog,
+                      personalized: "Nope"),
                 ] else
                   BlocTitle(
                       texte:
                           "You haven't added any custom ${isSmallScreen ? "\n" : ""}recipe yet !"),
+                if (myRecipes.values
+                    .where((recette) => recette.personalized != "Nope")
+                    .isNotEmpty) ...[
+                  BlocTitle(texte: "Your edited recipes"),
+                  WriteCarousel(
+                    showMealPlanDialog: showMealPlanDialog,
+                  ),
+                ]
+
                 //Row(
                 //  mainAxisSize: MainAxisSize.min,
                 //  children: [
@@ -183,11 +200,10 @@ class _WritePageState extends State<WritePage> {
 }
 
 class WriteCarousel extends StatelessWidget {
-  const WriteCarousel({
-    super.key,
-    required this.showMealPlanDialog,
-  });
+  const WriteCarousel(
+      {super.key, required this.showMealPlanDialog, this.personalized = ""});
   final void Function(BuildContext, String) showMealPlanDialog;
+  final String personalized;
 
   @override
   Widget build(BuildContext context) {
@@ -197,17 +213,21 @@ class WriteCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (String recipeKey in myRecipes) ...[
-            SizedBox(
-              width: 150,
-              child: RecipePreview(
-                  recipeKey: recipeKey,
-                  texte: myRecipes[recipeKey]!.name,
-                  img: myRecipes[recipeKey]!.image,
-                  showMealPlanDialog: showMealPlanDialog,
-                  padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
-            )
-          ]
+          ...myRecipes.keys.where(
+            (recipeKey) {
+              return personalized.isEmpty
+                  ? myRecipes[recipeKey]?.personalized != "Nope"
+                  : myRecipes[recipeKey]?.personalized == personalized;
+            },
+          ).map((recipeKey) => SizedBox(
+                width: 150,
+                child: RecipePreview(
+                    recipeKey: recipeKey,
+                    texte: myRecipes[recipeKey]!.name,
+                    img: myRecipes[recipeKey]!.image,
+                    showMealPlanDialog: showMealPlanDialog,
+                    padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
+              ))
         ],
       ),
     );
@@ -287,239 +307,6 @@ class RecipePreview extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class EmptyPreview extends StatelessWidget {
-  const EmptyPreview({
-    super.key,
-    this.padding = const EdgeInsets.all(4.0),
-  });
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: FilledButton(
-        style: ButtonStyle(
-          padding: WidgetStateProperty.all(EdgeInsets.all(50)),
-          backgroundColor:
-              WidgetStateProperty.all(Theme.of(context).colorScheme.tertiary),
-          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
-        onPressed: () {},
-        child: Text(""),
-      ),
-    );
-  }
-}
-
-class PlusMinusButton extends StatelessWidget {
-  const PlusMinusButton({
-    super.key,
-    required this.function,
-    required this.val,
-    required this.icondata,
-  });
-
-  final void Function(int) function;
-  final int val;
-  final IconData icondata;
-
-  @override
-  Widget build(BuildContext context) {
-    //var themeScheme = Theme.of(context).colorScheme;
-    return Padding(
-        padding: EdgeInsets.zero,
-        child: IconButton.filled(
-            padding: EdgeInsets.zero,
-            //style: ButtonStyle(
-            //    backgroundColor: WidgetStatePropertyAll(themeScheme.tertiary)),
-            onPressed: () {
-              function(val);
-            },
-            icon: Icon(
-              icondata,
-              size: 20,
-            )));
-  }
-}
-
-class OriginalRecipeDialogBox extends StatelessWidget {
-  OriginalRecipeDialogBox({
-    super.key,
-    required this.recipeKey,
-    required this.onToggleMealPlan,
-    required this.onToggleFavorite,
-    required this.onEditRecipe,
-    required this.onDeleteRecipe,
-  });
-
-  final String recipeKey;
-  final void Function(String) onToggleMealPlan;
-  final void Function(String) onToggleFavorite;
-  final void Function([String?]) onEditRecipe;
-  final void Function(String) onDeleteRecipe;
-  final double horizontalPadding = 50.0;
-  final double verticalPadding = 166;
-  final double verticalOffset = 50;
-
-  @override
-  Widget build(BuildContext context) {
-    final themeScheme = Theme.of(context).colorScheme;
-
-    IconData icon;
-    if (favoriteRecipes.contains(recipeKey)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    var imgDisplayed = myRecipes[recipeKey]!.image;
-    //if (imgDisplayed.isEmpty) {
-    //  imgDisplayed = "assets/image/meals/placeholder.jpg";
-    //}
-
-    return Padding(
-      padding: EdgeInsets.only(
-          top: verticalPadding - verticalOffset,
-          bottom: verticalPadding + verticalOffset,
-          right: horizontalPadding,
-          left: horizontalPadding),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: themeScheme.tertiaryContainer,
-            border:
-                BoxBorder.all(width: 2, color: Color.fromARGB(200, 0, 0, 0))),
-        child: Stack(children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(28),
-              child: SizedBox(
-                  height: 800, //overflowing, but no error so it works
-                  child: Stack(children: [
-                    imgDisplayed.isEmpty
-                        ? FittedBox(
-                            fit: BoxFit.fill,
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.asset(
-                                "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
-                                ),
-                          )
-                        : Expanded(
-                            child: Image.file(
-                              File(imgDisplayed),
-                            ),
-                          ),
-                    Center(
-                      child: Container(
-                        width: 3535,
-                        height: 5300,
-                        color: Color.fromARGB(100, 0, 0, 0),
-                      ),
-                    )
-                  ]))),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CloseButton(
-                    color: themeScheme.onPrimary,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        onToggleFavorite(recipeKey);
-                      },
-                      icon: Icon(
-                        icon,
-                        size: 30,
-                        color: themeScheme.tertiaryContainer,
-                      ))
-                ],
-              ),
-              Expanded(
-                child: Stack(children: [
-                  Text(
-                    myRecipes[recipeKey]!.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: themeScheme.tertiaryContainer),
-                    textAlign: TextAlign.center,
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        color: themeScheme.onPrimary,
-                        onPressed: () {
-                          onEditRecipe(recipeKey);
-                        },
-                        onLongPress: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => EditSubPage(
-                                recipe: myRecipes[recipeKey],
-                              ),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.edit)),
-                    TextButton(
-                        onPressed: () {},
-                        onLongPress: () {
-                          onDeleteRecipe(recipeKey);
-                          Navigator.of(context, rootNavigator: true).pop(true);
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                Future.delayed(Duration(seconds: 2), () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                });
-                                return AlertDialog(
-                                  title: Text(
-                                      "You successfully deleted the recipe !",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium),
-                                );
-                              });
-                        },
-                        child: Tooltip(
-                          message:
-                              "Long press to definitely delete this recipe",
-                          triggerMode: TooltipTriggerMode.tap,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Icon(
-                              Icons.delete_outline,
-                              size: 20,
-                            ),
-                          ),
-                        )),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ]),
       ),
     );
   }
