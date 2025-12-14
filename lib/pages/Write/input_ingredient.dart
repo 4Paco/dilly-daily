@@ -1,8 +1,9 @@
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:flutter/material.dart';
 
-class AutofillIngredient extends StatelessWidget {
-  AutofillIngredient({
+// ignore: must_be_immutable
+class InputIngredient extends StatelessWidget {
+  InputIngredient({
     super.key,
     required this.add,
     this.onCancel, // Nouveau paramètre optionnel
@@ -17,10 +18,10 @@ class AutofillIngredient extends StatelessWidget {
     var themeScheme = Theme.of(context).colorScheme;
     return Container(
       //Ingredients search bar
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: themeScheme.tertiaryFixed,
+        color: themeScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(25), // Rounded corners
       ),
       child: Autocomplete<String>(
@@ -35,6 +36,7 @@ class AutofillIngredient extends StatelessWidget {
                 .startsWith(textEditingValue.text.toLowerCase());
           }).cast<String>();
         },
+        optionsViewOpenDirection: OptionsViewOpenDirection.up,
         onSelected: (String selection) {
           valueKey =
               UniqueKey(); //reset the widget to make the typed-in content disappear
@@ -45,6 +47,7 @@ class AutofillIngredient extends StatelessWidget {
             FocusNode focusNode,
             VoidCallback onFieldSubmitted) {
           return TextField(
+            autofocus: true,
             controller: textEditingController,
             focusNode: focusNode,
             decoration: InputDecoration(

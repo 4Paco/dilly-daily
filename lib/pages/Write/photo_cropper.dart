@@ -77,9 +77,9 @@ class CropperBody extends StatelessWidget {
                     onPressed: onUploadFromGallery,
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(themeScheme.primary),
+                          WidgetStateProperty.all(themeScheme.primary),
                       foregroundColor:
-                          MaterialStateProperty.all(themeScheme.onPrimary),
+                          WidgetStateProperty.all(themeScheme.onPrimary),
                     ),
                     child: const Icon(Icons.photo),
                   ),
@@ -91,9 +91,9 @@ class CropperBody extends StatelessWidget {
                     onPressed: onUploadFromCamera,
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(themeScheme.primary),
+                          WidgetStateProperty.all(themeScheme.primary),
                       foregroundColor:
-                          MaterialStateProperty.all(themeScheme.onPrimary),
+                          WidgetStateProperty.all(themeScheme.onPrimary),
                     ),
                     child: const Icon(Icons.camera_alt),
                   ),

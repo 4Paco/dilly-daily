@@ -1,14 +1,26 @@
 import 'dart:io' show Directory, File;
 
+import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/recipes_dico.dart';
+import 'package:dilly_daily/models/ui/category_title_bloc.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
+import 'package:dilly_daily/pages/Write/ingredient_element.dart';
+import 'package:dilly_daily/pages/Write/input_ingredient.dart'
+    show InputIngredient;
 import 'package:dilly_daily/pages/Write/photo_cropper.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+
+extension StringExtension on String {
+  String capitalize() {
+    if (isEmpty) return this;
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+}
 
 class RecipeForm extends StatefulWidget {
   const RecipeForm({
@@ -29,9 +41,16 @@ class _RecipeFormState extends State<RecipeForm> {
   late final TextEditingController descriptionController;
   late final TextEditingController linkController;
 
+  late bool isDishTypeExpanded;
+  bool isIngredientExpanded = true; // Track whether the section is expanded
+  bool _isAddingIngredient = false; // Nouvel état pour contrôler l'affichage
+
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
   String? _savedImagePath; // Chemin permanent de l'image sauvegardée
+
+  late Map<String, double> _tempIngredients;
+  late List<String> _tempDishTypes;
 
   @override
   void initState() {
@@ -41,6 +60,13 @@ class _RecipeFormState extends State<RecipeForm> {
         TextEditingController(text: widget.widget.recette.summary);
     linkController =
         TextEditingController(text: widget.widget.recette.recipeLink);
+    //
+    // Créer des copies des données complexes
+    _tempIngredients =
+        Map<String, double>.from(widget.widget.recette.ingredients);
+    _tempDishTypes = List<String>.from(widget.widget.recette.dishTypes);
+    isDishTypeExpanded = _tempDishTypes.isEmpty;
+    //
     // Charger l'image existante si en mode édition
     if (widget.widget.recette.image.isNotEmpty) {
       _savedImagePath = widget.widget.recette.image;
@@ -58,17 +84,17 @@ class _RecipeFormState extends State<RecipeForm> {
     super.dispose();
   }
 
-  //Recipe(
-  //    {this.name = "",
+  //Recipe({
+  //    ok this.name = "",
   //    String? id,
-  //    this.summary = "",
+  //    ok this.summary = "",
   //    this.steps = const [],
   //    this.ingredients = const {},
-  //    this.personalized = "Nope",
-  //    this.recipeLink = "",
-  //    this.dishTypes = const ["Meal"],
+  //    this.personalized = "Nope", //maybe mettre le "globalDict" id ici
+  //    ok this.recipeLink = "",
+  //    ok this.dishTypes = const ["Meal"],
   //    this.servings = 1,
-  //    this.image = ""})
+  //    ok this.image = ""})
   //    : id = id ?? Uuid().v4();
   Future<String> _saveImagePermanently(String sourcePath) async {
     // Obtenir le répertoire de documents de l'application
@@ -150,102 +176,391 @@ class _RecipeFormState extends State<RecipeForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPhoneSized = MediaQuery.of(context).size.width < 600;
+    ColorScheme themeScheme = Theme.of(context).colorScheme;
     return Form(
       key: widget._formKey,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            TextFormField(
-              //Name
+            TextField(
               controller: nameController,
-              //initialValue: widget.widget.recette.name,
-              decoration: InputDecoration(
-                  hintText: (nameController.text == "")
-                      ? 'Name of the recipe'
-                      : nameController.text),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
+              themeScheme: themeScheme,
+              fillColor: themeScheme.surfaceContainer,
+              hintText: "Name of the recipe",
+              textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w700),
+              validation: true,
+            ),
+            //
+            //Photo + title + brief + link display
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CropperBody(
+                    croppedFile: _croppedFile,
+                    onUploadFromGallery: () => _uploadImage(source: "gallery"),
+                    onUploadFromCamera: () => _uploadImage(source: "camera")),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller: linkController,
+                        themeScheme: themeScheme,
+                        fillColor: themeScheme.surfaceContainerLow,
+                        hintText: 'Website link -if relevant',
+                        labelText: '(Website link)',
+                        textStyle: Theme.of(context).textTheme.bodyMedium!,
+                        multilignes: 1,
+                        validation: false,
+                      ),
+                      TextField(
+                        controller: descriptionController,
+                        themeScheme: themeScheme,
+                        fillColor: themeScheme.surfaceContainerLow,
+                        hintText: 'Short description',
+                        textStyle: Theme.of(context).textTheme.bodyMedium!,
+                        validation: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            //
+            // DishType Display
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isDishTypeExpanded = !isDishTypeExpanded; // Toggle visibility
+                });
               },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CategoryTitleBloc(cat: "Dish type(s)"),
+                  Icon(
+                    isDishTypeExpanded
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    size: 30,
+                    color: themeScheme.tertiary,
+                  ),
+                ],
+              ),
             ),
-            TextFormField(
-              //Description
-              controller: descriptionController,
-              //initialValue: widget.widget.recette.name,
-              decoration: const InputDecoration(hintText: 'Short description'),
-            ),
-            TextFormField(
-              //Link
-              controller: linkController,
-              //initialValue: widget.widget.recette.name,
-              decoration:
-                  const InputDecoration(labelText: 'Website link -if relevant'),
-            ),
-            Wrap(
-              //DishType
-              children: RecipesDico.dishTypes.map((dish) {
-                return ChoiceChip(
-                  label: Text(dish),
-                  selected: widget.widget.recette.dishTypes.contains(dish),
-                  onSelected: (selected) {
-                    setState(() {
-                      if (selected) {
-                        widget.widget.recette.dishTypes.add(dish);
-                      } else {
-                        widget.widget.recette.dishTypes.remove(dish);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                  setState(() {
-                    widget.widget.recette.image = pickedFile.path;
-                  });
-                }
+            isPhoneSized
+                ? GridView.count(
+                    // DishType
+                    padding: EdgeInsets.only(top: 10),
+                    crossAxisCount: 3, // Number of columns
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 2.5,
+                    shrinkWrap:
+                        true, // Ensures the grid doesn't expand infinitely
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disable scrolling
+                    children: RecipesDico.dishTypes.where((dish) {
+                      return isDishTypeExpanded ||
+                          _tempDishTypes.contains(dish);
+                    }).map((dish) {
+                      return ChoiceChip(
+                        label: Text(dish.capitalize()),
+                        selected: _tempDishTypes.contains(dish),
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) {
+                              _tempDishTypes.add(dish);
+                            } else {
+                              _tempDishTypes.remove(dish);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  )
+                : Wrap(
+                    // Computer-sized screen
+                    children: RecipesDico.dishTypes.where((dish) {
+                      return isDishTypeExpanded ||
+                          _tempDishTypes.contains(dish);
+                    }).map((dish) {
+                      return ChoiceChip(
+                        label: Text(dish.capitalize()),
+                        selected: _tempDishTypes.contains(dish),
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) {
+                              _tempDishTypes.add(dish);
+                            } else {
+                              _tempDishTypes.remove(dish);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+            //
+            // Ingredients display
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isIngredientExpanded =
+                      !isIngredientExpanded; // Toggle visibility
+                });
               },
-              child: const Text('Upload Image'),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CategoryTitleBloc(cat: "Ingredients"),
+                  Icon(
+                    isIngredientExpanded
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    size: 30,
+                    color: themeScheme.tertiary,
+                  ),
+                ],
+              ),
             ),
-            CropperBody(
-                croppedFile: _croppedFile,
-                onUploadFromGallery: () => _uploadImage(source: "gallery"),
-                onUploadFromCamera: () => _uploadImage(source: "camera")),
+            if (isIngredientExpanded) ...[
+              Column(children: [
+                if (_tempIngredients.isNotEmpty) ...[
+                  Column(
+                      //Forbidden ingredients bloc
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (var ingredient in _tempIngredients.keys)
+                          IngredientElement(
+                              initialValue:
+                                  _tempIngredients[ingredient].toString(),
+                              ingredient: ingredient,
+                              onPressed: () => {
+                                    _tempIngredients.remove(ingredient),
+                                    setState(() {})
+                                  },
+                              onChanged: (val) {
+                                try {
+                                  _tempIngredients[ingredient] =
+                                      double.parse(val);
+                                } catch (e) {
+                                  print(
+                                      "$val ne peut pas être converti en double: $e");
+                                }
+                                setState(() {});
+                              }),
+                        if (!_isAddingIngredient)
+                          (TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _isAddingIngredient = true;
+                              });
+                            },
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.add_circle_outline,
+                                size: 25,
+                              ),
+                              title: Row(
+                                children: [
+                                  Text("Add ingredient"),
+                                ],
+                              ),
+                            ),
+                          ))
+                        else
+                          Column(
+                            children: [
+                              InputIngredient(
+                                add: (String selection) {
+                                  _tempIngredients[selection] = 0;
+                                  setState(() {
+                                    _isAddingIngredient =
+                                        false; // Retour au bouton après ajout
+                                  });
+                                },
+                                onCancel: () {
+                                  setState(() {
+                                    _isAddingIngredient = false;
+                                  });
+                                },
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isAddingIngredient = false;
+                                  });
+                                },
+                                child: Text("Cancel",
+                                    style: TextStyle(color: themeScheme.error)),
+                              ),
+                            ],
+                          ),
+                      ]),
+                ],
+              ]),
+            ] else
+              Wrap(
+                children: _tempIngredients.keys.map((ing) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Chip(
+                      backgroundColor: themeScheme.tertiaryContainer,
+                      label: Text(
+                          "$ing: ${_tempIngredients[ing].toString().endsWith('.0') ? _tempIngredients[ing].toString().substring(0, _tempIngredients[ing].toString().length - 2) : _tempIngredients[ing]}${ingredientsDict[ing]!['unit']}"),
+                    ),
+                  );
+                }).toList(),
+              ),
+            //
+            //Save Button
+            //
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (widget._formKey.currentState!.validate()) {
-                    Recipe nouvelleRecette = Recipe(
-                      id: widget.widget.recette.id,
-                      name: nameController.text,
-                      image: _savedImagePath ??
-                          widget.widget.recette
-                              .image, // Utiliser le chemin permanent
-                      summary: descriptionController.text,
-                      recipeLink: linkController.text,
-                      servings: widget.widget.recette.servings,
-                      dishTypes: widget.widget.recette.dishTypes,
-                      personalized: widget.widget.recette.personalized,
-                    );
-                    myRecipes.addRecipe(nouvelleRecette);
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Submit'),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (widget._formKey.currentState!.validate()) {
+                      Recipe nouvelleRecette = Recipe(
+                        id: widget.widget.recette.id,
+                        name: nameController.text,
+                        image: _savedImagePath ??
+                            widget.widget.recette
+                                .image, // Utiliser le chemin permanent
+                        summary: descriptionController.text,
+                        recipeLink: linkController.text,
+                        ingredients: _tempIngredients,
+                        servings: widget.widget.recette.servings,
+                        dishTypes: _tempDishTypes,
+                        personalized: widget.widget.recette.personalized,
+                      );
+                      myRecipes.addRecipe(nouvelleRecette);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Save recipe'),
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TextField extends StatefulWidget {
+  TextField({
+    super.key,
+    required this.controller,
+    required this.themeScheme,
+    required this.fillColor,
+    required this.hintText,
+    required this.textStyle,
+    required this.validation,
+    labelText,
+    focusColor,
+    this.multilignes,
+    this.focusedBorderWidth = 2,
+  })  : focusColor = focusColor ?? fillColor,
+        labelText = labelText ?? hintText;
+
+  final TextEditingController controller;
+  final ColorScheme themeScheme;
+  final Color fillColor;
+  final Color focusColor;
+  final String hintText;
+  final String labelText;
+  final TextStyle textStyle;
+  final bool validation;
+  final int? multilignes;
+
+  final double focusedBorderWidth;
+
+  @override
+  State<TextField> createState() => _TextFieldState();
+}
+
+class _TextFieldState extends State<TextField> {
+  final ScrollController _scrollControllerA = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
+  // Add a FocusNode
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        // Trigger animation when the field loses focus
+        _scrollControllerA.animateTo(
+          0.0,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.ease,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose(); // Dispose the FocusNode
+    _scrollControllerA.dispose(); // Dispose the ScrollController
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bool isPhoneSized = MediaQuery.of(context).size.width < 600;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        //Name
+        controller: widget.controller,
+        scrollController: _scrollControllerA,
+        focusNode: _focusNode,
+        //initialValue: widget.widget.recette.name,
+        maxLines: widget.multilignes,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 5),
+            filled: true,
+            fillColor: widget.fillColor,
+            focusColor: widget.focusColor,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide.none,
+                gapPadding: 0),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(
+                    width: widget.focusedBorderWidth,
+                    color: widget.themeScheme.primary),
+                gapPadding: 0),
+            labelText: FocusScope.of(context).hasFocus
+                ? widget.labelText
+                : widget.hintText,
+            hintText:
+                (widget.controller.text == "") ? "" : widget.controller.text),
+        textAlign: isPhoneSized ? TextAlign.center : TextAlign.start,
+        style: widget.textStyle,
+        validator: widget.validation
+            ? (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              }
+            : null,
       ),
     );
   }

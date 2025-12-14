@@ -23,7 +23,7 @@ class Recipe {
       this.ingredients = const {},
       this.personalized = "Nope",
       this.recipeLink = "",
-      this.dishTypes = const ["Meal"],
+      this.dishTypes = const [],
       this.servings = 1,
       this.image = ""})
       : id = id ?? Uuid().v4();
