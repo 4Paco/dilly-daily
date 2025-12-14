@@ -9,7 +9,6 @@ import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
 List<String> generateSuggestions() {
-  print("Suggestioooon");
   return recipesDict.toList().take(6).toList();
 }
 
@@ -25,15 +24,16 @@ class _ExplorePageState extends State<ExplorePage> {
     super.initState();
     _loadGroceriesFuture = listeCourses.isLoaded();
     _loadGroceriesFuture = recipesDict.isLoaded();
-    _loadGroceriesFuture = ingredientsDict.isLoaded(); // Call load() only once
+    _loadGroceriesFuture = ingredientsDict.isLoaded();
+    _loadGroceriesFuture = personals.isLoaded(); // Call load() only once
   }
 
   void toggleFavorite(String recipeKey) {
     setState(() {
-      if (favoriteRecipes.contains(recipeKey)) {
-        favoriteRecipes.remove(recipeKey);
+      if (personals.favoriteRecipes.contains(recipeKey)) {
+        personals.favoriteRecipes.remove(recipeKey);
       } else {
-        favoriteRecipes.add(recipeKey);
+        personals.favoriteRecipes.add(recipeKey);
       }
     });
   }
@@ -130,7 +130,7 @@ class _ExplorePageState extends State<ExplorePage> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                if (favoriteRecipes.isNotEmpty) ...[
+                if (personals.favoriteRecipes.isNotEmpty) ...[
                   BlocTitle(texte: "Favoris"),
                   FavoriteCarousel(
                     onToggleMealPlan: toggleMealPlan,

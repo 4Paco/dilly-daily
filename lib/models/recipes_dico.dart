@@ -134,7 +134,6 @@ class RecipesDico extends Iterable implements Iterator {
 
   void reloadTheirRecipes() {
     //_recipesDict.removeWhere((key, value) => key < 0);
-    print("myRecipe reload in bigDict");
     for (String id in theirRecipes.keys) {
       _bigDict[id] = theirRecipes[id]!;
     }

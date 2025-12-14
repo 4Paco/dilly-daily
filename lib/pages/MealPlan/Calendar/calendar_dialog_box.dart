@@ -37,14 +37,14 @@ class CalendarDialogBox extends StatelessWidget {
     int nbMeals = 1;
 
     //set the default number of meals to cook for the recipe
-    nbMeals = weekMeals.where((day) => day[0] == recipeKey).length +
-        weekMeals.where((day) => day[1] == recipeKey).length;
+    nbMeals = personals.weekMeals.where((day) => day[0] == recipeKey).length +
+        personals.weekMeals.where((day) => day[1] == recipeKey).length;
     nbMeals = math.max(1, nbMeals);
 
     nbMeals *= mealsModifier;
 
     IconData icon;
-    if (favoriteRecipes.contains(recipeKey)) {
+    if (personals.favoriteRecipes.contains(recipeKey)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;

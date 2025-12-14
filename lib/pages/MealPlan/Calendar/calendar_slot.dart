@@ -23,7 +23,7 @@ class CalendarSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String recipeKey = weekMeals[(today + i) % 7][time];
+    String recipeKey = personals.weekMeals[(today + i) % 7][time];
     return DragTarget(
       builder: (context, candidateItems, rejectedItems) {
         return recipeKey.isNotEmpty

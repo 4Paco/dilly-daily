@@ -28,7 +28,7 @@ class WriteRecipeDialogBox extends StatelessWidget {
     final themeScheme = Theme.of(context).colorScheme;
 
     IconData icon;
-    if (favoriteRecipes.contains(recipeKey)) {
+    if (personals.favoriteRecipes.contains(recipeKey)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;

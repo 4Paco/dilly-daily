@@ -18,7 +18,8 @@ class _WritePageState extends State<WritePage> {
   void initState() {
     super.initState();
     _loadRecipesFuture = myRecipes.isLoaded();
-    _loadRecipesFuture = recipesDict.isLoaded(); // Call load() only once
+    _loadRecipesFuture = recipesDict.isLoaded();
+    _loadRecipesFuture = personals.isLoaded(); // Call load() only once
   }
 
   void toggleFavorite(String recipeKey) {
@@ -28,10 +29,10 @@ class _WritePageState extends State<WritePage> {
       //    myRecipes[recipeKey]?.personalized != "Nope") {
       //  keyFavourite = myRecipes[recipeKey]!.personalized;
       //}
-      if (favoriteRecipes.contains(keyFavourite)) {
-        favoriteRecipes.remove(recipeKey);
+      if (personals.favoriteRecipes.contains(keyFavourite)) {
+        personals.favoriteRecipes.remove(recipeKey);
       } else {
-        favoriteRecipes.add(recipeKey);
+        personals.favoriteRecipes.add(recipeKey);
       }
     });
   }
@@ -41,10 +42,12 @@ class _WritePageState extends State<WritePage> {
       if (mealPlanRecipes.containsKey(recipeKey)) {
         mealPlanRecipes.removeRecipe(recipeKey);
 
-        for (int day = 0; day < weekMeals.length; day++) {
+        for (int day = 0; day < personals.weekMeals.length; day++) {
           //also delete from Timeline
-          if (weekMeals[day][0] == recipeKey) weekMeals[day][0] = "";
-          if (weekMeals[day][1] == recipeKey) weekMeals[day][1] = "";
+          if (personals.weekMeals[day][0] == recipeKey)
+            personals.weekMeals[day][0] = "";
+          if (personals.weekMeals[day][1] == recipeKey)
+            personals.weekMeals[day][1] = "";
         }
       } else {
         mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),

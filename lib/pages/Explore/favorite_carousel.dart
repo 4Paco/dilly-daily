@@ -22,7 +22,7 @@ class FavoriteCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (String recipeKey in favoriteRecipes) ...[
+          for (String recipeKey in personals.favoriteRecipes) ...[
             SizedBox(
               width: 150,
               child: RecipePreview(
