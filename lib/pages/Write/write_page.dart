@@ -2,6 +2,7 @@ import 'dart:io' show File;
 
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Recipe.dart' show Recipe;
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/pages/Write/Modules/write_recipe_dialog_box.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
@@ -44,14 +45,39 @@ class _WritePageState extends State<WritePage> {
 
         for (int day = 0; day < personals.weekMeals.length; day++) {
           //also delete from Timeline
-          if (personals.weekMeals[day][0] == recipeKey)
+          if (personals.weekMeals[day][0] == recipeKey) {
             personals.weekMeals[day][0] = "";
-          if (personals.weekMeals[day][1] == recipeKey)
+          }
+          if (personals.weekMeals[day][1] == recipeKey) {
             personals.weekMeals[day][1] = "";
+          }
         }
       } else {
-        mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),
-            recipeKey: recipeKey);
+        Recipe recette = recipesDict.getRecipe(recipeKey);
+        String recetteId = recipeKey;
+        String personalized = recette.personalized;
+
+        if (mealPlanRecipes.containsKey(personalized)) {
+          //if the recipe is edited and original is in MealPlan
+          mealPlanRecipes.removeRecipe(personalized);
+
+          for (int day = 0; day < personals.weekMeals.length; day++) {
+            //also delete from Timeline
+            if (personals.weekMeals[day][0] == personalized) {
+              personals.weekMeals[day][0] = "";
+            }
+            if (personals.weekMeals[day][1] == personalized) {
+              personals.weekMeals[day][1] = "";
+            }
+          }
+        } else {
+          //just checking the 'edited versions' => always remember the original ID
+          if (recette.personalized != "Nope") {
+            recetteId = recette.personalized;
+          }
+
+          mealPlanRecipes.addRecipe(recette, recipeKey: recetteId);
+        }
       }
     });
   }
@@ -60,6 +86,9 @@ class _WritePageState extends State<WritePage> {
     setState(() {
       if (myRecipes.containsKey(recipeKey)) {
         myRecipes.removeRecipe(recipeKey);
+        if (mealPlanRecipes.containsKey(recipeKey)) {
+          mealPlanRecipes.removeRecipe(recipeKey);
+        }
       }
     });
   }

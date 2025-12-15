@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class RecipesDico extends Iterable implements Iterator {
   Map<String, Recipe> databaseDict = {};
   MyRecipes theirRecipes = myRecipes;
+  Map<String, Recipe> _bigDict = {};
 
   Function? onMyRecipesChanged;
 
@@ -28,7 +29,9 @@ class RecipesDico extends Iterable implements Iterator {
     });
   }
 
-  Map<String, Recipe> _bigDict = {};
+  bool containsKey(String val) {
+    return _bigDict.containsKey(val);
+  }
 
   bool _isLoaded = false;
   static List<String> dishTypes = [

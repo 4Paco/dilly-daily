@@ -570,7 +570,7 @@ class _RecipeFormState extends State<RecipeForm> {
                             },
                             child: Text(step.description)),
                         subtitle: Text(
-                            '${step.type.name} • ${step.duration!.inMinutes} min'),
+                            '${step.type.name} • ${step.duration?.inMinutes} min'),
                         trailing: IconButton(
                           icon: Icon(Icons.delete, color: themeScheme.error),
                           onPressed: () {

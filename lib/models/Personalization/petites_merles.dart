@@ -2,15 +2,15 @@ import 'dart:collection' show ListBase;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Personalization/my_recipes.dart'
+    show MyRecipes;
 import 'package:path_provider/path_provider.dart';
 
 class PetitesMerles {
   int _defaultPersonNumber = 0;
-
   double _patience = 0.5;
-
   List<String> _favoriteRecipes = [];
-
   List<List<String>> _weekMeals = [
     ["", ""],
     ["", ""],
@@ -20,6 +20,40 @@ class PetitesMerles {
     ["", ""],
     ["", ""]
   ];
+  final MyRecipes _myRecipes;
+
+  PetitesMerles({
+    required MyRecipes myRecipes,
+  }) : _myRecipes = myRecipes {
+    load();
+    _myRecipes.addListener(_cleanOrphanedRecipeIds);
+  }
+
+  void _cleanOrphanedRecipeIds() {
+    bool hasChanges = false;
+
+    // Nettoyer favoriteRecipes
+    int old_len = _favoriteRecipes.length;
+    _favoriteRecipes.removeWhere((id) => !recipesDict.containsKey(id));
+
+    if (_favoriteRecipes.length < old_len) {
+      hasChanges = true;
+    }
+
+    // Nettoyer weekMeals
+    for (var day in _weekMeals) {
+      for (int i = 0; i < day.length; i++) {
+        if (day[i].isNotEmpty && !recipesDict.containsKey(day[i])) {
+          day[i] = "";
+          hasChanges = true;
+        }
+      }
+    }
+
+    if (hasChanges) {
+      updateJson();
+    }
+  }
 
   Future<void> load() async {
     await ensureFileExists();

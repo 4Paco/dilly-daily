@@ -1,6 +1,7 @@
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Recipe.dart' show Recipe;
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Explore/favorite_carousel.dart';
@@ -33,7 +34,20 @@ class _ExplorePageState extends State<ExplorePage> {
       if (personals.favoriteRecipes.contains(recipeKey)) {
         personals.favoriteRecipes.remove(recipeKey);
       } else {
-        personals.favoriteRecipes.add(recipeKey);
+        Recipe recette = recipesDict.getRecipe(recipeKey);
+        String recetteId = recipeKey;
+        String personalized = recette.personalized;
+
+        if (personals.favoriteRecipes.contains(personalized)) {
+          //if the recipe is edited and original is in MealPlan
+          personals.favoriteRecipes.remove(personalized);
+        } else {
+          if (recette.personalized != "Nope") {
+            recetteId = recette.personalized;
+          }
+
+          personals.favoriteRecipes.add(recetteId);
+        }
       }
     });
   }
@@ -41,14 +55,42 @@ class _ExplorePageState extends State<ExplorePage> {
   void toggleMealPlan(String recipeKey) {
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
-        print(
-            "mealPlan contains recipeKey $recipeKey : removing recipe from mealPlan");
         mealPlanRecipes.removeRecipe(recipeKey);
+
+        for (int day = 0; day < personals.weekMeals.length; day++) {
+          //also delete from Timeline
+          if (personals.weekMeals[day][0] == recipeKey) {
+            personals.weekMeals[day][0] = "";
+          }
+          if (personals.weekMeals[day][1] == recipeKey) {
+            personals.weekMeals[day][1] = "";
+          }
+        }
       } else {
-        print(
-            "mealPlan does not contain recipeKey $recipeKey : adding recipe to mealPlan");
-        mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),
-            recipeKey: recipeKey);
+        Recipe recette = recipesDict.getRecipe(recipeKey);
+        String recetteId = recipeKey;
+        String personalized = recette.personalized;
+
+        if (mealPlanRecipes.containsKey(personalized)) {
+          //if the recipe is edited and original is in MealPlan
+          mealPlanRecipes.removeRecipe(personalized);
+
+          for (int day = 0; day < personals.weekMeals.length; day++) {
+            //also delete from Timeline
+            if (personals.weekMeals[day][0] == personalized) {
+              personals.weekMeals[day][0] = "";
+            }
+            if (personals.weekMeals[day][1] == personalized) {
+              personals.weekMeals[day][1] = "";
+            }
+          }
+        } else {
+          if (recette.personalized != "Nope") {
+            recetteId = recette.personalized;
+          }
+
+          mealPlanRecipes.addRecipe(recette, recipeKey: recetteId);
+        }
       }
     });
   }

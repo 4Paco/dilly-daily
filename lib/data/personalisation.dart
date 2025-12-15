@@ -11,4 +11,4 @@ PersonalizedGroceries coursesPersonnelles = PersonalizedGroceries();
 MyRecipes myRecipes = MyRecipes();
 MyRecipes mealPlanRecipes = MyRecipes(recipeFile: "meal_plan_recipes");
 
-PetitesMerles personals = PetitesMerles();
+PetitesMerles personals = PetitesMerles(myRecipes: myRecipes);

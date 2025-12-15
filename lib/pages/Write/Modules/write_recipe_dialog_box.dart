@@ -136,8 +136,9 @@ class WriteRecipeDialogBox extends StatelessWidget {
                     TextButton(
                         onPressed: () {},
                         onLongPress: () {
-                          onDeleteRecipe(recipeKey);
                           Navigator.of(context, rootNavigator: true).pop(true);
+                          onDeleteRecipe(recipeKey);
+
                           showDialog(
                               context: context,
                               builder: (context) {

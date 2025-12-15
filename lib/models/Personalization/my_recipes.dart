@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dilly_daily/data/recipes.dart' show recipesDict;
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:flutter/material.dart' show VoidCallback;
 import 'package:path_provider/path_provider.dart';
@@ -70,6 +71,29 @@ class MyRecipes extends Iterable implements Iterator {
     }
   }
 
+  MyRecipes? _listenedRecipes;
+
+  void linkToRecipes(MyRecipes listenedRecipes) {
+    _listenedRecipes = listenedRecipes;
+    _listenedRecipes!.addListener(_onRecipesDeleted);
+  }
+
+  void _onRecipesDeleted() {
+    bool hasChanges = false;
+
+    // Nettoyer dico
+    int old_len = _recipesDict.length;
+    _recipesDict.removeWhere((id, recipe) => !(recipesDict.containsKey(id)));
+
+    if (_recipesDict.length < old_len) {
+      hasChanges = true;
+    }
+
+    if (hasChanges) {
+      updateJson();
+    }
+  }
+
   Iterable<String> get keys => _recipesDict.keys;
   Iterable<Recipe> get values => _recipesDict.values;
 
@@ -115,6 +139,7 @@ class MyRecipes extends Iterable implements Iterator {
     final filePath = await _localFile;
     final json =
         _recipesDict.map((key, value) => MapEntry(key, value.toJson()));
+
     String jsonString = jsonEncode(json);
     filePath.writeAsString(jsonString);
     //print("new $_name Json : $json");
@@ -130,16 +155,15 @@ class MyRecipes extends Iterable implements Iterator {
     //int newKey = recette.hashCode;
     //_recipesDict[newKey] = recette;
     _recipesDict[key] = recette;
-    print(_recipesDict[key]!.toJson());
     updateJson();
     print("${recette.name} has been added to $_name");
   }
 
   void removeRecipe(String recipeKey) {
     if (_recipesDict.containsKey(recipeKey)) {
-      print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
       _recipesDict.remove(recipeKey);
       _notifyListeners();
+      print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
     } else {
       throw ArgumentError(
           "No such recipe in $_name with this ID $recipeKey: . Removal aborted");
