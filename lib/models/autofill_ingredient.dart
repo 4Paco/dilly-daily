@@ -30,9 +30,9 @@ class AutofillIngredient extends StatelessWidget {
             return const Iterable<String>.empty();
           }
           return ingredientsDict.where((option) {
-            return option
-                .toLowerCase()
-                .startsWith(textEditingValue.text.toLowerCase());
+            final query = textEditingValue.text.toLowerCase();
+            final words = option.toLowerCase().split(' ');
+            return words.any((word) => word.startsWith(query));
           }).cast<String>();
         },
         onSelected: (String selection) {

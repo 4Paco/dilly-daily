@@ -102,6 +102,7 @@ class PetitesMerles {
       '_favoriteRecipes': _favoriteRecipes,
       '_weekMeals': _weekMeals.map((day) => day).toList(),
     }; //_allergiesDict.map((key, value) => MapEntry(key, value));
+    //final json = {};
     String jsonString = jsonEncode(json);
     filePath.writeAsString(jsonString);
   }

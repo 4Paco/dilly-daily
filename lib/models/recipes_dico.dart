@@ -85,24 +85,24 @@ class RecipesDico extends Iterable implements Iterator {
     for (String key in data.keys) {
       String id = key;
       Recipe recipe = Recipe.fromJson(key, data[key]);
-      for (String valKey in data[key].keys) {
-        if (valKey == "name") {
-          recipe.name = data[key][valKey];
-        } else if (valKey == "image") {
-          recipe.image = data[key][valKey];
-        } else if (valKey == "personalized") {
-          recipe.personalized = data[key][valKey];
-        } else if (valKey == "steps") {
-          recipe.steps = (data[key][valKey] as List)
-              .map((stepJson) => Step.fromJson(stepJson))
-              .toList();
-        } else if (valKey == "ingredients") {
-          recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
-              .map((key, value) => MapEntry(key, value as double));
-        } else if (valKey == "summary") {
-          recipe.summary = data[key][valKey];
-        }
-      }
+      //for (String valKey in data[key].keys) {
+      //  if (valKey == "name") {
+      //    recipe.name = data[key][valKey];
+      //  } else if (valKey == "image") {
+      //    recipe.image = data[key][valKey];
+      //  } else if (valKey == "personalized") {
+      //    recipe.personalized = data[key][valKey];
+      //  } else if (valKey == "steps") {
+      //    recipe.steps = (data[key][valKey] as List)
+      //        .map((stepJson) => Step.fromJson(stepJson))
+      //        .toList();
+      //  } else if (valKey == "ingredients") {
+      //    recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
+      //        .map((key, value) => MapEntry(key, value as double));
+      //  } else if (valKey == "summary") {
+      //    recipe.summary = data[key][valKey];
+      //  }
+      //}
 
       databaseDict[id] = recipe;
     }

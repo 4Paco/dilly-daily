@@ -40,7 +40,8 @@ class Recipe {
         personalized = json['personalized'] ?? "Nope",
         summary = json['summary'] ?? "",
         ingredients = json['ingredients'] != null
-            ? Map<String, double>.from(json['ingredients'])
+            ? Map<String, double>.from(json['ingredients']
+                .map((key, value) => MapEntry(key, (value as num).toDouble())))
             : {},
         steps = json['steps'] != null
             ? (json['steps'] as List)
@@ -55,11 +56,11 @@ class Recipe {
     return {
       'id': id,
       'name': name,
-      'recipeLink': recipeLink,
-      'image': image,
-      'servings': servings,
-      'dishTypes': dishTypes,
-      'personalized': personalized,
+      if (recipeLink.isNotEmpty) 'recipeLink': recipeLink,
+      if (image != "") 'image': image,
+      if (servings > 1) 'servings': servings,
+      if (dishTypes.isNotEmpty) 'dishTypes': dishTypes,
+      if (personalized != "Nope") 'personalized': personalized,
       'steps': steps.map((s) => s.toJson()).toList(),
       'ingredients': ingredients,
       'summary': summary,
