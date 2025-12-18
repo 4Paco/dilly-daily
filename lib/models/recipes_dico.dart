@@ -15,25 +15,6 @@ class RecipesDico extends Iterable implements Iterator {
 
   Function? onMyRecipesChanged;
 
-  RecipesDico({bool fetch = true}) {
-    _bigDict = {};
-    if (fetch) {
-      load();
-    }
-    theirRecipes.addListener(() {
-      _bigDict = {};
-      for (String id in databaseDict.keys) {
-        _bigDict[id] = databaseDict[id]!;
-      }
-      reloadTheirRecipes();
-    });
-  }
-
-  bool containsKey(String val) {
-    return _bigDict.containsKey(val);
-  }
-
-  bool _isLoaded = false;
   static List<String> dishTypes = [
     "main course",
     "side dish",
@@ -50,6 +31,22 @@ class RecipesDico extends Iterable implements Iterator {
     "snack",
     "drink"
   ];
+
+  RecipesDico({bool fetch = true}) {
+    _bigDict = {};
+    if (fetch) {
+      load();
+    }
+    theirRecipes.addListener(() {
+      _bigDict = {};
+      for (String id in databaseDict.keys) {
+        _bigDict[id] = databaseDict[id]!;
+      }
+      reloadTheirRecipes();
+    });
+  }
+
+  bool _isLoaded = false;
 
   int get limit => _bigDict.keys.length;
   int i = 0;
@@ -129,6 +126,12 @@ class RecipesDico extends Iterable implements Iterator {
       return null;
     }
   }
+
+  bool containsKey(String val) {
+    return _bigDict.containsKey(val);
+  }
+
+  Iterable<MapEntry<String, Recipe>> get entries => _bigDict.entries;
 
   @override
   List<String> toList({bool growable = true}) {

@@ -6,6 +6,7 @@ import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Explore/favorite_carousel.dart';
 import 'package:dilly_daily/pages/Explore/recipe_preview.dart';
+import 'package:dilly_daily/pages/Explore/recipes_research_bar.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
@@ -106,6 +107,10 @@ class _ExplorePageState extends State<ExplorePage> {
     setState(() {});
   }
 
+  void reload() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -128,6 +133,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   Scaffold explorePageContent() {
     final themeScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -135,38 +141,25 @@ class _ExplorePageState extends State<ExplorePage> {
           CustomSliverAppBar(title: "Explore"),
 
           PinnedHeaderSliver(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: themeScheme.tertiaryFixed,
-                borderRadius: BorderRadius.circular(25), // Rounded corners
-              ),
-              child: Autocomplete<String>(
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  return const Iterable<String>.empty();
-                },
-                fieldViewBuilder: (BuildContext context,
-                    TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted) {
-                  return TextField(
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      border: InputBorder.none, // Removes the bottom line
-                      icon: Icon(Icons.search,
-                          color: themeScheme.onPrimaryFixedVariant),
-                      hintText: 'Search ideas...',
-                      hintStyle: TextStyle(
-                          color: themeScheme
-                              .onPrimaryFixedVariant), // Placeholder style
-                    ), // Text style
-                  );
-                },
-              ),
-            ),
-          ),
+              //    child: const Center(
+              //        child: Padding(
+              //  padding: EdgeInsets.all(20.0),
+              //  child: SearchBarWithFilter(),
+              //))),
+              child: RecipesResearchBar(
+                  onEditRecipe: (recipeKey) {
+                    editRecipe(recipeKey);
+                    setState(() {});
+                  },
+                  onToggleFavorite: (recipeKey) {
+                    toggleFavorite(recipeKey);
+                    setState(() {}); // Rebuild the dialog to update the icon
+                  },
+                  onToggleMealPlan: (recipeKey) {
+                    toggleMealPlan(recipeKey);
+                    setState(() {});
+                  },
+                  reload: reload)),
 
           // Scrollable Content
           SliverList(
