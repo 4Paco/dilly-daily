@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:dilly_daily/data/personalisation.dart' show myRecipes;
+import 'package:dilly_daily/models/KitchenGear.dart' show Gear;
 import 'package:dilly_daily/models/Personalization/my_recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/Step.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -49,6 +51,28 @@ class RecipesDico extends Iterable implements Iterator {
     "fingerfood",
     "snack",
     "drink"
+  ];
+  static List<Gear> kitchenGear = [
+    Gear(
+      name: "Oven",
+      icon: Icons.kitchen,
+      description: "Modern electric oven for baking and roasting",
+    ),
+    Gear(
+      name: "Mixer",
+      icon: Icons.blender_rounded,
+      description: "Kitchen mixer for smoothies and shakes",
+    ),
+    Gear(
+      name: "Fryer",
+      icon: Icons.local_fire_department,
+      description: "Deep fryer for fries and snacks",
+    ),
+    Gear(
+      name: "Microwave",
+      icon: Icons.microwave_rounded,
+      description: "Microwave oven for heating food",
+    ),
   ];
 
   int get limit => _bigDict.keys.length;
