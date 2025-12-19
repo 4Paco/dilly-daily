@@ -141,11 +141,6 @@ class _ExplorePageState extends State<ExplorePage> {
           CustomSliverAppBar(title: "Explore"),
 
           PinnedHeaderSliver(
-              //    child: const Center(
-              //        child: Padding(
-              //  padding: EdgeInsets.all(20.0),
-              //  child: SearchBarWithFilter(),
-              //))),
               child: RecipesResearchBar(
                   onEditRecipe: (recipeKey) {
                     editRecipe(recipeKey);

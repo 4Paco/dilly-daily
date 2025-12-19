@@ -216,6 +216,11 @@ class _RecipeFormState extends State<RecipeForm> {
             ),
             //
             //Photo + brief + link display
+            Builder(
+              builder: (context) {
+                return const SizedBox.shrink(); // Placeholder widget
+              },
+            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
