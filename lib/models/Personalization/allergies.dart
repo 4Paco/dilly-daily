@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-class Allergies extends Iterable with Iterator {
+class Allergies extends Iterable implements Iterator {
   Map<String, bool> _allergiesDict = {};
 
   int get limit => _allergiesDict.keys.length;

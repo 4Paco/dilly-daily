@@ -23,20 +23,25 @@ class Recipe {
       this.ingredients = const {},
       this.personalized = "Nope",
       this.recipeLink = "",
-      this.dishTypes = const ["Meal"],
+      this.dishTypes = const [],
       this.servings = 1,
       this.image = ""})
       : id = id ?? Uuid().v4();
 
+  static String generateId() {
+    return Uuid().v4();
+  }
+
   // named constructor
-  Recipe.fromJson(int jsonId, Map<String, dynamic> json)
-      : id = jsonId.toString(),
+  Recipe.fromJson(String jsonId, Map<String, dynamic> json)
+      : id = jsonId,
         name = json['name'],
         image = json['image'] ?? "",
         personalized = json['personalized'] ?? "Nope",
         summary = json['summary'] ?? "",
         ingredients = json['ingredients'] != null
-            ? Map<String, double>.from(json['ingredients'])
+            ? Map<String, double>.from(json['ingredients']
+                .map((key, value) => MapEntry(key, (value as num).toDouble())))
             : {},
         steps = json['steps'] != null
             ? (json['steps'] as List)
@@ -51,8 +56,11 @@ class Recipe {
     return {
       'id': id,
       'name': name,
-      'image': image,
-      'personalized': personalized,
+      if (recipeLink.isNotEmpty) 'recipeLink': recipeLink,
+      if (image != "") 'image': image,
+      if (servings > 1) 'servings': servings,
+      if (dishTypes.isNotEmpty) 'dishTypes': dishTypes,
+      if (personalized != "Nope") 'personalized': personalized,
       'steps': steps.map((s) => s.toJson()).toList(),
       'ingredients': ingredients,
       'summary': summary,

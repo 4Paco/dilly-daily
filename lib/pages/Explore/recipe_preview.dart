@@ -1,3 +1,5 @@
+import 'dart:io' show File;
+
 import 'package:dilly_daily/pages/Explore/recipe_dialog_box.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class RecipePreview extends StatelessWidget {
     required this.img,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
     this.padding = const EdgeInsets.all(15.0),
   });
   final String recipeKey;
@@ -16,7 +19,8 @@ class RecipePreview extends StatelessWidget {
   final String img;
 
   final void Function(String) onToggleMealPlan;
-  final void Function(String) onToggleFavorite; // Callback function type
+  final void Function(String) onToggleFavorite;
+  final void Function(String) onEditRecipe; // Callback function type
   final EdgeInsetsGeometry padding;
 
   @override
@@ -54,6 +58,10 @@ class RecipePreview extends StatelessWidget {
                       onToggleFavorite(recipeKey);
                       setState(() {}); // Rebuild the dialog to update the icon
                     },
+                    onEditRecipe: (recipeKey) {
+                      onEditRecipe(recipeKey);
+                      setState(() {});
+                    },
                   );
                 },
               );
@@ -70,9 +78,14 @@ class RecipePreview extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    imgDisplayed, // Ensures the image covers the button
-                  ),
+                  child: img.isEmpty
+                      ? Image.asset(
+                          imgDisplayed //imgDisplayed, // Ensures the image covers the button
+                          )
+                      : Image.file(
+                          File(imgDisplayed),
+                          height: 200,
+                        ),
                 ),
               ),
             ),

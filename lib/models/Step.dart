@@ -45,10 +45,23 @@ class Step {
     final hours = totalMin ~/ 60;
     final remaining = totalMin % 60;
 
-    return remaining == 0 ? "${hours}h" : "${hours}h${remaining}";
+    return remaining == 0 ? "${hours}h" : "${hours}h$remaining";
   }
 
   @override
   String toString() =>
       'Step(description: "$description", duration: ${duration?.inMinutes} min, type: $type)';
+
+  @override
+  Step copy({
+    String? description,
+    Duration? duration,
+    StepType? type,
+  }) {
+    return Step(
+      description: description ?? this.description,
+      duration: duration ?? this.duration,
+      type: type ?? this.type,
+    );
+  }
 }

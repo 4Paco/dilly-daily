@@ -1,5 +1,6 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Recipe.dart' show Recipe;
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/MealPlan/Calendar/calendar.dart';
@@ -13,18 +14,26 @@ class MealPlanPage extends StatefulWidget {
 }
 
 class _MealPlanPageState extends State<MealPlanPage> {
+  Future<void>? _loadMealPlanFuture; //= Future.value();
+  @override
+  void initState() {
+    super.initState();
+    _loadMealPlanFuture = mealPlanRecipes.isLoaded();
+    _loadMealPlanFuture = personals.isLoaded(); // Call load() only once
+  }
+
   void mealAddedToWeek(String recipeKey, int day, int time) {
     setState(() {
-      weekMeals[day][time] = recipeKey;
+      personals.weekMeals[day][time] = recipeKey;
     });
   }
 
   void toggleFavorite(String recipeKey) {
     setState(() {
-      if (favoriteRecipes.contains(recipeKey)) {
-        favoriteRecipes.remove(recipeKey);
+      if (personals.favoriteRecipes.contains(recipeKey)) {
+        personals.favoriteRecipes.remove(recipeKey);
       } else {
-        favoriteRecipes.add(recipeKey);
+        personals.favoriteRecipes.add(recipeKey);
       }
     });
   }
@@ -34,23 +43,50 @@ class _MealPlanPageState extends State<MealPlanPage> {
       if (mealPlanRecipes.containsKey(recipeKey)) {
         mealPlanRecipes.removeRecipe(recipeKey);
 
-        for (int day = 0; day < weekMeals.length; day++) {
+        for (int day = 0; day < personals.weekMeals.length; day++) {
           //also delete from Timeline
-          if (weekMeals[day][0] == recipeKey) weekMeals[day][0] = "";
-          if (weekMeals[day][1] == recipeKey) weekMeals[day][1] = "";
+          if (personals.weekMeals[day][0] == recipeKey) {
+            personals.weekMeals[day][0] = "";
+          }
+          if (personals.weekMeals[day][1] == recipeKey) {
+            personals.weekMeals[day][1] = "";
+          }
         }
       } else {
-        mealPlanRecipes.addRecipe(recipesDict.getRecipe(recipeKey),
-            recipeKey: recipeKey);
+        Recipe recette = recipesDict.getRecipe(recipeKey);
+        String recetteId = recipeKey;
+        String personalized = recette.personalized;
+
+        if (mealPlanRecipes.containsKey(personalized)) {
+          //if the recipe is edited and original is in MealPlan
+          mealPlanRecipes.removeRecipe(personalized);
+
+          for (int day = 0; day < personals.weekMeals.length; day++) {
+            //also delete from Timeline
+            if (personals.weekMeals[day][0] == personalized) {
+              personals.weekMeals[day][0] = "";
+            }
+            if (personals.weekMeals[day][1] == personalized) {
+              personals.weekMeals[day][1] = "";
+            }
+          }
+        } else {
+          //just checking the 'edited versions' => always remember the original ID
+          if (recette.personalized != "Nope") {
+            recetteId = recette.personalized;
+          }
+
+          mealPlanRecipes.addRecipe(recette, recipeKey: recetteId);
+        }
       }
     });
   }
 
   void toggleGroceries(String recipeKey, {int nbMeals = 0}) {
     if (nbMeals == 0) {
-      nbMeals = defaultPersonNumber;
+      nbMeals = personals.defaultPersonNumber;
     } else {
-      nbMeals = nbMeals * defaultPersonNumber;
+      nbMeals = nbMeals * personals.defaultPersonNumber;
     }
     for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
       listeCourses.addIngredient(ingredient,
@@ -59,7 +95,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
   }
 
   void startCooking(String recipeKey, {int nbMeals = 0}) {
-    if (nbMeals == 0) nbMeals = defaultPersonNumber;
+    if (nbMeals == 0) nbMeals = personals.defaultPersonNumber;
   }
 
   void showMealPlanDialog(BuildContext context, String recipeKey) {
@@ -104,11 +140,29 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _loadMealPlanFuture, // Wait for allergiesList to load
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting
+            return createMealPlanPageContent();
+          } else if (snapshot.hasError) {
+            // Handle errors
+            return Center(
+                child: Text("Error loading recipes: ${snapshot.error}"));
+          } else {
+            return createMealPlanPageContent();
+          }
+        });
+  }
+
+  Scaffold createMealPlanPageContent() {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           // Fixed AppBar
-          CustomSliverAppBar(title: "You Meal Plan"),
+          CustomSliverAppBar(title: "Your Meal Plan"),
 
           // Scrollable Content
           SliverList(

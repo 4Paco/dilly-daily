@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/pages/Account/account_page.dart';
+import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_slider/gradient_slider.dart';
 
@@ -16,13 +17,15 @@ class CookingProfilePage extends StatefulWidget {
 class _CookingProfilePageState extends State<CookingProfilePage> {
   void setDefaultMealsNumber(int delta) {
     setState(() {
-      defaultPersonNumber = max(1, defaultPersonNumber + delta);
+      personals.defaultPersonNumber =
+          max(1, personals.defaultPersonNumber + delta);
     });
   }
 
   void updatePatience(double newVal) {
     setState(() {
-      patience = max(0.1, min(0.9, (newVal * 10).roundToDouble() / 10));
+      personals.patience =
+          max(0.1, min(0.9, (newVal * 10).roundToDouble() / 10));
     });
   }
 
@@ -34,9 +37,12 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
       children: [
         BlocTitle(texte: "Number of portions per meal"),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          PlusMinusButton(function: setDefaultMealsNumber, val: -1, texte: "-"),
+          PlusMinusButton(
+              function: setDefaultMealsNumber,
+              val: -1,
+              icondata: Icons.remove_rounded),
           Text(
-            defaultPersonNumber.toString(),
+            personals.defaultPersonNumber.toString(),
             style: nbStyle,
           ),
           SizedBox(width: 7),
@@ -45,7 +51,11 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             size: 30,
             //color: themeScheme.primary,
           ),
-          PlusMinusButton(function: setDefaultMealsNumber, val: 1, texte: "+")
+          PlusMinusButton(
+            function: setDefaultMealsNumber,
+            val: 1,
+            icondata: Icons.add,
+          )
         ]),
         BlocTitle(texte: "Patience for cooking"),
         //Image.asset("assets/image/slider_thumb_cute.png")
@@ -60,7 +70,7 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             inactiveTrackGradient:
                 LinearGradient(colors: [Colors.blue, Colors.pink]),
             slider: Slider(
-                value: patience,
+                value: personals.patience,
                 onChanged: (value) {
                   updatePatience(value);
                 }),
@@ -73,14 +83,14 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
                 padding: const EdgeInsets.only(left: 54, top: 20),
                 child: Container(
                   decoration: BoxDecoration(border: Border.all()),
-                  height: patience == 0.1 ? 7 : 25,
+                  height: personals.patience == 0.1 ? 7 : 25,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 54, top: 20),
                 child: Container(
                   decoration: BoxDecoration(border: Border.all()),
-                  height: patience == 0.9 ? 7 : 25,
+                  height: personals.patience == 0.9 ? 7 : 25,
                 ),
               ),
             ],

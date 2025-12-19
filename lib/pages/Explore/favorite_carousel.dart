@@ -8,9 +8,11 @@ class FavoriteCarousel extends StatelessWidget {
     super.key,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
   });
   final void Function(String) onToggleMealPlan;
-  final void Function(String) onToggleFavorite; // Callback function type
+  final void Function(String) onToggleFavorite;
+  final void Function(String) onEditRecipe; // Callback function type
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class FavoriteCarousel extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
-          for (String recipeKey in favoriteRecipes) ...[
+          for (String recipeKey in personals.favoriteRecipes) ...[
             SizedBox(
               width: 150,
               child: RecipePreview(
@@ -29,6 +31,7 @@ class FavoriteCarousel extends StatelessWidget {
                   img: recipesDict[recipeKey]!.image,
                   onToggleMealPlan: onToggleMealPlan,
                   onToggleFavorite: onToggleFavorite,
+                  onEditRecipe: onEditRecipe,
                   padding: EdgeInsets.only(left: 5, right: 5, bottom: 10)),
             )
           ]

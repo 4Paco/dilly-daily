@@ -1,3 +1,4 @@
+import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/KitchenGear.dart';
 import 'package:dilly_daily/models/UserProfile.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,9 @@ class _KitchenPageState extends State<KitchenPage> {
     for (var gear in kitchenGear) {
       _hasGear[gear.name] = false;
     }
+    for (var gearName in personals.kitchenGear) {
+      _hasGear[gearName] = true;
+    }
   }
 
   void _updateUserProfile() async {
@@ -50,6 +54,7 @@ class _KitchenPageState extends State<KitchenPage> {
         .toList();
 
     final profile = UserProfile(kitchenGear: selectedGear);
+    personals.kitchenGear = selectedGear;
     await profile.save();
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -116,12 +121,11 @@ class _KitchenPageState extends State<KitchenPage> {
         },
       ),
 
-floatingActionButton: FloatingActionButton(
-  onPressed: _updateUserProfile,
-  backgroundColor: Colors.white,
-  child: const Icon(Icons.save),
-),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: _updateUserProfile,
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.save),
+      ),
     );
   }
 }

@@ -49,5 +49,9 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Upload your photos for your own recipes !</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Upload your photos for your own recipes !</string>
 	</dict>
 </plist>

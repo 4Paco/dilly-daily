@@ -1,5 +1,7 @@
+import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
+import 'package:dilly_daily/models/Recipe.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDialogBox extends StatelessWidget {
@@ -8,140 +10,163 @@ class RecipeDialogBox extends StatelessWidget {
     required this.recipeKey,
     required this.onToggleMealPlan,
     required this.onToggleFavorite,
+    required this.onEditRecipe,
   });
 
   final String recipeKey;
   final void Function(String) onToggleMealPlan;
   final void Function(String) onToggleFavorite;
+  final void Function(String) onEditRecipe;
   final double horizontalPadding = 50.0;
   final double verticalPadding = 150;
   final double verticalOffset = 50;
+
+  double calculateTotalPrice() {
+    double total = 0.0;
+    Recipe recette = recipesDict[recipeKey]!;
+    recette.ingredients.forEach((ingredient, quantity) {
+      double priceperunit = ingredientsDict[ingredient]?['price'] ?? 0.0;
+      total += priceperunit * quantity;
+    });
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
 
-    final recipe = recipesDict[recipeKey]!; // Get Recipe object
-    final isFavorite = favoriteRecipes.contains(recipeKey);
+    IconData icon;
+    if (personals.favoriteRecipes.contains(recipeKey)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
 
     return Padding(
       padding: EdgeInsets.only(
-        top: verticalPadding - verticalOffset,
-        bottom: verticalPadding + verticalOffset,
-        right: horizontalPadding,
-        left: horizontalPadding,
-      ),
+          top: verticalPadding - verticalOffset,
+          bottom: verticalPadding + verticalOffset,
+          right: horizontalPadding,
+          left: horizontalPadding),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: themeScheme.tertiaryContainer,
-          border: Border.all(width: 2, color: Color.fromARGB(100, 0, 0, 0)),
-        ),
+            borderRadius: BorderRadius.circular(30),
+            color: themeScheme.tertiaryContainer,
+            border:
+                BoxBorder.all(width: 2, color: Color.fromARGB(100, 0, 0, 0))),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Top row: Close button + Favorite
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CloseButton(),
                 IconButton(
-                  onPressed: () => onToggleFavorite(recipeKey),
-                  icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      size: 30),
-                )
+                    onPressed: () {
+                      onEditRecipe(recipeKey);
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      size: 30,
+                    )),
+                IconButton(
+                    onPressed: () {
+                      onToggleFavorite(recipeKey);
+                    },
+                    icon: Icon(
+                      icon,
+                      size: 30,
+                    ))
               ],
             ),
-
-            // Recipe title
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    recipe.name,
+                    recipesDict[recipeKey]!.name,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-
-                  /// NEW LINE FOR RECIPE DURATION
-                  if (recipe.duration().inMinutes > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        recipe.duration().inMinutes < 60
-                            ? "${recipe.duration().inMinutes} min"
-                            : "${recipe.duration().inHours}h${recipe.duration().inMinutes % 60 == 0 ? '' : '${recipe.duration().inMinutes % 60}'}",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black, // ✔ duration text black
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    "${(recipesDict[recipeKey]?.summary ?? "No description available.")} ${calculateTotalPrice().toStringAsFixed(2)} €",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                 ],
               ),
             ),
-
-            // Steps list
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ListView.separated(
-                  itemCount: recipe.steps.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 8),
-                  itemBuilder: (context, index) {
-                    final step = recipe.steps[index];
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${index + 1}. ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    flex: 6,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 10, bottom: 10),
+                      child: TextButton(
+                          style: ButtonStyle(
+                              shadowColor:
+                                  WidgetStateProperty.all(themeScheme.shadow),
+                              elevation: WidgetStateProperty.all(2),
+                              foregroundColor: WidgetStateProperty.all(
+                                  themeScheme.onPrimary),
+                              backgroundColor: WidgetStateProperty.all(
+                                  mealPlanRecipes.containsKey(recipeKey)
+                                      ? themeScheme.tertiary
+                                      : themeScheme.primary)),
+                          onPressed: () {
+                            onToggleMealPlan(recipeKey);
+                          },
+                          child: mealPlanRecipes.containsKey(recipeKey)
+                              ? Text("Remove")
+                              : Text("Add")),
+                    )),
+                if (!isSmallScreen) //Close button is less relevent on phone+problematic displaying of the text 'Close', so simpler to just remove it on 'small screens'
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20, bottom: 10),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side:
+                              BorderSide(color: themeScheme.primary, width: 2),
+                          foregroundColor: themeScheme.primary,
                         ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(step.description),
-
-                              /// NEW → Step type added under description
-                              Padding(
-                                padding: const EdgeInsets.only(top: 2),
-                                child: Text(
-                                  step.type.name[0].toUpperCase() +
-                                      step.type.name.substring(1),
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Close"),
+                      ),
+                    ),
+                  ),
+                if (mealPlanRecipes.containsKey(recipeKey)) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, bottom: 10),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: themeScheme.tertiaryFixedDim,
+                          borderRadius: BorderRadius.circular(30),
                         ),
-
-                        /// Duration shown right aligned
-                        if (step.duration != null)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              step.formattedDuration(),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black, // ✔ specifically BLACK
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.check,
+                              color: themeScheme.secondaryFixed),
+                        )),
+                  ),
+                ]
+              ],
+            )
           ],
         ),
       ),

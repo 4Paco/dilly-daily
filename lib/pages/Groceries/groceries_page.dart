@@ -39,6 +39,21 @@ class _GroceriesPageState extends State<GroceriesPage> {
     });
   }
 
+  double calculateGroceriesPrice() {
+    double total = 0.0;
+    var groceries = listeCourses.getExtended();
+
+    groceries.forEach((ingredient, quantity) {
+      if (ingredientsDict.contains(ingredient)) {
+        double pricePerUnit = ingredientsDict[ingredient]?['price'] ?? 0.0;
+        double qtt = quantity;
+        total += pricePerUnit * qtt;
+      }
+    });
+
+    return total;
+  }
+
   void selectIngredient(String ingredient, double? qtt) {
     listeCourses.addIngredient(ingredient, qtt);
     setState(() {});
@@ -140,40 +155,76 @@ class _GroceriesPageState extends State<GroceriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme themeScheme = Theme.of(context).colorScheme;
     return FutureBuilder(
         future: _loadGroceriesFuture, // Wait for allergiesList to load
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Show a loading indicator while waiting
-            return Center(child: CircularProgressIndicator());
+            return groceriesPageContent(context);
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
                 child: Text("Error loading allergies: ${snapshot.error}"));
           } else {
-            return Scaffold(
-              body: CustomScrollView(slivers: [
-                // Fixed AppBar
-                CustomSliverAppBar(title: "Wanted \n-fresh or canned-"),
-
-                // Scrollable Content
-                SliverList(
-                  delegate: GroceryList(
-                    onToggleGroceryList: toggleGroceryList,
-                  ),
-                ),
-              ]),
-              floatingActionButton: FloatingActionButton(
-                backgroundColor: themeScheme.primary,
-                foregroundColor: themeScheme.onPrimary,
-                onPressed: () {
-                  showAddGroceryDialog(context);
-                },
-                child: const Icon(Icons.add, size: 40),
-              ),
-            );
+            return groceriesPageContent(context);
           }
         });
+  }
+
+  Scaffold groceriesPageContent(BuildContext context) {
+    ColorScheme themeScheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      body: CustomScrollView(slivers: [
+        // Fixed AppBar
+        CustomSliverAppBar(title: "Wanted \n-fresh or canned-"),
+        if (!listeCourses.isEmpty)
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: themeScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Estimated total:",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: themeScheme.onPrimaryContainer,
+                    ),
+                  ),
+                  Text(
+                    "${calculateGroceriesPrice().toStringAsFixed(2)} €",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: themeScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+        // Scrollable Content
+        SliverList(
+          delegate: GroceryList(
+            onToggleGroceryList: toggleGroceryList,
+          ),
+        ),
+      ]),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: themeScheme.primary,
+        foregroundColor: themeScheme.onPrimary,
+        onPressed: () {
+          showAddGroceryDialog(context);
+        },
+        child: const Icon(Icons.add, size: 40),
+      ),
+    );
   }
 }

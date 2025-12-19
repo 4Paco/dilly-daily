@@ -1,14 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dilly_daily/data/recipes.dart' show recipesDict;
 import 'package:dilly_daily/models/Recipe.dart';
+import 'package:flutter/material.dart' show VoidCallback;
 import 'package:path_provider/path_provider.dart';
 
-class MyRecipes extends Iterable with Iterator {
+class MyRecipes extends Iterable implements Iterator {
   Map<String, Recipe> _recipesDict = {};
+  String _name = "";
+  String recipeFile;
 
   MyRecipes({this.recipeFile = "my_recipes"}) {
     _recipesDict = {};
+    recipeFile == "my_recipes"
+        ? _name = "myRecipes"
+        : _name = "mealPlanRecipes";
     load();
   }
 
@@ -16,7 +23,7 @@ class MyRecipes extends Iterable with Iterator {
   // // Use as iterator
   int get limit => _recipesDict.keys.length;
   int i = 0;
-  String recipeFile;
+
   @override
   int get current => i;
   @override
@@ -48,17 +55,61 @@ class MyRecipes extends Iterable with Iterator {
     return _recipesDict.keys.toList(growable: growable);
   }
 
+  final List<VoidCallback> _listeners = [];
+
+  void addListener(VoidCallback listener) {
+    _listeners.add(listener);
+  }
+
+  void removeListener(VoidCallback listener) {
+    _listeners.remove(listener);
+  }
+
+  void _notifyListeners() {
+    for (final listener in _listeners) {
+      listener();
+    }
+  }
+
+  MyRecipes? _listenedRecipes;
+
+  void linkToRecipes(MyRecipes listenedRecipes) {
+    _listenedRecipes = listenedRecipes;
+    _listenedRecipes!.addListener(_onRecipesDeleted);
+  }
+
+  void _onRecipesDeleted() {
+    bool hasChanges = false;
+
+    // Nettoyer dico
+    int old_len = _recipesDict.length;
+    _recipesDict.removeWhere((id, recipe) => !(recipesDict.containsKey(id)));
+
+    if (_recipesDict.length < old_len) {
+      hasChanges = true;
+    }
+
+    if (hasChanges) {
+      updateJson();
+    }
+  }
+
+  Iterable<String> get keys => _recipesDict.keys;
+  Iterable<Recipe> get values => _recipesDict.values;
+
   // General json handling
   Future<void> load() async {
     await ensureFileExists();
     final file = await _localFile;
     // Read the file
     final jsonString = await file.readAsString();
+    //print("stored jsonString of $_name : $jsonString");
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
       String id = key; //int.parse(key);
-      _recipesDict[id] = Recipe.fromJson(int.parse(key), data[key]);
+      _recipesDict[id] = Recipe.fromJson(key, data[key]);
     }
+    //print("decoded dict for $_name : $recipesDict");
   }
 
   Future<bool> isLoaded() async {
@@ -85,12 +136,13 @@ class MyRecipes extends Iterable with Iterator {
   }
 
   Future<void> updateJson() async {
-    print("updating MyRecipes JSON");
     final filePath = await _localFile;
     final json =
         _recipesDict.map((key, value) => MapEntry(key, value.toJson()));
+
     String jsonString = jsonEncode(json);
     filePath.writeAsString(jsonString);
+    //print("new $_name Json : $json");
   }
 
   void addRecipe(Recipe recette, {String recipeKey = ""}) {
@@ -102,29 +154,20 @@ class MyRecipes extends Iterable with Iterator {
     //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
     //int newKey = recette.hashCode;
     //_recipesDict[newKey] = recette;
-    //print("${recette.name} has been added to meal plan dict");
     _recipesDict[key] = recette;
     updateJson();
+    print("${recette.name} has been added to $_name");
   }
 
   void removeRecipe(String recipeKey) {
-    //print(
-    //    "DICT VALUES : ${_recipesDict.map((key, value) => MapEntry(key.toString(), value.name))}");
     if (_recipesDict.containsKey(recipeKey)) {
-      print(
-          "${_recipesDict[recipeKey]!.name} has been removed from meal plan dict");
       _recipesDict.remove(recipeKey);
+      _notifyListeners();
+      print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
     } else {
       throw ArgumentError(
-          "No such recipe in dict with this ID. Removal aborted");
+          "No such recipe in $_name with this ID $recipeKey: . Removal aborted");
     }
-    //if (_recipesDict.containsValue(recette)) {
-    //  _recipesDict.removeWhere((key, value) => value == recette);
-    //  print("${recette.name} has been removed from meal plan dict");
-    //} else {
-    //  throw ArgumentError(
-    //      "No such recipe in dict with this ID. Removal aborted");
-    //}
     updateJson();
   }
 }

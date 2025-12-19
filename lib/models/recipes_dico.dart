@@ -8,11 +8,50 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
-class RecipesDico extends Iterable with Iterator {
-  Map<String, Recipe> _recipesDict = {};
+class RecipesDico extends Iterable implements Iterator {
+  Map<String, Recipe> databaseDict = {};
   MyRecipes theirRecipes = myRecipes;
+  Map<String, Recipe> _bigDict = {};
 
-  int get limit => _recipesDict.keys.length;
+  Function? onMyRecipesChanged;
+
+  RecipesDico({bool fetch = true}) {
+    _bigDict = {};
+    if (fetch) {
+      load();
+    }
+    theirRecipes.addListener(() {
+      _bigDict = {};
+      for (String id in databaseDict.keys) {
+        _bigDict[id] = databaseDict[id]!;
+      }
+      reloadTheirRecipes();
+    });
+  }
+
+  bool containsKey(String val) {
+    return _bigDict.containsKey(val);
+  }
+
+  bool _isLoaded = false;
+  static List<String> dishTypes = [
+    "main course",
+    "side dish",
+    "dessert",
+    "appetizer",
+    "salad",
+    "bread",
+    "breakfast",
+    "soup",
+    "beverage",
+    "sauce",
+    "marinade",
+    "fingerfood",
+    "snack",
+    "drink"
+  ];
+
+  int get limit => _bigDict.keys.length;
   int i = 0;
   @override
   int get current => i;
@@ -23,14 +62,7 @@ class RecipesDico extends Iterable with Iterator {
   }
 
   @override
-  Iterator get iterator => _recipesDict.keys.iterator;
-
-  RecipesDico({bool fetch = true}) {
-    _recipesDict = {};
-    if (fetch) {
-      load();
-    }
-  }
+  Iterator get iterator => _bigDict.keys.iterator;
 
   Future<String> fetchRecipes() async {
     final response = await http
@@ -50,48 +82,49 @@ class RecipesDico extends Iterable with Iterator {
     final String jsonString = //await fetchRecipes();
         await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
-    // Recipe recipe = Recipe.fromJson(data);
     for (String key in data.keys) {
-      String id = key; //int.parse(key);
-      Recipe recipe = Recipe.fromJson(int.parse(key), data[key]);
-      // TODO: improve
-      for (String valKey in data[key].keys) {
-        if (valKey == "name") {
-          recipe.name = data[key][valKey];
-        } else if (valKey == "image") {
-          recipe.image = data[key][valKey];
-        } else if (valKey == "personalized") {
-          recipe.personalized = data[key][valKey];
-        } else if (valKey == "steps") {
-          recipe.steps = (data[key][valKey] as List)
-              .map((stepJson) => Step.fromJson(stepJson))
-              .toList();
-        } else if (valKey == "ingredients") {
-          recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
-              .map((key, value) => MapEntry(key, value as double));
-        } else if (valKey == "summary") {
-          recipe.summary = data[key][valKey];
-        }
-      }
+      String id = key;
+      Recipe recipe = Recipe.fromJson(key, data[key]);
+      //for (String valKey in data[key].keys) {
+      //  if (valKey == "name") {
+      //    recipe.name = data[key][valKey];
+      //  } else if (valKey == "image") {
+      //    recipe.image = data[key][valKey];
+      //  } else if (valKey == "personalized") {
+      //    recipe.personalized = data[key][valKey];
+      //  } else if (valKey == "steps") {
+      //    recipe.steps = (data[key][valKey] as List)
+      //        .map((stepJson) => Step.fromJson(stepJson))
+      //        .toList();
+      //  } else if (valKey == "ingredients") {
+      //    recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
+      //        .map((key, value) => MapEntry(key, value as double));
+      //  } else if (valKey == "summary") {
+      //    recipe.summary = data[key][valKey];
+      //  }
+      //}
 
-      _recipesDict[id] = recipe;
+      databaseDict[id] = recipe;
     }
 
-    for (String id in theirRecipes.toList()) {
-      _recipesDict[id] = theirRecipes[id]!;
+    for (String id in databaseDict.keys) {
+      _bigDict[id] = databaseDict[id]!;
     }
+    await theirRecipes.isLoaded();
+    reloadTheirRecipes();
+
+    _isLoaded = true;
   }
 
-  Future<bool> isLoaded() async {
-    if (_recipesDict.isEmpty) {
+  Future<void> isLoaded() async {
+    if (!_isLoaded) {
       await load();
     }
-    return _recipesDict.isNotEmpty;
   }
 
   Recipe? operator [](String recipe) {
-    if (_recipesDict.containsKey(recipe)) {
-      return _recipesDict[recipe];
+    if (_bigDict.containsKey(recipe)) {
+      return _bigDict[recipe];
     } else {
       return null;
     }
@@ -99,23 +132,31 @@ class RecipesDico extends Iterable with Iterator {
 
   @override
   List<String> toList({bool growable = true}) {
-    return _recipesDict.keys.toList(growable: growable);
+    return _bigDict.keys.toList(growable: growable);
   }
 
   void reloadTheirRecipes() {
     //_recipesDict.removeWhere((key, value) => key < 0);
-
-    for (String id in theirRecipes.toList()) {
-      _recipesDict[id] = theirRecipes[id]!;
+    for (String id in theirRecipes.keys) {
+      _bigDict[id] = theirRecipes[id]!;
     }
+    theirRecipes.values
+        .where((recipe) => recipe.personalized != 'Nope')
+        .forEach((recipe) {
+      _bigDict[recipe.personalized] = recipe;
+    });
   }
 
   Recipe getRecipe(String recipeId) {
-    if (_recipesDict.containsKey(recipeId)) {
-      return _recipesDict[recipeId]!;
+    if (_bigDict.containsKey(recipeId)) {
+      return _bigDict[recipeId]!;
     } else {
       throw ArgumentError('No such recipe with this ID. getRecipe aborted.');
     }
+  }
+
+  bool databaseContains(String recipeId) {
+    return databaseDict.keys.contains(recipeId);
   }
 
   void addRecipe(String recipeKey, String name,

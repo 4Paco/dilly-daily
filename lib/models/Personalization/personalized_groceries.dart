@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 
-class PersonalizedGroceries extends Iterable with Iterator {
+class PersonalizedGroceries extends Iterable implements Iterator {
   Set<String> _groceriesList = {};
   Set<String> _extendedGroceriesDict = {};
 

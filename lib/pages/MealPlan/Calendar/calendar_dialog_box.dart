@@ -1,4 +1,6 @@
+import 'dart:io' show File;
 import 'dart:math' as math;
+
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
@@ -24,7 +26,7 @@ class CalendarDialogBox extends StatelessWidget {
   final void Function(int) onModifyMeals;
   final void Function(String) onStartCooking;
   final double horizontalPadding = 50.0;
-  final double verticalPadding = 150;
+  final double verticalPadding = 166.5;
   final double verticalOffset = 50;
   final bool isAddedToGroceries;
   final int mealsModifier;
@@ -35,23 +37,23 @@ class CalendarDialogBox extends StatelessWidget {
     int nbMeals = 1;
 
     //set the default number of meals to cook for the recipe
-    nbMeals = weekMeals.where((day) => day[0] == recipeKey).length +
-        weekMeals.where((day) => day[1] == recipeKey).length;
+    nbMeals = personals.weekMeals.where((day) => day[0] == recipeKey).length +
+        personals.weekMeals.where((day) => day[1] == recipeKey).length;
     nbMeals = math.max(1, nbMeals);
 
     nbMeals *= mealsModifier;
 
     IconData icon;
-    if (favoriteRecipes.contains(recipeKey)) {
+    if (personals.favoriteRecipes.contains(recipeKey)) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
     }
 
     var imgDisplayed = recipesDict[recipeKey]!.image;
-    if (imgDisplayed.isEmpty) {
-      imgDisplayed = "assets/image/meals/placeholder.jpg";
-    }
+    //if (imgDisplayed.isEmpty) {
+    //  imgDisplayed = "assets/image/meals/placeholder.jpg";
+    //}
 
     return Padding(
       padding: EdgeInsets.only(
@@ -70,22 +72,28 @@ class CalendarDialogBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               child: SizedBox(
                   height: 800, //overflowing, but no error so it works
-                  child: FittedBox(
-                    fit: BoxFit.fill,
-                    clipBehavior: Clip.hardEdge,
-                    child: Stack(children: [
-                      Image.asset(
-                        imgDisplayed, // Ensures the image covers the button
+                  child: Stack(children: [
+                    imgDisplayed.isEmpty
+                        ? FittedBox(
+                            fit: BoxFit.fill,
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(
+                                "assets/image/meals/placeholder.jpg" //imgDisplayed, // Ensures the image covers the button
+                                ),
+                          )
+                        : Expanded(
+                            child: Image.file(
+                              File(imgDisplayed),
+                            ),
+                          ),
+                    Center(
+                      child: Container(
+                        width: 3535,
+                        height: 5300,
+                        color: Color.fromARGB(100, 0, 0, 0),
                       ),
-                      Center(
-                        child: Container(
-                          width: 3535,
-                          height: 5300,
-                          color: Color.fromARGB(100, 0, 0, 0),
-                        ),
-                      )
-                    ]),
-                  ))),
+                    )
+                  ]))),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

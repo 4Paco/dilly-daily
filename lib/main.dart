@@ -1,3 +1,4 @@
+import 'package:clarity_flutter/clarity_flutter.dart';
 import 'package:dilly_daily/pages/Account/account_page.dart';
 import 'package:dilly_daily/pages/Explore/explore_page.dart';
 import 'package:dilly_daily/pages/Groceries/groceries_page.dart';
@@ -6,7 +7,17 @@ import 'package:dilly_daily/pages/Write/write_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  final config = ClarityConfig(
+      projectId: "ukbsxmz277",
+      logLevel: LogLevel
+          .None // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
+      );
+
+  runApp(ClarityWidget(
+    app: MyApp(),
+    clarityConfig: config,
+  ));
+  //runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
