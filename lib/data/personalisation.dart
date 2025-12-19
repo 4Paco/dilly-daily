@@ -1,7 +1,7 @@
 import 'package:dilly_daily/models/Personalization/allergies.dart';
 import 'package:dilly_daily/models/Personalization/my_recipes.dart';
 import 'package:dilly_daily/models/Personalization/personalized_groceries.dart';
-import 'package:dilly_daily/models/Personalization/petites_merles.dart';
+import 'package:dilly_daily/models/petites_merles.dart';
 import 'package:dilly_daily/models/groceries.dart';
 
 Allergies allergiesList = Allergies();
