@@ -25,6 +25,7 @@
       "snack",
       "drink"
     ],
+    "gear": ["Oven"],
     "summary": "This recipe serves 2 and takes around 30min to make.\nOne portion of this dish costs about :"
   },
 
@@ -42,6 +43,7 @@
     "recipeLink": "https://saveurs-d-ici.blogspot.com/2015/01/muffin-la-farine-de-chataigne.html",
     "summary": "This recipe serves 1 week of breakfast for 1 and takes around 30min to make.\nOne portion of this dish costs about :",
     "dishTypes": ["dessert", "bread", "breakfast", "fingerfood", "snack"],
+    "gear": ["Oven"],
     "steps": [
       {
         "description": "Dans un saladier, battez les oeufs et ajoutez-y l'huile et le lait",
@@ -182,6 +184,7 @@
     "dishTypes": ["bread", "breakfast", "snack"],
     "recipeLink": "https://www.marmiton.org/recettes/recette_brioche-de-micheline-26eme-rencontre_40232.aspx",
     "summary": "This recipe serves 1 brioche and takes around 2h to make.\nOne portion of this dish costs about :",
+    "gear": ["Oven"],
     "steps": [
       {
         "description": "Mélanger la farine,la levure, le sucre et le sel.",
@@ -247,6 +250,7 @@
       "Garlic": 2.0
     },
     "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :",
+
     "steps": [
       {
         "description": "Boil water and cook pasta.",

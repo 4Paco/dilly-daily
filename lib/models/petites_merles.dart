@@ -20,6 +20,7 @@ class PetitesMerles {
     ["", ""],
     ["", ""]
   ];
+  List<String> _kitchenGear = [];
   final MyRecipes _myRecipes;
 
   PetitesMerles({
@@ -69,6 +70,7 @@ class PetitesMerles {
             ?.map((day) => List<String>.from(day as List<dynamic>))
             .toList() ??
         _weekMeals;
+    _kitchenGear = List<String>.from(json['_kitchenGear'] ?? []);
   }
 
   Future<bool> isLoaded() async {
@@ -81,7 +83,7 @@ class PetitesMerles {
   Future<File> get _localFile async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
-    return File('$path/personnel.json');
+    return File('$path/user.json');
   }
 
   Future<void> ensureFileExists() async {
@@ -101,6 +103,7 @@ class PetitesMerles {
       '_patience': _patience,
       '_favoriteRecipes': _favoriteRecipes,
       '_weekMeals': _weekMeals.map((day) => day).toList(),
+      '_kitchenGear': _kitchenGear,
     }; //_allergiesDict.map((key, value) => MapEntry(key, value));
     //final json = {};
     String jsonString = jsonEncode(json);
@@ -120,17 +123,23 @@ class PetitesMerles {
   }
 
   List<String> get favoriteRecipes =>
-      _FavoriteRecipesWrapper(_favoriteRecipes, updateJson);
+      _ShallowListWrapper(_favoriteRecipes, updateJson);
 
-  List<List<String>> get weekMeals => _WeekMealsWrapper(_weekMeals, updateJson);
+  List<String> get kitchenGear => _ShallowListWrapper(_kitchenGear, updateJson);
+  set kitchenGear(List<String> newList) {
+    _kitchenGear = newList;
+    updateJson();
+  }
+
+  List<List<String>> get weekMeals => _DeepListWrapper(_weekMeals, updateJson);
 }
 
 // Wrapper class for _favoriteRecipes to intercept modifications
-class _FavoriteRecipesWrapper extends ListBase<String> {
+class _ShallowListWrapper extends ListBase<String> {
   final List<String> _innerList;
   final void Function() _onModify;
 
-  _FavoriteRecipesWrapper(this._innerList, this._onModify);
+  _ShallowListWrapper(this._innerList, this._onModify);
 
   @override
   int get length => _innerList.length;
@@ -184,11 +193,11 @@ class _FavoriteRecipesWrapper extends ListBase<String> {
 }
 
 // Wrapper class for _weekMeals to intercept modifications
-class _WeekMealsWrapper extends ListBase<List<String>> {
+class _DeepListWrapper extends ListBase<List<String>> {
   final List<List<String>> _innerList;
   final void Function() _onModify;
 
-  _WeekMealsWrapper(this._innerList, this._onModify);
+  _DeepListWrapper(this._innerList, this._onModify);
 
   @override
   int get length => _innerList.length;
@@ -201,7 +210,7 @@ class _WeekMealsWrapper extends ListBase<List<String>> {
 
   @override
   List<String> operator [](int index) =>
-      _FavoriteRecipesWrapper(_innerList[index], _onModify);
+      _ShallowListWrapper(_innerList[index], _onModify);
 
   @override
   void operator []=(int index, List<String> value) {

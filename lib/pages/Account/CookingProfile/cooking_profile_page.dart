@@ -1,8 +1,7 @@
 import 'dart:math';
-
 import 'package:dilly_daily/data/personalisation.dart';
-import 'package:dilly_daily/models/ui/bloc_title.dart';
-import 'package:dilly_daily/models/ui/plus_minus_button.dart';
+import 'package:dilly_daily/pages/Account/account_page.dart';
+import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_slider/gradient_slider.dart';
 
@@ -38,7 +37,10 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
       children: [
         BlocTitle(texte: "Number of portions per meal"),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          PlusMinusButton(function: setDefaultMealsNumber, val: -1, texte: "-"),
+          PlusMinusButton(
+              function: setDefaultMealsNumber,
+              val: -1,
+              icondata: Icons.remove_rounded),
           Text(
             personals.defaultPersonNumber.toString(),
             style: nbStyle,
@@ -49,7 +51,11 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             size: 30,
             //color: themeScheme.primary,
           ),
-          PlusMinusButton(function: setDefaultMealsNumber, val: 1, texte: "+")
+          PlusMinusButton(
+            function: setDefaultMealsNumber,
+            val: 1,
+            icondata: Icons.add,
+          )
         ]),
         BlocTitle(texte: "Patience for cooking"),
         //Image.asset("assets/image/slider_thumb_cute.png")

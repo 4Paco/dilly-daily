@@ -1,8 +1,38 @@
 import 'package:dilly_daily/models/ui/custom_app_bar.dart';
+import 'package:dilly_daily/pages/Account/AccountSubPageScaffold.dart'
+    show AccountSubPageScaffold;
 import 'package:dilly_daily/pages/Account/CookingProfile/cooking_profile_page.dart';
-import 'package:dilly_daily/pages/Account/SpecialDiet/special_diet_page.dart';
-import 'package:dilly_daily/pages/Account/account_sub_page.dart';
+import 'package:dilly_daily/pages/Account/Kitchen/KitchenPage.dart';
+import 'package:dilly_daily/pages/Account/SpecialDiet/special_diet_page.dart'
+    show SpecialDietPage;
 import 'package:flutter/material.dart';
+
+class BlocTitle extends StatelessWidget {
+  const BlocTitle({
+    super.key,
+    required this.texte,
+  });
+
+  final String texte;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      //"Your forbidden ingredients"
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(
+            texte,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w700),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class AccountPage extends StatelessWidget {
   final accountSubmenus = <Map<String, dynamic>>[
@@ -14,29 +44,34 @@ class AccountPage extends StatelessWidget {
     },
     {
       "title": "My favorite meals",
-      'icon': Icons.favorite_border,
-      "page": Text("My favorite meals")
+      "icon": Icons.favorite_border,
+      "page": const Text("My favorite meals")
     },
     {
       "title": "My kitchen",
-      'icon': Icons.blender_rounded,
-      "page": Text("My kitchen")
+      "icon": Icons.blender_rounded,
+      "page": const KitchenPage()
     },
     {
       "title": "My friends",
-      'icon': Icons.handshake_outlined,
-      "page": Text("My friends")
+      "icon": Icons.handshake_outlined,
+      "page": const Text("My friends")
     },
     {
       "title": "Notifications",
-      'icon': Icons.notifications_outlined,
-      "page": Text("Notifications")
+      "icon": Icons.notifications_outlined,
+      "page": const Text("Notifications")
     },
-    {"title": "Help", 'icon': Icons.help_outline, "page": Text("Help")},
+    {
+      "title": "Help",
+      "icon": Icons.help_outline,
+      "page": const Text("Help"),
+      "fullScreen": false
+    },
     {
       "title": "About",
-      'icon': Icons.info_outline_rounded,
-      "page": Text("About")
+      "icon": Icons.info_outline_rounded,
+      "page": const Text("About")
     },
   ];
 
@@ -111,7 +146,8 @@ class AccountPage extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (context) => AccountSubPage(item: item),
+                          builder: (context) => AccountSubPageScaffold(
+                              title: item["title"], body: item["page"]),
                         ));
                   },
                 ),

@@ -46,6 +46,7 @@ class _RecipeFormState extends State<RecipeForm> {
   late final TextEditingController linkController;
 
   late bool isDishTypeExpanded;
+  late bool isUtensilsExpanded;
   late bool isIngredientExpanded;
   late bool isStepExpanded; // Track whether the section is expanded
 
@@ -59,6 +60,7 @@ class _RecipeFormState extends State<RecipeForm> {
 
   late Map<String, double> _tempIngredients;
   late List<String> _tempDishTypes;
+  late List<String> _tempUtensils;
   late List<Step> _tempSteps;
 
   @override
@@ -74,6 +76,7 @@ class _RecipeFormState extends State<RecipeForm> {
     _tempIngredients =
         Map<String, double>.from(widget.widget.recette.ingredients);
     _tempDishTypes = List<String>.from(widget.widget.recette.dishTypes);
+    _tempUtensils = List<String>.from(widget.widget.recette.necessaryGear);
     _tempSteps = widget.widget.recette.steps
         .map((step) => Step(
               description: step.description,
@@ -82,6 +85,7 @@ class _RecipeFormState extends State<RecipeForm> {
             ))
         .toList();
     isDishTypeExpanded = _tempDishTypes.isEmpty;
+    isUtensilsExpanded = _tempUtensils.isEmpty;
     isIngredientExpanded = _tempIngredients.isEmpty;
     isStepExpanded = _tempSteps.isEmpty;
     //
@@ -314,6 +318,7 @@ class _RecipeFormState extends State<RecipeForm> {
                     }).toList(),
                   )
                 : Wrap(
+                    spacing: 10,
                     // Computer-sized screen
                     children: RecipesDico.dishTypes.where((dish) {
                       return isDishTypeExpanded ||
@@ -328,6 +333,87 @@ class _RecipeFormState extends State<RecipeForm> {
                               _tempDishTypes.add(dish);
                             } else {
                               _tempDishTypes.remove(dish);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+            //
+            // Utensils Display
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isUtensilsExpanded = !isUtensilsExpanded; // Toggle visibility
+                });
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CategoryTitleBloc(cat: "Necessary cookware"),
+                  Icon(
+                    isUtensilsExpanded
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    size: 30,
+                    color: themeScheme.tertiary,
+                  ),
+                ],
+              ),
+            ),
+            isPhoneSized
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Wrap(
+                      spacing: 10,
+                      // Computer-sized screen
+                      children: RecipesDico.kitchenGear.where((gear) {
+                        return isUtensilsExpanded ||
+                            _tempUtensils.contains(gear.name);
+                      }).map((gear) {
+                        return ChoiceChip(
+                          label: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(gear.icon),
+                              Text(gear.name.capitalize()),
+                            ],
+                          ),
+                          selected: _tempUtensils.contains(gear.name),
+                          onSelected: (selected) {
+                            setState(() {
+                              if (selected) {
+                                _tempUtensils.add(gear.name);
+                              } else {
+                                _tempUtensils.remove(gear.name);
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  )
+                : Wrap(
+                    spacing: 10,
+                    // Computer-sized screen
+                    children: RecipesDico.kitchenGear.where((gear) {
+                      return isUtensilsExpanded ||
+                          _tempUtensils.contains(gear.name);
+                    }).map((gear) {
+                      return ChoiceChip(
+                        label: Row(
+                          children: [
+                            Icon(gear.icon),
+                            Text(gear.name.capitalize()),
+                          ],
+                        ),
+                        selected: _tempUtensils.contains(gear.name),
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) {
+                              _tempUtensils.add(gear.name);
+                            } else {
+                              _tempUtensils.remove(gear.name);
                             }
                           });
                         },
@@ -620,85 +706,6 @@ class _RecipeFormState extends State<RecipeForm> {
               ],
             ],
 
-            //
-            // Steps display
-            //TextButton(
-            //  onPressed: () {
-            //    setState(() {
-            //      isStepExpanded = !isStepExpanded; // Toggle visibility
-            //    });
-            //  },
-            //  child: Row(
-            //    crossAxisAlignment: CrossAxisAlignment.end,
-            //    children: [
-            //      CategoryTitleBloc(cat: "Steps"),
-            //      Icon(
-            //        isStepExpanded
-            //            ? Icons.keyboard_arrow_down_rounded
-            //            : Icons.keyboard_arrow_up_rounded,
-            //        size: 30,
-            //        color: themeScheme.tertiary,
-            //      ),
-            //    ],
-            //  ),
-            //),
-            //if (isStepExpanded) ...[
-            //  Column(children: [
-            //    if (_tempSteps.isNotEmpty) ...[
-            //      Column(
-            //          //Forbidden ingredients bloc
-            //          mainAxisSize: MainAxisSize.min,
-            //          children: [
-            //            for (var step in _tempSteps)
-            //              StepElement(
-            //                  initialStep: step,
-            //                  ingredient: "",
-            //                  onPressed: () =>
-            //                      {_tempSteps.remove(step), setState(() {})},
-            //                  onChanged: (val) {
-            //                    step = step.copy(description: val);
-            //                    setState(() {});
-            //                  }),
-            //          ]),
-            //    ],
-            //    if (!_isAddingIngredient)
-            //      (TextButton(
-            //        onPressed: () {
-            //          setState(() {
-            //            _isAddingIngredient = true;
-            //          });
-            //        },
-            //        child: ListTile(
-            //          leading: Icon(
-            //            Icons.add_circle_outline,
-            //            size: 25,
-            //          ),
-            //          title: Row(
-            //            children: [
-            //              Text("Add step"),
-            //            ],
-            //          ),
-            //          iconColor: themeScheme.onTertiaryFixedVariant,
-            //          textColor: themeScheme.onTertiaryFixedVariant,
-            //        ),
-            //      ))
-            //    else
-            //      Column(
-            //        children: [
-            //          ListTile(title: Text("Empty")),
-            //          TextButton(
-            //            onPressed: () {
-            //              setState(() {
-            //                _isAddingIngredient = false;
-            //              });
-            //            },
-            //            child: Text("Cancel",
-            //                style: TextStyle(color: themeScheme.error)),
-            //          ),
-            //        ],
-            //      ),
-            //  ]),
-            //],
             ////
             //Save Button
             //
@@ -722,6 +729,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         steps: _tempSteps,
                         servings: widget.widget.recette.servings,
                         dishTypes: _tempDishTypes,
+                        necessaryGear: _tempUtensils,
                         personalized: widget.widget.recette.personalized,
                       );
 

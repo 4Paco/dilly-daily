@@ -41,6 +41,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
   void toggleMealPlan(String recipeKey) {
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
+        print("mealPlanRecipes.containsKey(recipeKey)");
         mealPlanRecipes.removeRecipe(recipeKey);
 
         for (int day = 0; day < personals.weekMeals.length; day++) {
@@ -58,6 +59,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
         String personalized = recette.personalized;
 
         if (mealPlanRecipes.containsKey(personalized)) {
+          print("mealPlanRecipes.containsKey(personalized)");
           //if the recipe is edited and original is in MealPlan
           mealPlanRecipes.removeRecipe(personalized);
 
@@ -73,6 +75,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
         } else {
           //just checking the 'edited versions' => always remember the original ID
           if (recette.personalized != "Nope") {
+            print("recette.personalized != 'Nope'");
             recetteId = recette.personalized;
           }
 
