@@ -1,6 +1,5 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/KitchenGear.dart';
-import 'package:dilly_daily/models/UserProfile.dart';
 import 'package:flutter/material.dart';
 
 List<Gear> kitchenGear = [
@@ -53,9 +52,7 @@ class _KitchenPageState extends State<KitchenPage> {
         .map((entry) => entry.key)
         .toList();
 
-    final profile = UserProfile(kitchenGear: selectedGear);
     personals.kitchenGear = selectedGear;
-    await profile.save();
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Profile updated and saved!")),

@@ -161,9 +161,10 @@ class MyRecipes extends Iterable implements Iterator {
 
   void removeRecipe(String recipeKey) {
     if (_recipesDict.containsKey(recipeKey)) {
+      print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
       _recipesDict.remove(recipeKey);
       _notifyListeners();
-      print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
+      
     } else {
       throw ArgumentError(
           "No such recipe in $_name with this ID $recipeKey: . Removal aborted");

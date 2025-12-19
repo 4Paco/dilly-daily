@@ -9,6 +9,7 @@ class Recipe {
   String personalized;
   List<Step> steps;
   Map<String, double> ingredients;
+  List<String> necessaryGear;
   String summary;
   int servings;
   String recipeLink;
@@ -21,6 +22,7 @@ class Recipe {
       this.summary = "",
       this.steps = const [],
       this.ingredients = const {},
+      this.necessaryGear = const [],
       this.personalized = "Nope",
       this.recipeLink = "",
       this.dishTypes = const [],
@@ -43,6 +45,7 @@ class Recipe {
             ? Map<String, double>.from(json['ingredients']
                 .map((key, value) => MapEntry(key, (value as num).toDouble())))
             : {},
+        necessaryGear = List<String>.from(json['gear'] ?? []),
         steps = json['steps'] != null
             ? (json['steps'] as List)
                 .map((item) => Step.fromJson(item))
@@ -60,6 +63,7 @@ class Recipe {
       if (image != "") 'image': image,
       if (servings > 1) 'servings': servings,
       if (dishTypes.isNotEmpty) 'dishTypes': dishTypes,
+      if (necessaryGear.isNotEmpty) 'gear': necessaryGear,
       if (personalized != "Nope") 'personalized': personalized,
       'steps': steps.map((s) => s.toJson()).toList(),
       'ingredients': ingredients,
