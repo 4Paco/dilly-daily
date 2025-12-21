@@ -7,7 +7,7 @@ import 'package:dilly_daily/models/Personalization/my_recipes.dart'
     show MyRecipes;
 import 'package:path_provider/path_provider.dart';
 
-class PetitesMerles {
+class UserProfile {
   int _defaultPersonNumber = 0;
   double _patience = 0.5;
   List<String> _favoriteRecipes = [];
@@ -23,7 +23,7 @@ class PetitesMerles {
   List<String> _kitchenGear = [];
   final MyRecipes _myRecipes;
 
-  PetitesMerles({
+  UserProfile({
     required MyRecipes myRecipes,
   }) : _myRecipes = myRecipes {
     load();

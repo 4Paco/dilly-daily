@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:core'
+    show Function, Iterable, Map, Set, String, bool, override, print;
 
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart' show Recipe;
@@ -6,9 +8,10 @@ import 'package:dilly_daily/pages/Explore/clipper.dart'
     show ConvexConcaveClipper;
 import 'package:dilly_daily/pages/Explore/recipe_dialog_box.dart';
 import 'package:flutter/material.dart';
+import 'package:popover/popover.dart';
 
 // ignore: must_be_immutable
-class RecipesResearchBar extends StatelessWidget {
+class RecipesResearchBar extends StatefulWidget {
   RecipesResearchBar({
     super.key,
     required this.onEditRecipe,
@@ -21,7 +24,28 @@ class RecipesResearchBar extends StatelessWidget {
   final void Function(String) onToggleFavorite;
   final void Function(String) onEditRecipe;
   final void Function() reload;
+
+  @override
+  State<RecipesResearchBar> createState() => _RecipesResearchBarState();
+}
+
+class _RecipesResearchBarState extends State<RecipesResearchBar> {
   var valueKey = UniqueKey();
+
+  bool useFoodPreferences = true;
+
+  bool useKitchenPreferences = true;
+
+  void foodToggled() {
+    useFoodPreferences = !useFoodPreferences;
+    setState(() {});
+  }
+
+  void kitchenToggled() {
+    setState(() {
+      useKitchenPreferences = !useKitchenPreferences;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +68,7 @@ class RecipesResearchBar extends StatelessWidget {
                   onSelected: (Map<String, String> selectedOption) {
                     String recipeKey = selectedOption['id']!;
                     //reset the widget to make the typed-in content disappear
-                    reload();
+                    widget.reload();
                     valueKey = UniqueKey();
                     showAdaptiveDialog(
                       context: context,
@@ -53,9 +77,9 @@ class RecipesResearchBar extends StatelessWidget {
                           builder: (context, setState) {
                             return RecipeDialogBox(
                               recipeKey: recipeKey,
-                              onToggleMealPlan: onToggleMealPlan,
-                              onToggleFavorite: onToggleFavorite,
-                              onEditRecipe: onEditRecipe,
+                              onToggleMealPlan: widget.onToggleMealPlan,
+                              onToggleFavorite: widget.onToggleFavorite,
+                              onEditRecipe: widget.onEditRecipe,
                             );
                           },
                         );
@@ -72,7 +96,7 @@ class RecipesResearchBar extends StatelessWidget {
                       onTapOutside: (event) => {
                         FocusScope.of(context).unfocus(),
                         valueKey = UniqueKey(),
-                        reload(),
+                        widget.reload(),
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none, // Removes the bottom line
@@ -91,7 +115,13 @@ class RecipesResearchBar extends StatelessWidget {
           ),
           Transform.translate(
             offset: const Offset(-8, 0),
-            child: FilterButton(themeScheme: themeScheme),
+            child: FilterButton(
+              themeScheme: themeScheme,
+              foodBool: useFoodPreferences,
+              onFoodToggled: foodToggled,
+              kitchenBool: useKitchenPreferences,
+              onKitchenToggled: kitchenToggled,
+            ),
           ),
         ],
       ),
@@ -115,12 +145,20 @@ class RecipesResearchBar extends StatelessWidget {
 }
 
 class FilterButton extends StatelessWidget {
-  const FilterButton({
+  FilterButton({
     super.key,
     required this.themeScheme,
+    required this.foodBool,
+    required this.onFoodToggled,
+    required this.kitchenBool,
+    required this.onKitchenToggled,
   });
 
   final ColorScheme themeScheme;
+  bool foodBool;
+  final void Function() onFoodToggled;
+  bool kitchenBool;
+  final void Function() onKitchenToggled;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +176,112 @@ class FilterButton extends StatelessWidget {
           ),
         ],
       ),
-      child: IconButton(onPressed: () {}, icon: Icon(Icons.tune_rounded)),
+      child: IconButton(
+          onPressed: () {
+            showPopover(
+              context: context,
+              bodyBuilder: (context) => FilteringContent(
+                useFoodPreferences: foodBool,
+                onFoodToggled: onFoodToggled,
+                useKitchenPreferences: kitchenBool,
+                onKitchenToggled: onKitchenToggled,
+              ),
+              direction: PopoverDirection.bottom,
+              backgroundColor: themeScheme.tertiaryFixed,
+              barrierColor: Colors.transparent,
+              shadow: [
+                BoxShadow(
+                    color: Color(0x1F000000),
+                    blurRadius: 10,
+                    offset: Offset(-2, -1))
+              ],
+              width: 200,
+              arrowHeight: 17,
+              arrowWidth: 12,
+              arrowDxOffset: 24,
+              arrowDyOffset: 2,
+              contentDyOffset: -12,
+            );
+          },
+          icon: Icon(Icons.tune_rounded)),
     );
+  }
+}
+
+class FilteringContent extends StatefulWidget {
+  FilteringContent({
+    super.key,
+    required this.useFoodPreferences,
+    required this.onFoodToggled,
+    required this.useKitchenPreferences,
+    required this.onKitchenToggled,
+  });
+
+  bool useFoodPreferences;
+  final void Function() onFoodToggled;
+  bool useKitchenPreferences;
+  final void Function() onKitchenToggled;
+
+  @override
+  State<FilteringContent> createState() => _FilteringContentState();
+}
+
+class _FilteringContentState extends State<FilteringContent> {
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: 200),
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 5),
+              title: Text("Use your food preferences"),
+              trailing: Switch(
+                activeTrackColor: Colors.lightGreen,
+                inactiveTrackColor: Colors.deepOrange,
+                thumbColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
+                  return Colors.white;
+                }),
+                trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
+                    (Set<WidgetState> states) {
+                  return const Color.fromARGB(
+                      20, 0, 0, 0); // Consistent outline color.
+                }),
+                value: widget.useFoodPreferences,
+                onChanged: (value) {
+                  widget.onFoodToggled();
+                  widget.useFoodPreferences = !widget.useFoodPreferences;
+                  setState(() {});
+                },
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 5),
+              title: Text("Use your kitchen preferences"),
+              trailing: Switch(
+                activeTrackColor: Colors.lightGreen,
+                inactiveTrackColor: Colors.deepOrange,
+                thumbColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
+                  return Colors.white;
+                }),
+                trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
+                    (Set<WidgetState> states) {
+                  return const Color.fromARGB(
+                      20, 0, 0, 0); // Consistent outline color.
+                }),
+                value: widget.useKitchenPreferences,
+                onChanged: (value) {
+                  widget.onKitchenToggled();
+                  widget.useKitchenPreferences = !widget.useKitchenPreferences;
+                  setState(() {});
+                },
+              ),
+            )
+          ],
+        ));
   }
 }
