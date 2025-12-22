@@ -2,6 +2,7 @@ import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart' show Recipe;
+import 'package:dilly_daily/models/UserProfile.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Explore/favorite_carousel.dart';
@@ -11,41 +12,43 @@ import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
 List<String> generateSuggestions(Map<String, bool> activePreferences) {
-  return recipesDict.entries
-      .where((entry) {
-        Recipe recette = entry.value;
+  Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+      recettesFiltrees(activePreferences);
+  return recettesAcceptees.map((entry) => entry.key).toList().take(24).toList();
+}
 
-        bool satisfyFoodPreferences = true;
-        if (activePreferences["food"]!) {
-          // La recette ne doit contenir AUCUN ingrédient mal aimé
-          satisfyFoodPreferences = !allergiesList.keys
-              .any((ingredient) => recette.ingredients.containsKey(ingredient));
-          if (!satisfyFoodPreferences) return false; //on arrête les frais
-        }
+Iterable<MapEntry<String, Recipe>> recettesFiltrees(
+    Map<String, bool> activePreferences) {
+  return recipesDict.entries.where((entry) {
+    Recipe recette = entry.value;
 
-        bool satisfyGearPreferences = true;
-        if (activePreferences["kitchen"]!) {
-          // La recette ne doit demander AUCUN kitchen gear non possédé par l'utilisateur
-          satisfyGearPreferences = recette.necessaryGear
-              .every((gear) => personals.kitchenGear.contains(gear));
-          if (!satisfyGearPreferences) return false;
-        }
+    bool satisfyFoodPreferences = true;
+    if (activePreferences["food"]!) {
+      // La recette ne doit contenir AUCUN ingrédient mal aimé
+      satisfyFoodPreferences = !allergiesList.keys
+          .any((ingredient) => recette.ingredients.containsKey(ingredient));
+      if (!satisfyFoodPreferences) return false; //on arrête les frais
+    }
 
-        bool satisfyEnergyPreferences = true;
-        if (activePreferences["energy"]!) {
-          // La recette ne doit pas être trop longue à préparer
-          satisfyEnergyPreferences =
-              recette.prepDuration() <= personals.patienceMinutes;
-        }
+    bool satisfyGearPreferences = true;
+    if (activePreferences["kitchen"]!) {
+      // La recette ne doit demander AUCUN kitchen gear non possédé par l'utilisateur
+      satisfyGearPreferences = recette.necessaryGear
+          .every((gear) => personals.kitchenGear.contains(gear));
+      if (!satisfyGearPreferences) return false;
+    }
 
-        return satisfyEnergyPreferences &&
-            satisfyFoodPreferences &&
-            satisfyGearPreferences;
-      })
-      .map((entry) => entry.key)
-      .toList()
-      .take(6)
-      .toList();
+    bool satisfyEnergyPreferences = true;
+    if (activePreferences["energy"]!) {
+      // La recette ne doit pas être trop longue à préparer
+      satisfyEnergyPreferences =
+          recette.prepDuration() <= personals.patienceMinutes;
+    }
+
+    return satisfyEnergyPreferences &&
+        satisfyFoodPreferences &&
+        satisfyGearPreferences;
+  });
 }
 
 class ExplorePage extends StatefulWidget {
@@ -59,6 +62,7 @@ class _ExplorePageState extends State<ExplorePage>
 
   // État de recherche
   Set<String> activeSearchIngredients = {};
+  double activePatience = -1;
   Map<String, bool> activePreferences = {
     "food": true,
     "kitchen": true,
@@ -162,10 +166,17 @@ class _ExplorePageState extends State<ExplorePage>
 
   //Gérer la modification des filtres de recherches
   void handleFilterChange(Map<String, bool> newFilters) {
-    setState(() {
-      newFilters.entries
-          .map((entry) => activePreferences[entry.key] = entry.value);
-    });
+    newFilters.entries
+        .map((entry) => activePreferences[entry.key] = entry.value);
+    if (activePatience > 0) {
+      // a 'Patience search' is ongoing
+      searchResults = _filterRecipesByPatience(activePatience);
+    }
+    if (activeSearchIngredients.isNotEmpty) {
+      // an ingredient search is ongoing
+      searchResults = _filterRecipesByIngredients(activeSearchIngredients);
+    }
+    setState(() {});
   }
 
   // Gérer l'ajout d'ingrédients pour la recherche multi-ingrédients
@@ -188,6 +199,12 @@ class _ExplorePageState extends State<ExplorePage>
     });
   }
 
+  void handlePatienceSearch(double newPatience) {
+    activePatience = newPatience;
+    searchResults = _filterRecipesByPatience(activePatience);
+    setState(() {});
+  }
+
   void removeIngredient(String ingredient) {
     setState(() {
       activeSearchIngredients.remove(ingredient);
@@ -201,7 +218,10 @@ class _ExplorePageState extends State<ExplorePage>
 
   // Filtrer les recettes par ingrédients (intersection)
   List<String> _filterRecipesByIngredients(Set<String> ingredients) {
-    return recipesDict.entries
+    Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+        recettesFiltrees(activePreferences);
+
+    return recettesAcceptees
         .where((entry) {
           Recipe recette = entry.value;
           // La recette doit contenir TOUS les ingrédients recherchés
@@ -212,10 +232,30 @@ class _ExplorePageState extends State<ExplorePage>
         .toList();
   }
 
+  // Filtrer les recettes par ingrédients (intersection)
+  List<String> _filterRecipesByPatience(double patience) {
+    //The personal value of patience needs to be ignored
+    Map<String, bool> preferences = Map<String, bool>.from(activePreferences);
+    preferences["energy"] = false;
+    Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+        recettesFiltrees(preferences);
+
+    return recettesAcceptees
+        .where((entry) {
+          Recipe recette = entry.value;
+          Duration maxTolerated = UserProfile.getMinutesFromPatience(patience);
+          // La recette doit contenir TOUS les ingrédients recherchés
+          return recette.prepDuration() <= maxTolerated;
+        })
+        .map((entry) => entry.key)
+        .toList();
+  }
+
   // Clear toute la recherche
   void clearSearch() {
     setState(() {
       activeSearchIngredients.clear();
+      activePatience = -1;
       searchResults = null;
     });
   }
@@ -273,7 +313,9 @@ class _ExplorePageState extends State<ExplorePage>
                     setState(() {});
                   },
                   onIngredientSearch: handleIngredientSearch,
+                  onPatienceSearch: handlePatienceSearch,
                   activeSearchIngredients: activeSearchIngredients,
+                  activePatience: activePatience,
                   activePreferences: activePreferences,
                   updatePreferences: handleFilterChange,
                   reload: clearSearch)),

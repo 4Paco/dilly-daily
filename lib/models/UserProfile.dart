@@ -116,12 +116,31 @@ class UserProfile {
     updateJson();
   }
 
+  //patience range between 0.1 and 0.5
+  static int minutes_01 = 5;
+  static int minutes_05 = 35;
+  static int minutes_08 = 60;
   Duration get patienceMinutes {
     if (_patience <= 0.5) {
-      return Duration(minutes: (_patience * 30 / 0.4 - 2.5).ceil());
+      return Duration(
+          minutes: (_patience * (minutes_05 - minutes_01) / 0.4 - 2.5).ceil());
     }
     if (_patience <= 0.8) {
-      return Duration(minutes: (_patience * 25 / 0.3 - 6).floor());
+      return Duration(
+          minutes: (_patience * (minutes_08 - minutes_05) / 0.3 - 6).floor());
+    }
+
+    return Duration(days: 2); //~= +inf pour la valeur max
+  }
+
+  static Duration getMinutesFromPatience(double patience) {
+    if (patience <= 0.5) {
+      return Duration(
+          minutes: (patience * (minutes_05 - minutes_01) / 0.4 - 2.5).ceil());
+    }
+    if (patience <= 0.8) {
+      return Duration(
+          minutes: (patience * (minutes_08 - minutes_05) / 0.3 - 6).floor());
     }
 
     return Duration(days: 2); //~= +inf pour la valeur max
