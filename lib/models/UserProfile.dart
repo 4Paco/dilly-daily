@@ -116,6 +116,17 @@ class UserProfile {
     updateJson();
   }
 
+  Duration get patienceMinutes {
+    if (_patience <= 0.5) {
+      return Duration(minutes: (_patience * 30 / 0.4 - 2.5).ceil());
+    }
+    if (_patience <= 0.8) {
+      return Duration(minutes: (_patience * 25 / 0.3 - 6).floor());
+    }
+
+    return Duration(days: 2); //~= +inf pour la valeur max
+  }
+
   int get defaultPersonNumber => _defaultPersonNumber;
   set defaultPersonNumber(int value) {
     _defaultPersonNumber = value;
