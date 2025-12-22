@@ -34,9 +34,10 @@ dependencies:
   http: ^1.6.0
   uuid: ^4.4.2
 
-  image_picker: ^0.8.7+3
+  image_picker: ^1.2.1
   image_cropper: ^11.0.0
   dotted_border: ^3.1.0
+  popover: ^0.4.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

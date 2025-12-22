@@ -2,15 +2,53 @@ import 'package:dilly_daily/data/ingredients.dart';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart' show Recipe;
+import 'package:dilly_daily/models/UserProfile.dart';
 import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Explore/favorite_carousel.dart';
 import 'package:dilly_daily/pages/Explore/recipe_preview.dart';
+import 'package:dilly_daily/pages/Explore/recipes_research_bar.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
-List<String> generateSuggestions() {
-  return recipesDict.toList().take(6).toList();
+List<String> generateSuggestions(Map<String, bool> activePreferences) {
+  Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+      recettesFiltrees(activePreferences);
+  return recettesAcceptees.map((entry) => entry.key).toList().take(24).toList();
+}
+
+Iterable<MapEntry<String, Recipe>> recettesFiltrees(
+    Map<String, bool> activePreferences) {
+  return recipesDict.entries.where((entry) {
+    Recipe recette = entry.value;
+
+    bool satisfyFoodPreferences = true;
+    if (activePreferences["food"]!) {
+      // La recette ne doit contenir AUCUN ingrédient mal aimé
+      satisfyFoodPreferences = !allergiesList.keys
+          .any((ingredient) => recette.ingredients.containsKey(ingredient));
+      if (!satisfyFoodPreferences) return false; //on arrête les frais
+    }
+
+    bool satisfyGearPreferences = true;
+    if (activePreferences["kitchen"]!) {
+      // La recette ne doit demander AUCUN kitchen gear non possédé par l'utilisateur
+      satisfyGearPreferences = recette.necessaryGear
+          .every((gear) => personals.kitchenGear.contains(gear));
+      if (!satisfyGearPreferences) return false;
+    }
+
+    bool satisfyEnergyPreferences = true;
+    if (activePreferences["energy"]!) {
+      // La recette ne doit pas être trop longue à préparer
+      satisfyEnergyPreferences =
+          recette.prepDuration() <= personals.patienceMinutes;
+    }
+
+    return satisfyEnergyPreferences &&
+        satisfyFoodPreferences &&
+        satisfyGearPreferences;
+  });
 }
 
 class ExplorePage extends StatefulWidget {
@@ -18,8 +56,20 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> {
+class _ExplorePageState extends State<ExplorePage>
+    with SingleTickerProviderStateMixin {
   Future<void>? _loadGroceriesFuture; //= Future.value();
+
+  // État de recherche
+  Set<String> activeSearchIngredients = {};
+  double activePatience = -1;
+  Map<String, bool> activePreferences = {
+    "food": true,
+    "kitchen": true,
+    "energy": true
+  };
+  List<String>? searchResults;
+
   @override
   void initState() {
     super.initState();
@@ -114,6 +164,106 @@ class _ExplorePageState extends State<ExplorePage> {
     setState(() {});
   }
 
+  //Gérer la modification des filtres de recherches
+  void handleFilterChange(Map<String, bool> newFilters) {
+    newFilters.entries
+        .map((entry) => activePreferences[entry.key] = entry.value);
+    if (activePatience > 0) {
+      // a 'Patience search' is ongoing
+      searchResults = _filterRecipesByPatience(activePatience);
+    }
+    if (activeSearchIngredients.isNotEmpty) {
+      // an ingredient search is ongoing
+      searchResults = _filterRecipesByIngredients(activeSearchIngredients);
+    }
+    setState(() {});
+  }
+
+  // Gérer l'ajout d'ingrédients pour la recherche multi-ingrédients
+  void handleIngredientSearch(String ingredient) {
+    setState(() {
+      if (activeSearchIngredients.contains(ingredient)) {
+        // Si l'ingrédient est déjà dans la recherche, on le retire
+        activeSearchIngredients.remove(ingredient);
+      } else {
+        // Sinon on l'ajoute
+        activeSearchIngredients.add(ingredient);
+      }
+
+      // Recalculer les résultats de recherche
+      if (activeSearchIngredients.isEmpty) {
+        searchResults = null;
+      } else {
+        searchResults = _filterRecipesByIngredients(activeSearchIngredients);
+      }
+    });
+  }
+
+  void handlePatienceSearch(double newPatience) {
+    activePatience = newPatience;
+    searchResults = _filterRecipesByPatience(activePatience);
+    setState(() {});
+  }
+
+  void removeIngredient(String ingredient) {
+    setState(() {
+      activeSearchIngredients.remove(ingredient);
+      if (activeSearchIngredients.isEmpty) {
+        searchResults = null;
+      } else {
+        searchResults = _filterRecipesByIngredients(activeSearchIngredients);
+      }
+    });
+  }
+
+  // Filtrer les recettes par ingrédients (intersection)
+  List<String> _filterRecipesByIngredients(Set<String> ingredients) {
+    Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+        recettesFiltrees(activePreferences);
+
+    return recettesAcceptees
+        .where((entry) {
+          Recipe recette = entry.value;
+          // La recette doit contenir TOUS les ingrédients recherchés
+          return ingredients.every(
+              (ingredient) => recette.ingredients.containsKey(ingredient));
+        })
+        .map((entry) => entry.key)
+        .toList();
+  }
+
+  // Filtrer les recettes par ingrédients (intersection)
+  List<String> _filterRecipesByPatience(double patience) {
+    //The personal value of patience needs to be ignored
+    Map<String, bool> preferences = Map<String, bool>.from(activePreferences);
+    preferences["energy"] = false;
+    Iterable<MapEntry<String, Recipe>> recettesAcceptees =
+        recettesFiltrees(preferences);
+
+    return recettesAcceptees
+        .where((entry) {
+          Recipe recette = entry.value;
+          Duration maxTolerated = UserProfile.getMinutesFromPatience(patience);
+          // La recette doit contenir TOUS les ingrédients recherchés
+          return recette.prepDuration() <= maxTolerated;
+        })
+        .map((entry) => entry.key)
+        .toList();
+  }
+
+  // Clear toute la recherche
+  void clearSearch() {
+    setState(() {
+      activeSearchIngredients.clear();
+      activePatience = -1;
+      searchResults = null;
+    });
+  }
+
+  void reload() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -135,7 +285,13 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   Scaffold explorePageContent() {
+    List<String> recipesToShow =
+        searchResults ?? generateSuggestions(activePreferences);
+    String sectionTitle = searchResults != null
+        ? "Search Results (${searchResults!.length})"
+        : "Suggestions";
     final themeScheme = Theme.of(context).colorScheme;
+    print(recipesToShow);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -143,44 +299,68 @@ class _ExplorePageState extends State<ExplorePage> {
           CustomSliverAppBar(title: "Explore"),
 
           PinnedHeaderSliver(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: themeScheme.tertiaryFixed,
-                borderRadius: BorderRadius.circular(25), // Rounded corners
-              ),
-              child: Autocomplete<String>(
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  return const Iterable<String>.empty();
-                },
-                fieldViewBuilder: (BuildContext context,
-                    TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted) {
-                  return TextField(
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      border: InputBorder.none, // Removes the bottom line
-                      icon: Icon(Icons.search,
-                          color: themeScheme.onPrimaryFixedVariant),
-                      hintText: 'Search ideas...',
-                      hintStyle: TextStyle(
-                          color: themeScheme
-                              .onPrimaryFixedVariant), // Placeholder style
-                    ), // Text style
-                  );
-                },
+              child: RecipesResearchBar(
+                  onEditRecipe: (recipeKey) {
+                    editRecipe(recipeKey);
+                    setState(() {});
+                  },
+                  onToggleFavorite: (recipeKey) {
+                    toggleFavorite(recipeKey);
+                    setState(() {}); // Rebuild the dialog to update the icon
+                  },
+                  onToggleMealPlan: (recipeKey) {
+                    toggleMealPlan(recipeKey);
+                    setState(() {});
+                  },
+                  onIngredientSearch: handleIngredientSearch,
+                  onPatienceSearch: handlePatienceSearch,
+                  activeSearchIngredients: activeSearchIngredients,
+                  activePatience: activePatience,
+                  activePreferences: activePreferences,
+                  updatePreferences: handleFilterChange,
+                  reload: clearSearch)),
+
+          // Chips des ingrédients actifs
+          if (activeSearchIngredients.isNotEmpty)
+            SliverToBoxAdapter(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 00),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (String ingredient in activeSearchIngredients)
+                      Chip(
+                        label: Text(ingredient),
+                        deleteIcon: Icon(Icons.close, size: 18),
+                        onDeleted: () => removeIngredient(ingredient),
+                        backgroundColor: themeScheme.secondaryContainer,
+                        labelStyle: TextStyle(
+                          color: themeScheme.onSecondaryContainer,
+                        ),
+                      ),
+                    // Bouton pour tout effacer
+                    ActionChip(
+                      label: Text("Clear all"),
+                      avatar: Icon(Icons.clear_all, size: 18),
+                      onPressed: clearSearch,
+                      backgroundColor: themeScheme.errorContainer,
+                      labelStyle: TextStyle(
+                        color: themeScheme.onErrorContainer,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
           // Scrollable Content
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                if (personals.favoriteRecipes.isNotEmpty) ...[
+                if (personals.favoriteRecipes.isNotEmpty &&
+                    searchResults == null) ...[
                   BlocTitle(texte: "Favoris"),
                   FavoriteCarousel(
                     onToggleMealPlan: toggleMealPlan,
@@ -188,27 +368,65 @@ class _ExplorePageState extends State<ExplorePage> {
                     onEditRecipe: editRecipe,
                   )
                 ],
-                BlocTitle(texte: "Suggestions"),
-                GridView.count(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics:
-                      NeverScrollableScrollPhysics(), // Disable GridView scrolling
-                  crossAxisCount: 2,
-                  childAspectRatio: 1, // Adjust to control item size
-                  children: [
-                    for (String recipeKey in generateSuggestions()) ...[
-                      RecipePreview(
-                        recipeKey: recipeKey,
-                        texte: recipesDict[recipeKey]!.name,
-                        img: recipesDict[recipeKey]!.image,
-                        onToggleMealPlan: toggleMealPlan,
-                        onToggleFavorite: toggleFavorite,
-                        onEditRecipe: editRecipe,
-                      )
-                    ]
-                  ],
+                // Titre de section avec animation
+                BlocTitle(
+                  key: ValueKey(sectionTitle),
+                  texte: sectionTitle,
                 ),
+
+                //Message si aucun résultat
+                if (searchResults != null && searchResults!.isEmpty) ...[
+                  Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: themeScheme.onSurfaceVariant.withAlpha(127),
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          "No recipes found",
+                          style: TextStyle(
+                            color: themeScheme.onSurfaceVariant,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "Try removing some ingredients",
+                          style: TextStyle(
+                            color: themeScheme.onSurfaceVariant.withAlpha(178),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else ...[
+                  GridView.count(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics:
+                        NeverScrollableScrollPhysics(), // Disable GridView scrolling
+                    crossAxisCount: 2,
+                    childAspectRatio: 1, // Adjust to control item size
+                    children: [
+                      for (String recipeKey in recipesToShow) ...[
+                        RecipePreview(
+                          recipeKey: recipeKey,
+                          texte: recipesDict[recipeKey]!.name,
+                          img: recipesDict[recipeKey]!.image,
+                          onToggleMealPlan: toggleMealPlan,
+                          onToggleFavorite: toggleFavorite,
+                          onEditRecipe: editRecipe,
+                        )
+                      ]
+                    ],
+                  )
+                ],
               ],
             ),
           ),
