@@ -41,6 +41,7 @@ class _WritePageState extends State<WritePage> {
   void toggleMealPlan(String recipeKey) {
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
+        removeGroceries(recipeKey);
         mealPlanRecipes.removeRecipe(recipeKey);
 
         for (int day = 0; day < personals.weekMeals.length; day++) {
@@ -58,7 +59,9 @@ class _WritePageState extends State<WritePage> {
         String personalized = recette.personalized;
 
         if (mealPlanRecipes.containsKey(personalized)) {
-          //if the recipe is edited and original is in MealPlan
+
+          removeGroceries(personalized);
+
           mealPlanRecipes.removeRecipe(personalized);
 
           for (int day = 0; day < personals.weekMeals.length; day++) {
@@ -71,7 +74,7 @@ class _WritePageState extends State<WritePage> {
             }
           }
         } else {
-          //just checking the 'edited versions' => always remember the original ID
+          
           if (recette.personalized != "Nope") {
             recetteId = recette.personalized;
           }
@@ -80,6 +83,14 @@ class _WritePageState extends State<WritePage> {
         }
       }
     });
+  }
+
+  void removeGroceries(String recipeKey, {int nbMeals = 0}) {
+    for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
+      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+        listeCourses.forceRemoveIngredient(ingredient);
+      }
+    }
   }
 
   void deleteRecipe(String recipeKey) {
@@ -217,7 +228,7 @@ class _WritePageState extends State<WritePage> {
         foregroundColor: themeScheme.onPrimary,
         tooltip: 'Create new recipe',
         onPressed: () async {
-          final value = await Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute<void>(
               builder: (context) => EditSubPage(),

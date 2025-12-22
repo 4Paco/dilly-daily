@@ -47,17 +47,20 @@ class PersonalizedGroceries extends Iterable implements Iterator {
     var workingJson = List.from(json.keys);
     if (json.isEmpty) {
       workingJson = [
-        "Mozza",
-        "Raisin",
-        "Jambon",
-        "Oeufs",
-        "Chocolat",
-        "PQ",
-        "Petit-dej",
-        "Jus de fruit",
-        "Légumes",
-        "Sacs poubelle",
-        "Pâtes"
+        "Mozzarella",      
+        "Egg",             
+        "Chocolate",      
+        "Pasta",          
+        "Bacon",           
+        "Cereal",          
+        "Carrot",          
+        "Bread",           
+        "Milk",            
+        "Butter", 
+        "Toilet Paper",    
+        "Trash Bags",      
+        "Paper Towels",    
+        "Dish Soap",       
       ];
     }
     for (String elmt in workingJson) {
