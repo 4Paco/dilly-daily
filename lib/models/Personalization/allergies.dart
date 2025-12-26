@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 
 class Allergies extends Iterable implements Iterator {
@@ -33,6 +34,8 @@ class Allergies extends Iterable implements Iterator {
   bool? operator [](String ingredient) {
     return _allergiesDict[ingredient];
   }
+
+  Iterable<String> get keys => _allergiesDict.keys;
 
   Future<void> load() async {
     await ensureFileExists();

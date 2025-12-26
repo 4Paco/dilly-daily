@@ -216,6 +216,18 @@
     },
     "category": "Dairy Products"
   },
+  "Water": {
+    "icon": "water_glass",
+    "unit": "mL",
+    "price": 0.0,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Other"
+  },
   "Pizza Dough": {
     "icon": "pizza",
     "unit": "",

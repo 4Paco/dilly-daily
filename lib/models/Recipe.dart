@@ -80,4 +80,14 @@ class Recipe {
 
     return Duration(minutes: totalMinutes);
   }
+
+  Duration prepDuration() {
+    final totalMinutes =
+        steps.where((step) => step.type == StepType.preparation).fold<int>(
+              0,
+              (prev, step) => prev + (step.duration?.inMinutes ?? 0),
+            );
+
+    return Duration(minutes: totalMinutes);
+  }
 }

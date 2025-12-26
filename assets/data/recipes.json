@@ -5,7 +5,7 @@
     "image": "",
     "ingredients": {
       "Ground Beef": 200.0,
-      "Cucumber": 2.0,
+      "Zucchini": 2.0,
       "Cheese": 100.0,
       "Cream": 100.0
     },
@@ -240,7 +240,7 @@
   },
   "2": {
     "name": "Pasta Carbonara",
-    "image": "https://example.com/pasta.jpg",
+    "image": "",
     "personalized": "Nope",
     "ingredients": {
       "Chicken": 300.0,
