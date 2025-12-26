@@ -193,7 +193,7 @@
   },
 
   "Coconut Milk": {
-    "icon": "milk_glass",
+    "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.005,
     "diet": {
@@ -205,7 +205,7 @@
     "category": "Dairy Products"
   },
   "Milk": {
-    "icon": "milk_glass",
+    "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.001,
     "diet": {
@@ -301,7 +301,7 @@
     "category": "Dairy Products"
   },
   "Yogurt": {
-    "icon": "milk_glass",
+    "icon": "glass_of_milk",
     "unit": "",
     "price": 0.5,
     "diet": {
@@ -313,7 +313,7 @@
     "category": "Dairy Products"
   },
   "Cream": {
-    "icon": "milk_glass",
+    "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.008,
     "diet": {

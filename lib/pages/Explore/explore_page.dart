@@ -106,6 +106,7 @@ class _ExplorePageState extends State<ExplorePage>
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
         print("1");
+        removeGroceries(recipeKey);
         mealPlanRecipes.removeRecipe(recipeKey);
         print("2");
         for (int day = 0; day < personals.weekMeals.length; day++) {
@@ -126,6 +127,7 @@ class _ExplorePageState extends State<ExplorePage>
 
         if (mealPlanRecipes.containsKey(personalized)) {
           print("5");
+          removeGroceries(personalized);      
           //if the recipe is edited and original is in MealPlan
           mealPlanRecipes.removeRecipe(personalized);
 
@@ -151,6 +153,14 @@ class _ExplorePageState extends State<ExplorePage>
         }
       }
     });
+  }
+
+  void removeGroceries(String recipeKey, {int nbMeals = 0}) {
+    for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
+      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+        listeCourses.forceRemoveIngredient(ingredient);
+      }
+    }
   }
 
   void editRecipe(String recipeKey) async {

@@ -42,7 +42,7 @@ class Allergies extends Iterable implements Iterator {
     final file = await _localFile;
     // Read the file
     final jsonString = await file.readAsString();
-    final json = jsonDecode(jsonString);
+    jsonDecode(jsonString);
     // for (String key in json.keys) {
     //   _allergiesDict[key] = json[key] as bool;
     // }

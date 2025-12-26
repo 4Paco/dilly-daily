@@ -50,10 +50,10 @@ class AutofillIngredient extends StatelessWidget {
             controller: textEditingController,
             focusNode: focusNode,
             decoration: InputDecoration(
-              border: InputBorder.none, // Removes the bottom line
+              border: InputBorder.none,
               icon:
                   Icon(Icons.search, color: themeScheme.onPrimaryFixedVariant),
-              hintText: 'Search ingredients...',
+              hintText: 'Search and Add ingredients...',
               hintStyle: TextStyle(
                   color:
                       themeScheme.onPrimaryFixedVariant), // Placeholder style

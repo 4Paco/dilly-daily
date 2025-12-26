@@ -42,10 +42,11 @@ class _MealPlanPageState extends State<MealPlanPage> {
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
         print("mealPlanRecipes.containsKey(recipeKey)");
+        removeGroceries(recipeKey);
         mealPlanRecipes.removeRecipe(recipeKey);
 
         for (int day = 0; day < personals.weekMeals.length; day++) {
-          //also delete from Timeline
+
           if (personals.weekMeals[day][0] == recipeKey) {
             personals.weekMeals[day][0] = "";
           }
@@ -60,11 +61,11 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
         if (mealPlanRecipes.containsKey(personalized)) {
           print("mealPlanRecipes.containsKey(personalized)");
-          //if the recipe is edited and original is in MealPlan
+          removeGroceries(personalized);
           mealPlanRecipes.removeRecipe(personalized);
 
           for (int day = 0; day < personals.weekMeals.length; day++) {
-            //also delete from Timeline
+            
             if (personals.weekMeals[day][0] == personalized) {
               personals.weekMeals[day][0] = "";
             }
@@ -73,7 +74,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
             }
           }
         } else {
-          //just checking the 'edited versions' => always remember the original ID
+
           if (recette.personalized != "Nope") {
             print("recette.personalized != 'Nope'");
             recetteId = recette.personalized;
@@ -94,6 +95,14 @@ class _MealPlanPageState extends State<MealPlanPage> {
     for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
       listeCourses.addIngredient(ingredient,
           recipesDict[recipeKey]!.ingredients[ingredient]! / 1.0 * nbMeals);
+    }
+  }
+
+  void removeGroceries(String recipeKey, {int nbMeals = 0}) {
+    for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
+      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+        listeCourses.forceRemoveIngredient(ingredient);
+      }
     }
   }
 
@@ -160,7 +169,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
   }
 
   Scaffold createMealPlanPageContent() {
-    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
+    // bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
       body: CustomScrollView(
         slivers: [

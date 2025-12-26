@@ -137,4 +137,11 @@ class Groceries extends Iterable implements Iterator {
   Map<String, double> getExtended() {
     return Map.from(_extendedGroceriesDict);
   }
+
+  // NOUVELLE FONCTION : Vide complètement la liste de courses
+  void clearAll() {
+    _groceriesDict.clear();
+    _extendedGroceriesDict.clear();
+    updateJson();
+  }
 }

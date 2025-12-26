@@ -52,7 +52,6 @@ class Step {
   String toString() =>
       'Step(description: "$description", duration: ${duration?.inMinutes} min, type: $type)';
 
-  @override
   Step copy({
     String? description,
     Duration? duration,

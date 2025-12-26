@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Personalization/my_recipes.dart'
     show MyRecipes;
+import 'package:dilly_daily/models/Personalization/personalized_groceries.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UserProfile {
@@ -22,10 +23,13 @@ class UserProfile {
   ];
   List<String> _kitchenGear = [];
   final MyRecipes _myRecipes;
+  final PersonalizedGroceries _coursesPersonnelles;
 
   UserProfile({
     required MyRecipes myRecipes,
-  }) : _myRecipes = myRecipes {
+  })  : _myRecipes = myRecipes,
+        _coursesPersonnelles = PersonalizedGroceries() {
+    _coursesPersonnelles.onModify = updateJson;
     load();
     _myRecipes.addListener(_cleanOrphanedRecipeIds);
   }
@@ -71,6 +75,7 @@ class UserProfile {
             .toList() ??
         _weekMeals;
     _kitchenGear = List<String>.from(json['_kitchenGear'] ?? []);
+    _coursesPersonnelles.fromJson(json['_coursesPersonnelles'] ?? []);
   }
 
   Future<bool> isLoaded() async {
@@ -104,6 +109,7 @@ class UserProfile {
       '_favoriteRecipes': _favoriteRecipes,
       '_weekMeals': _weekMeals.map((day) => day).toList(),
       '_kitchenGear': _kitchenGear,
+      '_coursesPersonnelles': _coursesPersonnelles.toJson(),
     }; //_allergiesDict.map((key, value) => MapEntry(key, value));
     //final json = {};
     String jsonString = jsonEncode(json);
@@ -160,6 +166,8 @@ class UserProfile {
     _kitchenGear = newList;
     updateJson();
   }
+
+  PersonalizedGroceries get coursesPersonnelles => _coursesPersonnelles;
 
   List<List<String>> get weekMeals => _DeepListWrapper(_weekMeals, updateJson);
 }
