@@ -5,7 +5,6 @@ import 'package:dilly_daily/models/ui/bloc_title.dart';
 import 'package:dilly_daily/models/ui/custom_sliver_app_bar.dart';
 import 'package:dilly_daily/pages/Groceries/grocery_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class GroceriesPage extends StatefulWidget {
   @override
@@ -18,7 +17,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
   void initState() {
     super.initState();
     _loadGroceriesFuture = listeCourses.isLoaded();
-    _loadGroceriesFuture = coursesPersonnelles.isLoaded();
+    _loadGroceriesFuture = personals.isLoaded();
     _loadGroceriesFuture = ingredientsDict.isLoaded(); // Call load() only once
   }
 
@@ -66,23 +65,27 @@ class _GroceriesPageState extends State<GroceriesPage> {
   }
 
   void addToOftenUsed(String item) {
-    coursesPersonnelles.addIngredient(item);
+    personals.coursesPersonnelles.addIngredient(item);
+    listeCourses.addIngredient(item, null);
     setState(() {});
   }
+
   void removeFromOftenUsed(String item) {
-    coursesPersonnelles.removeIngredient(item);
+    personals.coursesPersonnelles.removeIngredient(item);
     setState(() {});
   }
+
   Future<void> showAddToOftenUsedDialog(BuildContext context) {
     String customText = "";
-    
-    return showAdaptiveDialog( 
+
+    return showAdaptiveDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 150, horizontal: 50),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 150, horizontal: 50),
               child: Material(
                 borderRadius: BorderRadius.circular(25),
                 elevation: 8,
@@ -113,9 +116,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                           ],
                         ),
                       ),
-                      
-                        SizedBox(height: 10),
-                      
+                      SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
@@ -124,10 +125,11 @@ class _GroceriesPageState extends State<GroceriesPage> {
                         ),
                       ),
                       SizedBox(height: 10),
-
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.tertiaryFixed,
                           borderRadius: BorderRadius.circular(25),
@@ -138,16 +140,20 @@ class _GroceriesPageState extends State<GroceriesPage> {
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.onPrimaryFixedVariant),
+                            icon: Icon(Icons.edit,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryFixedVariant),
                             hintText: 'e.g: Trash Bags, Soap...',
-                            hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimaryFixedVariant),
+                            hintStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryFixedVariant),
                           ),
                         ),
                       ),
-                      
                       SizedBox(height: 15),
-
-                      TextButton( 
+                      TextButton(
                         onPressed: () {
                           if (customText.isNotEmpty) {
                             addToOftenUsed(customText);
@@ -156,10 +162,10 @@ class _GroceriesPageState extends State<GroceriesPage> {
                         },
                         child: Text(
                           'Add',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      
                       SizedBox(height: 10),
                     ],
                   ),
@@ -187,7 +193,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiaryContainer,
-                    borderRadius: BorderRadius.circular(25), 
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   width: 10,
                   height: 50,
@@ -213,7 +219,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                             },
                             child: Text(
                               "Add",
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             )),
                         SizedBox(height: 10),
                       ],
@@ -225,10 +232,14 @@ class _GroceriesPageState extends State<GroceriesPage> {
                           children: [
                             // EDIBLE
                             ExpansionTile(
-                              title: Text("Edible 🍎", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                              title: Text("Edible 🍎",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
                               children: [
-                                for (String elmt in coursesPersonnelles)
-                                  if (ingredientsDict[elmt] != null && 
+                                for (String elmt
+                                    in personals.coursesPersonnelles)
+                                  if (ingredientsDict[elmt] != null &&
                                       ingredientsDict[elmt]?['icon'] != null &&
                                       ingredientsDict[elmt]?['icon'] != "") ...[
                                     ListTile(
@@ -241,7 +252,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                       ),
                                       title: Text(elmt),
                                       trailing: IconButton(
-                                        icon: Icon(Icons.delete_outline, size: 18),
+                                        icon: Icon(Icons.delete_outline,
+                                            size: 18),
                                         onPressed: () {
                                           removeFromOftenUsed(elmt);
                                           setState(() {});
@@ -255,15 +267,19 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                   ]
                               ],
                             ),
-                            
+
                             // NON-EDIBLE
                             ExpansionTile(
                               title: Row(
                                 children: [
-                                  Text("Non-edible 🧻", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                  Text("Non-edible 🧻",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold)),
                                   Spacer(),
                                   IconButton(
-                                    icon: Icon(Icons.add_circle_outline, size: 20),
+                                    icon: Icon(Icons.add_circle_outline,
+                                        size: 20),
                                     onPressed: () async {
                                       await showAddToOftenUsedDialog(context);
                                       setState(() {});
@@ -273,7 +289,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                 ],
                               ),
                               children: [
-                                for (String elmt in coursesPersonnelles)
+                                for (String elmt
+                                    in personals.coursesPersonnelles)
                                   if (ingredientsDict[elmt] == null ||
                                       ingredientsDict[elmt]?['icon'] == null ||
                                       ingredientsDict[elmt]?['icon'] == "") ...[
@@ -287,7 +304,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                       ),
                                       title: Text(elmt),
                                       trailing: IconButton(
-                                        icon: Icon(Icons.delete_outline, size: 18),
+                                        icon: Icon(Icons.delete_outline,
+                                            size: 18),
                                         onPressed: () {
                                           removeFromOftenUsed(elmt);
                                           setState(() {});
@@ -370,19 +388,18 @@ class _GroceriesPageState extends State<GroceriesPage> {
                       ),
                     ],
                   ),
-
                   IconButton(
                     icon: Icon(Icons.delete, size: 28),
                     color: themeScheme.error,
                     tooltip: 'Delete all groceries',
                     onPressed: () {
-
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('Confirmation'),
-                            content: Text('Do you really want to clear the entire grocery list?'),
+                            content: Text(
+                                'Do you really want to clear the entire grocery list?'),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
@@ -393,7 +410,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                   clearAllGroceries();
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('Empty', style: TextStyle(color: themeScheme.error)),
+                                child: Text('Empty',
+                                    style: TextStyle(color: themeScheme.error)),
                               ),
                             ],
                           );
