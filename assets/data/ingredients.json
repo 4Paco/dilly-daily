@@ -977,5 +977,53 @@
       "glutenfree": true
     },
     "category": "Baking&Seasonings"
+  },
+  "Shortcrust Pastry": {
+    "icon": "pie",
+    "unit": "",
+    "price": 1.5,
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Bakery"
+  },
+  "Gruyere": {
+    "icon": "cheese_wedge",
+    "unit": "g",
+    "price": 0.015,
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy"
+  },
+  "Feta": {
+    "icon": "cheese_wedge",
+    "unit": "g",
+    "price": 0.012,
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy"
+  },
+  "Salmon": {
+    "icon": "fish",
+    "unit": "g",
+    "price": 0.025,
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
   }
 }
