@@ -1,6 +1,6 @@
 {
   "1": {
-    "name": "Gratin de courgettes",
+    "name": "Zucchini Gratin",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
@@ -26,11 +26,11 @@
       "drink"
     ],
     "gear": ["Oven"],
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 30 min to make.\nOne portion of this dish costs about:"
   },
 
   "11": {
-    "name": "Breakfast muffins",
+    "name": "Breakfast Muffins",
     "ingredients": {
       "Chestnut Flour": 200.0,
       "Egg": 4.0,
@@ -41,42 +41,42 @@
       "Rosemary": 2.0
     },
     "recipeLink": "https://saveurs-d-ici.blogspot.com/2015/01/muffin-la-farine-de-chataigne.html",
-    "summary": "This recipe serves 1 week of breakfast for 1 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "summary": "This recipe serves 1 week of breakfast for 1 person and takes around 30 min to make.\nOne portion of this dish costs about:",
     "dishTypes": ["dessert", "bread", "breakfast", "fingerfood", "snack"],
     "gear": ["Oven"],
     "steps": [
       {
-        "description": "Dans un saladier, battez les oeufs et ajoutez-y l'huile et le lait",
+        "description": "In a mixing bowl, beat the eggs and add the oil and milk.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Dans un autre récipient, ajoutez la farine de châtaigne, le sucre brun et la levure",
+        "description": "In another container, add the chestnut flour, brown sugar, and baking powder.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Vous pouvez ensuite mélanger les 2 préparations et bien homogénéiser pour un aspect lisse et onctueux",
+        "description": "Combine the two mixtures and mix well until smooth and creamy.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Hachez grossièrement votre chocolat et le mélange de noix (quelques cranberries et graines de lupin seront aussi délicieuses !)",
+        "description": "Roughly chop the chocolate and the nut mix (a few cranberries and lupin seeds will also be delicious!).",
         "duration": 15,
         "type": "preparation"
       },
       {
-        "description": "Incorporez à la préparation et laissez reposer au frais pendant une heure",
+        "description": "Fold into the batter and let rest in the refrigerator for one hour.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Versez votre pâte dans des moules à muffin beurrés",
+        "description": "Pour the batter into buttered muffin molds.",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "Enfournez à 180°C pendant 17 minutes (Plantez un couteau, s'il ressort 'sec', le muffin est cuit!)",
+        "description": "Bake at 180°C (356°F) for 17 minutes (insert a knife—if it comes out clean, the muffins are done!).",
         "duration": 17,
         "type": "cooking"
       }
@@ -84,7 +84,7 @@
   },
 
   "12": {
-    "name": "Telebreizh crepes (original)",
+    "name": "Telebreizh Crêpes (Original)",
     "ingredients": {
       "Buckwheat Flour": 1000.0,
       "Egg": 4.0,
@@ -93,8 +93,6 @@
       "Butter": 250.0
     },
     "servings": 6,
-    "mealType": {},
-    "recipeLink": "",
     "dishTypes": [
       "main course",
       "side dish",
@@ -104,20 +102,20 @@
       "fingerfood",
       "snack"
     ],
-    "summary": "This recipe serves 40 crepes and takes around 2h to make.\nOne portion of this dish costs about :",
+    "summary": "This recipe makes 40 crêpes and takes around 2 hours to prepare.\nOne portion of this dish costs about:",
     "steps": [
       {
-        "description": "Dans un saladier, battez les oeufs avec le lait et le beurre",
+        "description": "In a mixing bowl, beat the eggs with the milk and butter.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Incorporez farine et eau alternativement pour éviter les grumeaux",
+        "description": "Gradually incorporate the flour and water alternately to avoid lumps.",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "Faites cuire chaque crêpe jusqu'à ce qu'elle soit presque dorée, \"une crêpe cuite est une crêpe trop cuite\"",
+        "description": "Cook each crêpe until almost golden — \"a cooked crêpe is an overcooked crêpe.\"",
         "duration": 70,
         "type": "cooking"
       }
@@ -125,7 +123,7 @@
   },
 
   "13": {
-    "name": "Telebreizh crepes (sweet edition)",
+    "name": "Telebreizh Crêpes (Sweet Edition)",
     "ingredients": {
       "Wheat Flour": 1000.0,
       "Egg": 10.0,
@@ -134,8 +132,7 @@
       "Sugar": 0.0
     },
     "servings": 6,
-    "recipeLink": "",
-    "summary": "This recipe serves 40 crepes and takes around 2h to make.\nOne portion of this dish costs about :",
+    "summary": "This recipe makes 40 crêpes and takes around 2 hours to prepare.\nOne portion of this dish costs about:",
     "dishTypes": [
       "main course",
       "side dish",
@@ -147,22 +144,22 @@
     ],
     "steps": [
       {
-        "description": "Dans un saladier, battez les oeufs avec le beurre et une partie du lait",
+        "description": "In a mixing bowl, beat the eggs with the butter and part of the milk.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Incorporez farine et lait alternativement pour éviter les grumeaux",
+        "description": "Gradually incorporate the flour and milk alternately to avoid lumps.",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "\"Sucre au goût\"",
+        "description": "Add sugar to taste.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Faites cuire chaque crêpe jusqu'à ce qu'elle soit presque dorée, \"une crêpe cuite est une crêpe trop cuite\"",
+        "description": "Cook each crêpe until almost golden — \"a cooked crêpe is an overcooked crêpe.\"",
         "duration": 70,
         "type": "cooking"
       }
@@ -170,7 +167,7 @@
   },
 
   "14": {
-    "name": "Brioche de Micheline (26ème rencontre)",
+    "name": "Micheline’s Brioche (26th Gathering)",
     "ingredients": {
       "Wheat Flour": 500.0,
       "Baking Powder": 7.0,
@@ -182,289 +179,59 @@
     },
     "servings": 2,
     "dishTypes": ["bread", "breakfast", "snack"],
-    "recipeLink": "https://www.marmiton.org/recettes/recette_brioche-de-micheline-26eme-rencontre_40232.aspx",
-    "summary": "This recipe serves 1 brioche and takes around 2h to make.\nOne portion of this dish costs about :",
+    "summary": "This recipe makes 1 brioche and takes around 2 hours to prepare.\nOne portion of this dish costs about:",
     "gear": ["Oven"],
     "steps": [
       {
-        "description": "Mélanger la farine,la levure, le sucre et le sel.",
+        "description": "Mix the flour, baking powder, sugar, and salt.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Incorporer les œufs, puis le beurre ramolli.",
+        "description": "Add the eggs, then the softened butter.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Ajouter du lait tiède et pétrir pour obtenir une pâte souple et non collante. ( au robot 5 min environ )",
+        "description": "Add lukewarm milk and knead until you get a soft, non-sticky dough (about 5 minutes using a mixer).",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "Mettre en boule, la placer dans un récipient et couvrir d'un torchon.",
+        "description": "Form into a ball, place in a bowl, and cover with a cloth.",
         "duration": 2,
-        "type": "prepapration"
+        "type": "preparation"
       },
       {
-        "description": "Laisser monter environ 1 heure à 1 heure 30 (je me sers de mon micro-onde comme d'une étuve en y faisant bouillir un peu d'eau dans un grand saladier pendant le pétrissage de la pâte...quand la pâte est prête je vide l'eau, essuie légèrement et y place le pâton avant de remettre le tout dans le micro-onde éteint ainsi pas de risque de courant d'air et la levée démarre rapidement)",
+        "description": "Let rise for about 1 to 1½ hours in a warm place.",
         "duration": 60,
         "type": "preparation"
       },
       {
-        "description": "On \"rompt\" la pâte en appuyant en son milieu.",
+        "description": "Punch down the dough by pressing in the center.",
         "duration": 0,
         "type": "preparation"
       },
       {
-        "description": "La travailler de nouveau (y ajouter éventuellement des raisins secs, pépites de chocolat ou des fruits confits).",
+        "description": "Knead again (optionally add raisins, chocolate chips, or candied fruit).",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "On peut la natter très facilement pour en faire des brioches vendéennes, \nou on peut faire des boules de 80 à 100 g que l'on placera par 3 dans des moules à cake.\nOn peut aussi faire des pains aux raisins (escargots) ou brioche chinois, des briochés à la pomme.",
+        "description": "Shape as desired: braided brioche, rolls, or loaf-style brioche.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Laisser de nouveau monter dans un endroit chaud et à l'abri des courants d'air jusqu'à ce que la brioche ait de nouveau doublé de volume.",
+        "description": "Let rise again in a warm, draft-free place until doubled in size.",
         "duration": 40,
         "type": "preparation"
       },
       {
-        "description": "Cuire la brioche nattée 20 min à 180°C (thermostat 6), 30 à 35 min une brioche Nanterre (dans le moule à cake), 15 min les escargots.",
+        "description": "Bake braided brioche for 20 min at 180°C (356°F); loaf brioche for 30–35 min; rolls for 15 min.",
         "duration": 20,
         "type": "cooking"
       }
     ]
-  },
-  "2": {
-    "name": "Pasta Carbonara",
-    "image": "",
-    "personalized": "Nope",
-    "ingredients": {
-      "Chicken": 300.0,
-      "Coconut Milk": 200.0,
-      "Curry Powder": 2.0,
-      "Onion": 1.0,
-      "Garlic": 2.0
-    },
-    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :",
-
-    "steps": [
-      {
-        "description": "Boil water and cook pasta.",
-        "duration": 10,
-        "type": "cooking",
-        "ingredients": [
-          { "name": "Pasta", "quantity": 200, "unit": "gram" },
-          { "name": "Salt", "quantity": 5, "unit": "gram" }
-        ]
-      },
-      {
-        "description": "Cook bacon in pan.",
-        "duration": 5,
-        "type": "cooking",
-        "ingredients": [
-          { "name": "Bacon", "quantity": 100, "unit": "gram" }
-        ]
-      },
-      {
-        "description": "Mix pasta with eggs and bacon.",
-        "duration": null,
-        "type": "preparation",
-        "ingredients": [
-          { "name": "Eggs", "quantity": 2, "unit": "piece" }
-        ]
-      }
-    ]
-  },
-  "3": {
-    "name": "Chicken Curry",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Chicken": 300.0,
-      "Coconut Milk": 200.0,
-      "Curry Powder": 2.0,
-      "Onion": 1.0,
-      "Garlic": 2.0
-    },
-    "summary": "This recipe serves 4 and takes around 40min to make.\nOne portion of this dish costs about :"
-  },
-  "4": {
-    "name": "Vegetable Stir Fry",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Broccoli": 0.5,
-      "Carrot": 2.0,
-      "Bell Pepper": 1.0,
-      "Soy Sauce": 2.0,
-      "Ginger": 0.5,
-      "Garlic": 2.0
-    },
-    "summary": "This recipe serves 2 and takes around 15min to make.\nOne portion of this dish costs about :"
-  },
-  "5": {
-    "name": "Pancakes",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Wheat Flour": 200.0,
-      "Milk": 300.0,
-      "Egg": 1.0,
-      "Sugar": 25.0,
-      "Butter": 50.0
-    },
-    "summary": "This recipe serves 4 and takes around 20min to make.\nOne portion of this dish costs about :"
-  },
-  "6": {
-    "name": "Beef Tacos",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Ground Beef": 300.0,
-      "Taco Shells": 6.0,
-      "Lettuce": 0.25,
-      "Cheddar": 100.0,
-      "Salsa": 100.0
-    },
-    "summary": "This recipe serves 3 and takes around 25min to make.\nOne portion of this dish costs about :"
-  },
-  "7": {
-    "name": "Margarita Pizza",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Pizza Dough": 1.0,
-      "Tomato Sauce": 100.0,
-      "Mozzarella": 1.0,
-      "Basil": 3.0,
-      "Olive Oil": 1.0
-    },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
-  },
-  "8": {
-    "name": "Caesar Salad",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Lettuce": 1.0,
-      "Crouton": 50.0,
-      "Parmesan": 30.0,
-      "Caesar Sauce": 50.0,
-      "Chicken": 150.0
-    },
-    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :"
-  },
-  "9": {
-    "name": "Chocolate Cake",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Wheat Flour": 200.0,
-      "Sugar": 150.0,
-      "Chocolate": 100.0,
-      "Butter": 100.0,
-      "Egg": 2.0
-    },
-    "summary": "This recipe serves 8 and takes around 60min to make.\nOne portion of this dish costs about :"
-  },
-  "10": {
-    "name": "Tomato Soup",
-    "personalized": "Nope",
-    "image": "",
-    "ingredients": {
-      "Tomato": 5.0,
-      "Onion": 1.0,
-      "Garlic": 2.0,
-      "Vegetable Broth": 1.0,
-      "Cream": 50.0
-    },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
-  },
-  "0": {
-    "name": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-    "personalized": "Nope",
-    "image": "",
-    "servings": 2,
-    "readyInMinutes": 45,
-    "cookingMinutes": 25,
-    "preparationMinutes": 20,
-    "recipeOutside": false,
-    "steps": [
-      {
-        "description": "In a large skillet, melt butter over medium heat until foamy.",
-        "duration": 2
-      },
-      {
-        "description": "Then add bread crumbs, tossing to coat in butter, until toasted and lightly browned.",
-        "duration": 3
-      },
-      {
-        "description": "Remove from pan into small bowl; mix in cheese and about a tablespoon of the green scallion tops.",
-        "duration": 2
-      },
-      {
-        "description": "In the meantime, begin to prepare your pasta according to the directions on the package.",
-        "duration": 10
-      },
-      {
-        "description": "While the pasta is cooking, put about a tablespoon of olive oil in the same pan you used for the bread crumbs.",
-        "duration": 1
-      },
-      {
-        "description": "Over medium heat, add the garlic, whites of the scallions, and cauliflower to the skillet.",
-        "duration": 3
-      },
-      {
-        "description": "Saute until the cauliflower shows some caramelization.",
-        "duration": 5
-      },
-      {
-        "description": "Then add the wine until the florets are tender-crisp.",
-        "duration": 3
-      },
-      {
-        "description": "Add salt, pepper, and red pepper flakes.",
-        "duration": 1
-      },
-      {
-        "description": "When pasta is just shy of al dente, reserve about a cup of the cooking water and drain the pasta.",
-        "duration": 2
-      },
-      {
-        "description": "Add the drained pasta to the skillet—still over medium heat—with the veggies and toss with some pasta water, as necessary (I added a little at a time; I ended up using about 1/2 cup), till the pasta is coated and turns easily.",
-        "duration": 3
-      },
-      {
-        "description": "You may want to add another little drizzle of olive oil. Again, taste and season accordingly.",
-        "duration": 1
-      },
-      {
-        "description": "Put into serving bowls and top with the bread crumb mixture. Sprinkle some more scallion greens on top.",
-        "duration": 1
-      },
-      {
-        "description": "That's it! There's cauliflower in every bite. And that's a great thing.",
-        "duration": 1
-      }
-    ],
-    "dishTypes": ["main course", "side dish"],
-    "ingredients": {
-      "Butter": 15.0,
-      "Cauliflower": 1.0,
-      "Cheese": 20.0,
-      "Olive Oil": 1.0,
-      "Garlic": 5.0,
-      "Pasta": 170.0,
-      "Pepper": 2.0,
-      "Salt": 2.0,
-      "Green Onion": 3.0,
-      "Wine": 2.0,
-      "Crouton": 50.0
-    },
-    "summary": "This recipe serves 2 and takes around 45min to make.\nOne portion of this dish costs about :"
   }
 }
