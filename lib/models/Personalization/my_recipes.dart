@@ -19,6 +19,12 @@ class MyRecipes extends Iterable implements Iterator {
     load();
   }
 
+  Map<String, Recipe> get recipesDict => _recipesDict;
+
+  void empty(){
+    _recipesDict = {};
+  }
+
   // Functional overrides
   // // Use as iterator
   int get limit => _recipesDict.keys.length;
