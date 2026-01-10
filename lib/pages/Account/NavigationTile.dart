@@ -17,25 +17,24 @@ class NavigationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = item['title'] as String? ?? 'Untitled';
 
-    return InkWell(
-onTap: () {
-  final Widget pageBody = item['page'] as Widget;
+    return ListTile(
+      leading: leading,
+      title: Text(title),
+      trailing: trailing,
+      onTap: () {
+        final Widget pageBody = item['page'] as Widget;
 
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => AccountSubPageScaffold(
-        title: item['title'],
-        body: pageBody,
-      ),
-    ),
-  );
-},
-      child: ListTile(
-        leading: leading,
-        title: Text(title),
-        trailing: trailing,
-      ),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => AccountSubPageScaffold(
+              title: item['title'],
+              body: pageBody,
+            ),
+          ),
+        );
+      },
     );
   }
 }
+
