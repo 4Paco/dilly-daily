@@ -1,7 +1,7 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/KitchenGear.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dilly_daily/pages/Account/Kitchen/kitchen_logic.dart';
 List<Gear> kitchenGear = [
   Gear(
     name: "Oven",
@@ -38,20 +38,16 @@ class _KitchenPageState extends State<KitchenPage> {
   @override
   void initState() {
     super.initState();
-    for (var gear in kitchenGear) {
-      _hasGear[gear.name] = false;
-    }
-    for (var gearName in personals.kitchenGear) {
-      _hasGear[gearName] = true;
-    }
+    _hasGear.addAll(
+      buildInitialGearMap(
+        kitchenGear,
+        personals.kitchenGear,
+      ),
+    );
   }
 
-  void _updateUserProfile() async {
-    final selectedGear = _hasGear.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
-
+  void _updateUserProfile() {
+    final selectedGear = selectedGearFromMap(_hasGear);
     personals.kitchenGear = selectedGear;
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -64,8 +60,6 @@ class _KitchenPageState extends State<KitchenPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      // ❌ NO APP BAR
-      // appBar: AppBar(... removed ...)
 
       body: ListView.builder(
         padding: const EdgeInsets.all(12),
