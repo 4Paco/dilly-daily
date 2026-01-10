@@ -6,6 +6,20 @@ import 'package:dilly_daily/pages/Account/Kitchen/KitchenPage.dart';
 import 'package:dilly_daily/pages/Account/SpecialDiet/special_diet_page.dart'
     show SpecialDietPage;
 import 'package:flutter/material.dart';
+import 'package:dilly_daily/data/personalisation.dart';
+
+class AccountSubmenu {
+  final String title;
+  final IconData icon;
+  final Widget page;
+
+  const AccountSubmenu({
+    required this.title,
+    required this.icon,
+    required this.page
+  });
+}
+
 
 class BlocTitle extends StatelessWidget {
   const BlocTitle({
@@ -35,44 +49,47 @@ class BlocTitle extends StatelessWidget {
 }
 
 class AccountPage extends StatelessWidget {
-  final accountSubmenus = <Map<String, dynamic>>[
-    {"title": 'Special diet', "icon": Icons.star, "page": SpecialDietPage()},
-    {
-      "title": "My cooking profile",
-      "icon": Icons.restaurant_menu,
-      "page": CookingProfilePage()
-    },
-    {
-      "title": "My favorite meals",
-      "icon": Icons.favorite_border,
-      "page": const Text("My favorite meals")
-    },
-    {
-      "title": "My kitchen",
-      "icon": Icons.blender_rounded,
-      "page": const KitchenPage()
-    },
-    {
-      "title": "My friends",
-      "icon": Icons.handshake_outlined,
-      "page": const Text("My friends")
-    },
-    {
-      "title": "Notifications",
-      "icon": Icons.notifications_outlined,
-      "page": const Text("Notifications")
-    },
-    {
-      "title": "Help",
-      "icon": Icons.help_outline,
-      "page": const Text("Help"),
-      "fullScreen": false
-    },
-    {
-      "title": "About",
-      "icon": Icons.info_outline_rounded,
-      "page": const Text("About")
-    },
+  final List<AccountSubmenu> accountSubmenus = const [
+  AccountSubmenu(
+  title: 'Special diet',
+  icon: Icons.star,
+  page: SpecialDietPage(),
+  ),
+  AccountSubmenu(
+  title: 'My cooking profile',
+  icon: Icons.restaurant_menu,
+  page: CookingProfilePage(),
+  ),
+  AccountSubmenu(
+  title: 'My favorite meals',
+  icon: Icons.favorite_border,
+  page: Text('My favorite meals'),
+  ),
+  AccountSubmenu(
+  title: 'My kitchen',
+  icon: Icons.blender_rounded,
+  page: KitchenPage(),
+  ),
+  AccountSubmenu(
+  title: 'My friends',
+  icon: Icons.handshake_outlined,
+  page: Text('My friends'),
+  ),
+  AccountSubmenu(
+  title: 'Notifications',
+  icon: Icons.notifications_outlined,
+  page: Text('Notifications'),
+  ),
+  AccountSubmenu(
+  title: 'Help',
+  icon: Icons.help_outline,
+  page: Text('Help'),
+  ),
+  AccountSubmenu(
+  title: 'About',
+  icon: Icons.info_outline_rounded,
+  page: Text('About'),
+  ),
   ];
 
   @override
@@ -134,21 +151,24 @@ class AccountPage extends StatelessWidget {
               //Text("We improve our product by using Microsoft Clarity to see how you use our app. By using our app, you agree that we and Microsoft can collect and use this data." +
               //    "We use Microsoft Clarity to capture how you use and interact with our app through behavioral metrics, heatmaps, and session replay to improve our app." +
               //    "App usage data is captured using first-party cookies and other tracking technologies for site optimization. For more information about how Microsoft collects and uses your data, visit the Microsoft Privacy Statement."),
-              for (var item in accountSubmenus) ...[
+              for (final item in accountSubmenus) ...[
                 ListTile(
-                  leading: Icon(item["icon"]),
-                  title: Text(item["title"]),
+                  leading: Icon(item.icon),
+                  title: Text(item.title),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: theme.colorScheme.tertiary,
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (context) => AccountSubPageScaffold(
-                              title: item["title"], body: item["page"]),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AccountSubPageScaffold(
+                          title: item.title,
+                          body: item.page
+                        ),
+                      ),
+                    );
                   },
                 ),
                 Divider(thickness: 1, color: theme.colorScheme.tertiary),
