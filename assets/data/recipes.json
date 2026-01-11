@@ -26,7 +26,34 @@
       "drink"
     ],
     "gear": ["Oven"],
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Preheat oven to 180°C.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Slice zucchini into thin rounds.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Brown ground beef in a skillet.",
+        "duration": 10,
+        "type": "cooking"
+      },
+      {
+        "description": "Layer zucchini and beef in a baking dish, pour cream over the top, sprinkle with cheese.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Bake for 20 minutes until the cheese is golden and bubbly.",
+        "duration": 20,
+        "type": "cooking"
+      }
+    ]
   },
 
   "11": {
@@ -204,7 +231,7 @@
       {
         "description": "Mettre en boule, la placer dans un récipient et couvrir d'un torchon.",
         "duration": 2,
-        "type": "prepapration"
+        "type": "preparation"
       },
       {
         "description": "Laisser monter environ 1 heure à 1 heure 30 (je me sers de mon micro-onde comme d'une étuve en y faisant bouillir un peu d'eau dans un grand saladier pendant le pétrissage de la pâte...quand la pâte est prête je vide l'eau, essuie légèrement et y place le pâton avant de remettre le tout dans le micro-onde éteint ainsi pas de risque de courant d'air et la levée démarre rapidement)",
@@ -238,6 +265,7 @@
       }
     ]
   },
+
   "2": {
     "name": "Pasta Carbonara",
     "image": "",
@@ -280,7 +308,34 @@
       "Onion": 1.0,
       "Garlic": 2.0
     },
-    "summary": "This recipe serves 4 and takes around 40min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 40min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Chop onion and garlic.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Sauté onion and garlic until soft.",
+        "duration": 5,
+        "type": "cooking"
+      },
+      {
+        "description": "Add chicken pieces and brown on all sides.",
+        "duration": 10,
+        "type": "cooking"
+      },
+      {
+        "description": "Add curry powder and stir well.",
+        "duration": 2,
+        "type": "preparation"
+      },
+      {
+        "description": "Pour in coconut milk and simmer for 15 minutes until chicken is cooked through.",
+        "duration": 15,
+        "type": "cooking"
+      }
+    ]
   },
   "4": {
     "name": "Vegetable Stir Fry",
@@ -294,7 +349,29 @@
       "Ginger": 0.5,
       "Garlic": 2.0
     },
-    "summary": "This recipe serves 2 and takes around 15min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 2 and takes around 15min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Chop all vegetables into bite-sized pieces.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Heat oil in a pan and sauté garlic and ginger for 1-2 minutes.",
+        "duration": 2,
+        "type": "cooking"
+      },
+      {
+        "description": "Add vegetables and stir-fry on high heat for 8-10 minutes.",
+        "duration": 10,
+        "type": "cooking"
+      },
+      {
+        "description": "Add soy sauce and stir for another 1-2 minutes before serving.",
+        "duration": 2,
+        "type": "preparation"
+      }
+    ]
   },
   "5": {
     "name": "Pancakes",
@@ -307,7 +384,24 @@
       "Sugar": 25.0,
       "Butter": 50.0
     },
-    "summary": "This recipe serves 4 and takes around 20min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 20min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Mix flour, sugar, milk, and egg to make a smooth batter.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Heat butter in a skillet over medium heat.",
+        "duration": 2,
+        "type": "cooking"
+      },
+      {
+        "description": "Pour batter into skillet and cook each pancake for 2-3 minutes per side until golden.",
+        "duration": 10,
+        "type": "cooking"
+      }
+    ]
   },
   "6": {
     "name": "Beef Tacos",
@@ -320,7 +414,24 @@
       "Cheddar": 100.0,
       "Salsa": 100.0
     },
-    "summary": "This recipe serves 3 and takes around 25min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 3 and takes around 25min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Cook ground beef in a skillet until browned.",
+        "duration": 10,
+        "type": "cooking"
+      },
+      {
+        "description": "Warm taco shells in the oven for 5 minutes.",
+        "duration": 5,
+        "type": "cooking"
+      },
+      {
+        "description": "Assemble tacos with beef, lettuce, cheddar, and salsa.",
+        "duration": 5,
+        "type": "preparation"
+      }
+    ]
   },
   "7": {
     "name": "Margarita Pizza",
@@ -333,7 +444,29 @@
       "Basil": 3.0,
       "Olive Oil": 1.0
     },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Preheat oven to 220°C.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Roll out pizza dough and place on a baking tray.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Spread tomato sauce, add mozzarella slices, and sprinkle basil on top.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Bake for 12-15 minutes until crust is golden and cheese melted.",
+        "duration": 15,
+        "type": "cooking"
+      }
+    ]
   },
   "8": {
     "name": "Caesar Salad",
@@ -346,7 +479,24 @@
       "Caesar Sauce": 50.0,
       "Chicken": 150.0
     },
-    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Grill or pan-fry chicken until fully cooked.",
+        "duration": 10,
+        "type": "cooking"
+      },
+      {
+        "description": "Chop lettuce and place in a large bowl.",
+        "duration": 2,
+        "type": "preparation"
+      },
+      {
+        "description": "Add croutons, Parmesan, Caesar sauce, and sliced chicken. Toss to combine.",
+        "duration": 5,
+        "type": "preparation"
+      }
+    ]
   },
   "9": {
     "name": "Chocolate Cake",
@@ -359,7 +509,34 @@
       "Butter": 100.0,
       "Egg": 2.0
     },
-    "summary": "This recipe serves 8 and takes around 60min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 8 and takes around 60min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Preheat oven to 180°C and grease a cake pan.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Melt chocolate and butter together.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Mix in sugar and eggs until smooth.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Fold in flour and pour batter into pan.",
+        "duration": 3,
+        "type": "preparation"
+      },
+      {
+        "description": "Bake for 25-30 minutes until a toothpick comes out clean.",
+        "duration": 30,
+        "type": "cooking"
+      }
+    ]
   },
   "10": {
     "name": "Tomato Soup",
@@ -372,7 +549,29 @@
       "Vegetable Broth": 1.0,
       "Cream": 50.0
     },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :"
+    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "steps": [
+      {
+        "description": "Chop tomatoes, onion, and garlic.",
+        "duration": 5,
+        "type": "preparation"
+      },
+      {
+        "description": "Sauté onion and garlic in a pot until soft.",
+        "duration": 5,
+        "type": "cooking"
+      },
+      {
+        "description": "Add tomatoes and vegetable broth. Simmer for 15 minutes.",
+        "duration": 15,
+        "type": "cooking"
+      },
+      {
+        "description": "Blend soup until smooth and stir in cream before serving.",
+        "duration": 5,
+        "type": "preparation"
+      }
+    ]
   },
   "0": {
     "name": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
