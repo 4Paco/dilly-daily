@@ -1,7 +1,7 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dilly_daily/pages/Account/kitchen/KitchenPage.dart';
+import 'package:dilly_daily/pages/Account/Kitchen/KitchenPage.dart';
 
 void main() {
   testWidgets('renders all kitchen gear items', (tester) async {
