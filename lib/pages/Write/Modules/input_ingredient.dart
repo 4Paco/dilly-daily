@@ -47,7 +47,6 @@ class InputIngredient extends StatelessWidget {
             FocusNode focusNode,
             VoidCallback onFieldSubmitted) {
           return TextField(
-            autofocus: true,
             controller: textEditingController,
             focusNode: focusNode,
             decoration: InputDecoration(

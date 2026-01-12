@@ -1,25 +1,23 @@
 import 'package:dilly_daily/models/ui/custom_app_bar.dart';
+import 'package:dilly_daily/pages/Account/About/about_page.dart';
 import 'package:dilly_daily/pages/Account/AccountSubPageScaffold.dart'
     show AccountSubPageScaffold;
 import 'package:dilly_daily/pages/Account/CookingProfile/cooking_profile_page.dart';
+import 'package:dilly_daily/pages/Account/Favorite/favorite_page.dart';
+import 'package:dilly_daily/pages/Account/Help/help_page.dart';
 import 'package:dilly_daily/pages/Account/Kitchen/KitchenPage.dart';
 import 'package:dilly_daily/pages/Account/SpecialDiet/special_diet_page.dart'
     show SpecialDietPage;
 import 'package:flutter/material.dart';
-import 'package:dilly_daily/data/personalisation.dart';
 
 class AccountSubmenu {
   final String title;
   final IconData icon;
   final Widget page;
 
-  const AccountSubmenu({
-    required this.title,
-    required this.icon,
-    required this.page
-  });
+  const AccountSubmenu(
+      {required this.title, required this.icon, required this.page});
 }
-
 
 class BlocTitle extends StatelessWidget {
   const BlocTitle({
@@ -50,46 +48,46 @@ class BlocTitle extends StatelessWidget {
 
 class AccountPage extends StatelessWidget {
   final List<AccountSubmenu> accountSubmenus = const [
-  AccountSubmenu(
-  title: 'Special diet',
-  icon: Icons.star,
-  page: SpecialDietPage(),
-  ),
-  AccountSubmenu(
-  title: 'My cooking profile',
-  icon: Icons.restaurant_menu,
-  page: CookingProfilePage(),
-  ),
-  AccountSubmenu(
-  title: 'My favorite meals',
-  icon: Icons.favorite_border,
-  page: Text('My favorite meals'),
-  ),
-  AccountSubmenu(
-  title: 'My kitchen',
-  icon: Icons.blender_rounded,
-  page: KitchenPage(),
-  ),
-  AccountSubmenu(
-  title: 'My friends',
-  icon: Icons.handshake_outlined,
-  page: Text('My friends'),
-  ),
-  AccountSubmenu(
-  title: 'Notifications',
-  icon: Icons.notifications_outlined,
-  page: Text('Notifications'),
-  ),
-  AccountSubmenu(
-  title: 'Help',
-  icon: Icons.help_outline,
-  page: Text('Help'),
-  ),
-  AccountSubmenu(
-  title: 'About',
-  icon: Icons.info_outline_rounded,
-  page: Text('About'),
-  ),
+    AccountSubmenu(
+      title: 'Special diet',
+      icon: Icons.star,
+      page: SpecialDietPage(),
+    ),
+    AccountSubmenu(
+      title: 'My cooking profile',
+      icon: Icons.restaurant_menu,
+      page: CookingProfilePage(),
+    ),
+    AccountSubmenu(
+      title: 'My favorite meals',
+      icon: Icons.favorite_border,
+      page: FavoritePage(),
+    ),
+    AccountSubmenu(
+      title: 'My kitchen',
+      icon: Icons.blender_rounded,
+      page: KitchenPage(),
+    ),
+    AccountSubmenu(
+      title: 'My friends',
+      icon: Icons.handshake_outlined,
+      page: Text('My friends'),
+    ),
+    AccountSubmenu(
+      title: 'Notifications',
+      icon: Icons.notifications_outlined,
+      page: Text('Notifications'),
+    ),
+    AccountSubmenu(
+      title: 'Help',
+      icon: Icons.help_outline,
+      page: HelpPage(),
+    ),
+    AccountSubmenu(
+      title: 'About',
+      icon: Icons.info_outline_rounded,
+      page: AboutPage(),
+    ),
   ];
 
   @override
@@ -164,9 +162,7 @@ class AccountPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) => AccountSubPageScaffold(
-                          title: item.title,
-                          body: item.page
-                        ),
+                            title: item.title, body: item.page),
                       ),
                     );
                   },

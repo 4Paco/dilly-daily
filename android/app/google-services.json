@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862493235616",
+    "project_id": "dillydaily-13234",
+    "storage_bucket": "dillydaily-13234.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862493235616:android:41479c3fa3e3bbc6622cc5",
+        "android_client_info": {
+          "package_name": "com.example.namer_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMMjpV4028O5B9Up2PBlSE3aiKLb5OLC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

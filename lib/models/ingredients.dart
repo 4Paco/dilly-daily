@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:http/http.dart' as http;
 
@@ -57,8 +56,8 @@ class Ingredients extends Iterable implements Iterator {
 
   Future<void> load() async {
     final String jsonString =
-        //await fetchIngredients(); //comment this line when you don't want to use the server
-        await rootBundle.loadString('assets/data/ingredients.json');
+        await fetchIngredients(); //comment this line when you don't want to use the server
+    //await rootBundle.loadString('assets/data/ingredients.json');
     final data = jsonDecode(jsonString);
     for (String ing in data.keys) {
       Map<String, dynamic> newIng = data[ing];
