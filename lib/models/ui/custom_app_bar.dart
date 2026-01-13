@@ -14,6 +14,8 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
+
     return Column(
       children: [
         AppBar(

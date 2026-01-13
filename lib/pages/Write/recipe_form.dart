@@ -14,6 +14,7 @@ import 'package:dilly_daily/pages/Write/Modules/input_ingredient.dart'
 import 'package:dilly_daily/pages/Write/Modules/photo_cropper.dart';
 import 'package:dilly_daily/pages/Write/Modules/step_editor.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -106,18 +107,6 @@ class _RecipeFormState extends State<RecipeForm> {
     super.dispose();
   }
 
-  //Recipe({
-  //    ok this.name = "",
-  //    String? id,
-  //    ok this.summary = "",
-  //    this.steps = const [],
-  //    ok this.ingredients = const {},
-  //    this.personalized = "Nope", //maybe mettre le "globalDict" id ici
-  //    ok this.recipeLink = "",
-  //    ok this.dishTypes = const ["Meal"],
-  //    this.servings = 1,
-  //    ok this.image = ""})
-  //    : id = id ?? Uuid().v4();
   Future<String> _saveImagePermanently(String sourcePath) async {
     // Obtenir le répertoire de documents de l'application
     final Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -142,46 +131,54 @@ class _RecipeFormState extends State<RecipeForm> {
 
   Future<void> _cropImage() async {
     ColorScheme themeScheme = Theme.of(context).colorScheme;
-    final croppedFile = await ImageCropper().cropImage(
-      sourcePath: _pickedFile!.path,
-      compressFormat: ImageCompressFormat.jpg,
-      compressQuality: 100,
-      uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: themeScheme.primary,
-            toolbarWidgetColor: themeScheme.onPrimary,
-            initAspectRatio: CropAspectRatioPresetCustom(),
-            lockAspectRatio: true,
-            aspectRatioPresets: [
-              CropAspectRatioPresetCustom(),
-            ],
-            hideBottomControls: true),
-        IOSUiSettings(
-            title: 'Cropper',
-            aspectRatioLockEnabled: true,
-            aspectRatioPresets: [
-              CropAspectRatioPresetCustom(),
-            ],
-            aspectRatioPickerButtonHidden: true),
-        WebUiSettings(
-          context: context,
-          presentStyle: WebPresentStyle.dialog,
-          size: const CropperSize(
-            width: 520,
-            height: 780,
-          ),
-        ),
-      ],
-    );
-    if (croppedFile != null) {
-      final String permanentPath =
-          await _saveImagePermanently(croppedFile.path);
-
+    if (kIsWeb) {
       setState(() {
-        _croppedFile = croppedFile;
-        _savedImagePath = permanentPath; // Stocker le chemin permanent
+        _croppedFile = CroppedFile(_pickedFile!.path);
+        _savedImagePath = _pickedFile!.path; // Stocker le chemin permanent
       });
+    } else {
+      ImageCropper cropper = ImageCropper();
+      final croppedFile = await cropper.cropImage(
+        sourcePath: _pickedFile!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: themeScheme.primary,
+              toolbarWidgetColor: themeScheme.onPrimary,
+              initAspectRatio: CropAspectRatioPresetCustom(),
+              lockAspectRatio: true,
+              aspectRatioPresets: [
+                CropAspectRatioPresetCustom(),
+              ],
+              hideBottomControls: true),
+          IOSUiSettings(
+              title: 'Cropper',
+              aspectRatioLockEnabled: true,
+              aspectRatioPresets: [
+                CropAspectRatioPresetCustom(),
+              ],
+              aspectRatioPickerButtonHidden: true),
+          WebUiSettings(
+            context: context,
+            presentStyle: WebPresentStyle.dialog,
+            size: const CropperSize(
+              width: 520,
+              height: 600,
+            ),
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        final String permanentPath =
+            await _saveImagePermanently(croppedFile.path);
+
+        setState(() {
+          _croppedFile = croppedFile;
+          _savedImagePath = permanentPath; // Stocker le chemin permanent
+        });
+      }
     }
   }
 
@@ -198,7 +195,7 @@ class _RecipeFormState extends State<RecipeForm> {
 
   @override
   Widget build(BuildContext context) {
-    bool isPhoneSized = MediaQuery.of(context).size.width < 600;
+    bool isSmallScreen = MediaQuery.of(context).size.width < 600;
     ColorScheme themeScheme = Theme.of(context).colorScheme;
     return Form(
       key: widget._formKey,
@@ -295,7 +292,7 @@ class _RecipeFormState extends State<RecipeForm> {
                   ],
                 ),
               ),
-              isPhoneSized
+              isSmallScreen
                   ? GridView.count(
                       // DishType
                       padding: EdgeInsets.only(top: 10),
@@ -337,6 +334,7 @@ class _RecipeFormState extends State<RecipeForm> {
                           label: Text(dish.capitalize()),
                           selected: _tempDishTypes.contains(dish),
                           onSelected: (selected) {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             setState(() {
                               if (selected) {
                                 _tempDishTypes.add(dish);
@@ -371,7 +369,7 @@ class _RecipeFormState extends State<RecipeForm> {
                   ],
                 ),
               ),
-              isPhoneSized
+              isSmallScreen
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Wrap(
@@ -413,6 +411,7 @@ class _RecipeFormState extends State<RecipeForm> {
                       }).map((gear) {
                         return ChoiceChip(
                           label: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(gear.icon),
                               Text(gear.name.capitalize()),

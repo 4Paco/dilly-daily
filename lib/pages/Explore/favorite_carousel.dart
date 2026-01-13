@@ -16,15 +16,17 @@ class FavoriteCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
+
     return SizedBox(
-      height: 150,
+      height: isSmallScreen ? 150 : 300,
       child: ListView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         children: [
           for (String recipeKey in personals.favoriteRecipes) ...[
             SizedBox(
-              width: 150,
+              width: isSmallScreen ? 150 : 300,
               child: RecipePreview(
                   recipeKey: recipeKey,
                   texte: recipesDict[recipeKey]!.name,

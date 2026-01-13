@@ -8,6 +8,7 @@ class CustomSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme themeScheme = Theme.of(context).colorScheme;
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
 
     return SliverAppBar(
       backgroundColor: themeScheme.primary,
@@ -17,7 +18,8 @@ class CustomSliverAppBar extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.w900),
+        style: TextStyle(
+            fontWeight: FontWeight.w900, fontSize: isSmallScreen ? null : 40),
       ),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(5),

@@ -351,10 +351,13 @@ class _GroceriesPageState extends State<GroceriesPage> {
 
   Scaffold groceriesPageContent(BuildContext context) {
     ColorScheme themeScheme = Theme.of(context).colorScheme;
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
       body: CustomScrollView(slivers: [
         // Fixed AppBar
-        CustomSliverAppBar(title: "Wanted \n-fresh or canned-"),
+        CustomSliverAppBar(
+            title:
+                isSmallScreen ? "Wanted \n-fresh or canned-" : "Grocery list"),
         if (!listeCourses.isEmpty)
           SliverToBoxAdapter(
             child: Container(

@@ -24,6 +24,7 @@ class CalendarSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String recipeKey = personals.weekMeals[(today + i) % 7][time];
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return DragTarget(
       builder: (context, candidateItems, rejectedItems) {
         return recipeKey.isNotEmpty
@@ -37,8 +38,10 @@ class CalendarSlot extends StatelessWidget {
                   onMealAddedToWeek("", (today + i) % 7, time);
                 },
                 child: SizedBox(
-                    width: i == 0 ? 150 : 100,
-                    height: 129,
+                    width: i == 0
+                        ? (isSmallScreen ? 150 : 310)
+                        : (isSmallScreen ? 100 : 220),
+                    height: isSmallScreen ? 129 : 220,
                     child: CalendarRecipePreview(
                       recipeKey: recipeKey,
                       texte: recipesDict[recipeKey]!.name,
@@ -47,7 +50,11 @@ class CalendarSlot extends StatelessWidget {
                     )),
               )
             : SizedBox(
-                width: i == 0 ? 150 : 100, height: 129, child: EmptyPreview());
+                width: i == 0
+                    ? (isSmallScreen ? 150 : 310)
+                    : (isSmallScreen ? 100 : 220),
+                height: isSmallScreen ? 129 : 220,
+                child: EmptyPreview());
       },
       onAcceptWithDetails: (details) {
         onMealAddedToWeek(details.data as String, (today + i) % 7, time);

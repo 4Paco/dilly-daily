@@ -77,12 +77,14 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    double sliderPatience = widget.activePatience;
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     ColorScheme themeScheme = Theme.of(context).colorScheme;
     return Container(
       color: themeScheme.surface,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(16, 8, 8, 8),
+        padding: isSmallScreen
+            ? EdgeInsets.fromLTRB(16, 8, 8, 8)
+            : EdgeInsets.fromLTRB(500, 8, 492, 8),
         child: Column(
           children: [
             Row(
@@ -217,105 +219,131 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ChoiceChip(
-                  labelPadding: EdgeInsets.zero,
-                  label: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.lunch_dining,
-                        size: 15,
-                      ),
-                      Text(" By Name"),
-                    ],
-                  ),
-                  selected: searchOption == "name",
-                  showCheckmark: false,
-                  onSelected: (selected) {
-                    if (searchOption != "name") {
-                      setState(() {
-                        searchOption = "name";
-                        valueKey = UniqueKey();
-                        _textController?.clear();
-
-                        widget.reload();
-                      });
-                    }
-                  },
-                ),
-                ChoiceChip(
-                  labelPadding: EdgeInsets.zero,
-                  label: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.science_outlined,
-                        size: 15,
-                      ),
-                      Text(" By Ingredient"),
-                      if (widget.activeSearchIngredients.isNotEmpty) ...[
-                        SizedBox(width: 4),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: themeScheme.onSecondary,
-                            borderRadius: BorderRadius.circular(10),
+                Expanded(
+                  child: Padding(
+                    padding: isSmallScreen
+                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
+                        : const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
+                    child: ChoiceChip(
+                      labelPadding: EdgeInsets.zero,
+                      label: Row(
+                        mainAxisSize:
+                            isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.lunch_dining,
+                            size: 15,
                           ),
-                          child: Text(
-                            '${widget.activeSearchIngredients.length}',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: themeScheme.onSecondaryContainer,
+                          Text(" By Name"),
+                        ],
+                      ),
+                      selected: searchOption == "name",
+                      showCheckmark: false,
+                      onSelected: (selected) {
+                        if (searchOption != "name") {
+                          setState(() {
+                            searchOption = "name";
+                            valueKey = UniqueKey();
+                            _textController?.clear();
+
+                            widget.reload();
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: isSmallScreen
+                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
+                        : const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
+                    child: ChoiceChip(
+                      labelPadding: EdgeInsets.zero,
+                      label: Row(
+                        mainAxisSize:
+                            isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.science_outlined,
+                            size: 15,
+                          ),
+                          Text(" By Ingredient"),
+                          if (widget.activeSearchIngredients.isNotEmpty) ...[
+                            SizedBox(width: 4),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: themeScheme.onSecondary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                '${widget.activeSearchIngredients.length}',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: themeScheme.onSecondaryContainer,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                  selected: searchOption == "ingredient",
-                  showCheckmark: false,
-                  onSelected: (selected) {
-                    if (searchOption != "ingredient") {
-                      setState(() {
-                        searchOption = "ingredient";
-                        valueKey = UniqueKey();
-                        _textController?.clear();
-
-                        widget.reload();
-                      });
-                    }
-                  },
-                ),
-                ChoiceChip(
-                  labelPadding: EdgeInsets.zero,
-                  label: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.electric_bolt,
-                        size: 15,
+                          ],
+                        ],
                       ),
-                      Text(" By Energy"),
-                    ],
-                  ),
-                  selected: searchOption == "energy",
-                  showCheckmark: false,
-                  onSelected: (selected) {
-                    if (searchOption != "energy") {
-                      setState(() {
-                        searchOption = "energy";
-                        valueKey = UniqueKey();
-                        _textController?.clear();
+                      selected: searchOption == "ingredient",
+                      showCheckmark: false,
+                      onSelected: (selected) {
+                        if (searchOption != "ingredient") {
+                          setState(() {
+                            searchOption = "ingredient";
+                            valueKey = UniqueKey();
+                            _textController?.clear();
 
-                        widget.reload();
-                      });
-                    }
-                  },
-                )
+                            widget.reload();
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: isSmallScreen
+                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
+                        : const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
+                    child: ChoiceChip(
+                      labelPadding: EdgeInsets.zero,
+                      label: Row(
+                        mainAxisSize:
+                            isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.electric_bolt,
+                            size: 15,
+                          ),
+                          Text(" By Energy"),
+                        ],
+                      ),
+                      selected: searchOption == "energy",
+                      showCheckmark: false,
+                      onSelected: (selected) {
+                        if (searchOption != "energy") {
+                          setState(() {
+                            searchOption = "energy";
+                            valueKey = UniqueKey();
+                            _textController?.clear();
+
+                            widget.reload();
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ],
             )
           ],

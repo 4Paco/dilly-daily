@@ -23,8 +23,10 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
+
     return SizedBox(
-      height: 278,
+      height: isSmallScreen ? 278 : 500,
       child: ListView(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
@@ -35,9 +37,14 @@ class Calendar extends StatelessWidget {
                 i == 0
                     ? Text(
                         "Today",
-                        style: TextStyle(fontWeight: FontWeight.w900),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: isSmallScreen ? null : 20),
                       )
-                    : Text(weekDays[(today + i) % 7]),
+                    : Text(
+                        weekDays[(today + i) % 7],
+                        style: TextStyle(fontSize: isSmallScreen ? null : 18),
+                      ),
                 CalendarSlot(
                   i: i,
                   today: today,

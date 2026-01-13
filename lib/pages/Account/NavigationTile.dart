@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'AccountSubPageScaffold.dart';
 
 class NavigationTile extends StatelessWidget {
@@ -37,4 +38,3 @@ class NavigationTile extends StatelessWidget {
     );
   }
 }
-

@@ -32,10 +32,10 @@ class CalendarDialogBox extends StatelessWidget {
   final bool isAddedToGroceries;
   final int mealsModifier;
 
-
   @override
   Widget build(BuildContext context) {
     final themeScheme = Theme.of(context).colorScheme;
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     int nbMeals = 1;
 
     //set the default number of meals to cook for the recipe
@@ -61,8 +61,8 @@ class CalendarDialogBox extends StatelessWidget {
       padding: EdgeInsets.only(
           top: verticalPadding - verticalOffset,
           bottom: verticalPadding + verticalOffset,
-          right: horizontalPadding,
-          left: horizontalPadding),
+          right: horizontalPadding + (isSmallScreen ? 0 : 702),
+          left: horizontalPadding + (isSmallScreen ? 0 : 702)),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
@@ -268,8 +268,7 @@ class CalendarDialogBox extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => RecipeStepsScreen(
-                                      recipe: recipesDict[recipeKey]!
-                                    ),
+                                        recipe: recipesDict[recipeKey]!),
                                   ),
                                 );
                               },

@@ -10,6 +10,7 @@ class BlocTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Row(
       //"Your forbidden ingredients"
       children: [
@@ -19,6 +20,7 @@ class BlocTitle extends StatelessWidget {
             texte,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
+                fontSize: isSmallScreen ? null : 30,
                 fontWeight: FontWeight.w700),
           ),
         ),

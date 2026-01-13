@@ -48,8 +48,8 @@ class RecipeDialogBox extends StatelessWidget {
       padding: EdgeInsets.only(
           top: verticalPadding - verticalOffset,
           bottom: verticalPadding + verticalOffset,
-          right: horizontalPadding,
-          left: horizontalPadding),
+          right: horizontalPadding + (isSmallScreen ? 0 : 600),
+          left: horizontalPadding + (isSmallScreen ? 0 : 600)),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),

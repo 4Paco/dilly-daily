@@ -24,6 +24,7 @@ class RecipePreview extends StatelessWidget {
     if (img.isEmpty) {
       imgDisplayed = "assets/image/meals/placeholder.jpg";
     }
+
     return Padding(
       padding: padding,
       child: FilledButton(

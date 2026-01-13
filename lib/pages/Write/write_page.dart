@@ -59,7 +59,6 @@ class _WritePageState extends State<WritePage> {
         String personalized = recette.personalized;
 
         if (mealPlanRecipes.containsKey(personalized)) {
-
           removeGroceries(personalized);
 
           mealPlanRecipes.removeRecipe(personalized);
@@ -74,7 +73,6 @@ class _WritePageState extends State<WritePage> {
             }
           }
         } else {
-          
           if (recette.personalized != "Nope") {
             recetteId = recette.personalized;
           }
@@ -87,7 +85,8 @@ class _WritePageState extends State<WritePage> {
 
   void removeGroceries(String recipeKey, {int nbMeals = 0}) {
     for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
-      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+      if (listeCourses.contains(ingredient) ||
+          listeCourses.appearsInList(ingredient)) {
         listeCourses.forceRemoveIngredient(ingredient);
       }
     }
@@ -180,7 +179,9 @@ class _WritePageState extends State<WritePage> {
               centerTitle: true,
               title: Text(
                 "Your Recipes",
-                style: TextStyle(fontWeight: FontWeight.w900),
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: isSmallScreen ? null : 40),
               )),
           PinnedHeaderSliver(
             child: Divider(

@@ -25,6 +25,8 @@ class RecipePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
+
     var imgDisplayed = img;
     if (img.isEmpty) {
       imgDisplayed = "assets/image/meals/placeholder.jpg";

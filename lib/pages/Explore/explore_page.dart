@@ -127,7 +127,7 @@ class _ExplorePageState extends State<ExplorePage>
 
         if (mealPlanRecipes.containsKey(personalized)) {
           print("5");
-          removeGroceries(personalized);      
+          removeGroceries(personalized);
           //if the recipe is edited and original is in MealPlan
           mealPlanRecipes.removeRecipe(personalized);
 
@@ -157,7 +157,8 @@ class _ExplorePageState extends State<ExplorePage>
 
   void removeGroceries(String recipeKey, {int nbMeals = 0}) {
     for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
-      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+      if (listeCourses.contains(ingredient) ||
+          listeCourses.appearsInList(ingredient)) {
         listeCourses.forceRemoveIngredient(ingredient);
       }
     }
@@ -301,7 +302,7 @@ class _ExplorePageState extends State<ExplorePage>
         ? "Search Results (${searchResults!.length})"
         : "Suggestions";
     final themeScheme = Theme.of(context).colorScheme;
-    print(recipesToShow);
+    bool isSmallScreen = MediaQuery.of(context).size.width <= 600;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -421,7 +422,7 @@ class _ExplorePageState extends State<ExplorePage>
                     shrinkWrap: true,
                     physics:
                         NeverScrollableScrollPhysics(), // Disable GridView scrolling
-                    crossAxisCount: 2,
+                    crossAxisCount: isSmallScreen ? 2 : 6,
                     childAspectRatio: 1, // Adjust to control item size
                     children: [
                       for (String recipeKey in recipesToShow) ...[
