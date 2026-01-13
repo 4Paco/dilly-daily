@@ -6,6 +6,7 @@ import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/models/Personalization/my_recipes.dart'
     show MyRecipes;
 import 'package:dilly_daily/models/Personalization/personalized_groceries.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
 
 class UserProfile {
@@ -38,10 +39,10 @@ class UserProfile {
     bool hasChanges = false;
 
     // Nettoyer favoriteRecipes
-    int old_len = _favoriteRecipes.length;
+    int oldLen = _favoriteRecipes.length;
     _favoriteRecipes.removeWhere((id) => !recipesDict.containsKey(id));
 
-    if (_favoriteRecipes.length < old_len) {
+    if (_favoriteRecipes.length < oldLen) {
       hasChanges = true;
     }
 
@@ -61,21 +62,25 @@ class UserProfile {
   }
 
   Future<void> load() async {
-    await ensureFileExists();
-    final file = await _localFile;
-    // Read the file
-    final jsonString = await file.readAsString();
-    final json = jsonDecode(jsonString);
-    _defaultPersonNumber = json['_defaultPersonNumber'] ?? 1;
-    _patience = (json['_patience'] ?? _patience).toDouble();
-    _favoriteRecipes =
-        List<String>.from(json['_favoriteRecipes'] ?? _favoriteRecipes);
-    _weekMeals = (json['_weekMeals'] as List<dynamic>?)
-            ?.map((day) => List<String>.from(day as List<dynamic>))
-            .toList() ??
-        _weekMeals;
-    _kitchenGear = List<String>.from(json['_kitchenGear'] ?? []);
-    _coursesPersonnelles.fromJson(json['_coursesPersonnelles'] ?? []);
+    if (!kIsWeb) {
+      await ensureFileExists();
+      final file = await _localFile;
+      // Read the file
+      final jsonString = await file.readAsString();
+      final json = jsonDecode(jsonString);
+      _defaultPersonNumber = json['_defaultPersonNumber'] ?? 1;
+      _patience = (json['_patience'] ?? _patience).toDouble();
+      _favoriteRecipes =
+          List<String>.from(json['_favoriteRecipes'] ?? _favoriteRecipes);
+      _weekMeals = (json['_weekMeals'] as List<dynamic>?)
+              ?.map((day) => List<String>.from(day as List<dynamic>))
+              .toList() ??
+          _weekMeals;
+      _kitchenGear = List<String>.from(json['_kitchenGear'] ?? []);
+      _coursesPersonnelles.fromJson(json['_coursesPersonnelles'] ?? []);
+    } else {
+      _defaultPersonNumber = 1;
+    }
   }
 
   Future<bool> isLoaded() async {
@@ -102,18 +107,22 @@ class UserProfile {
   }
 
   Future<void> updateJson() async {
-    final filePath = await _localFile;
-    final json = {
-      '_defaultPersonNumber': _defaultPersonNumber,
-      '_patience': _patience,
-      '_favoriteRecipes': _favoriteRecipes,
-      '_weekMeals': _weekMeals.map((day) => day).toList(),
-      '_kitchenGear': _kitchenGear,
-      '_coursesPersonnelles': _coursesPersonnelles.toJson(),
-    }; //_allergiesDict.map((key, value) => MapEntry(key, value));
-    //final json = {};
-    String jsonString = jsonEncode(json);
-    filePath.writeAsString(jsonString);
+    if (!kIsWeb) {
+      // Perform platform-specific operations
+
+      final filePath = await _localFile;
+      final json = {
+        '_defaultPersonNumber': _defaultPersonNumber,
+        '_patience': _patience,
+        '_favoriteRecipes': _favoriteRecipes,
+        '_weekMeals': _weekMeals.map((day) => day).toList(),
+        '_kitchenGear': _kitchenGear,
+        '_coursesPersonnelles': _coursesPersonnelles.toJson(),
+      }; //_allergiesDict.map((key, value) => MapEntry(key, value));
+      //final json = {};
+      String jsonString = jsonEncode(json);
+      filePath.writeAsString(jsonString);
+    }
   }
 
   double get patience => _patience;

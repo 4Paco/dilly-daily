@@ -342,7 +342,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
           } else if (snapshot.hasError) {
             // Handle errors
             return Center(
-                child: Text("Error loading allergies: ${snapshot.error}"));
+                child: Text("Error loading grocery page: ${snapshot.error}"));
           } else {
             return groceriesPageContent(context);
           }

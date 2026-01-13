@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dilly_daily/data/recipes.dart' show recipesDict;
 import 'package:dilly_daily/models/Recipe.dart';
-import 'package:flutter/material.dart' show VoidCallback;
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyRecipes extends Iterable implements Iterator {
@@ -21,7 +20,7 @@ class MyRecipes extends Iterable implements Iterator {
 
   Map<String, Recipe> get recipesDict => _recipesDict;
 
-  void empty(){
+  void empty() {
     _recipesDict = {};
   }
 
@@ -88,10 +87,10 @@ class MyRecipes extends Iterable implements Iterator {
     bool hasChanges = false;
 
     // Nettoyer dico
-    int old_len = _recipesDict.length;
+    int oldLen = _recipesDict.length;
     _recipesDict.removeWhere((id, recipe) => !(recipesDict.containsKey(id)));
 
-    if (_recipesDict.length < old_len) {
+    if (_recipesDict.length < oldLen) {
       hasChanges = true;
     }
 
@@ -105,17 +104,18 @@ class MyRecipes extends Iterable implements Iterator {
 
   // General json handling
   Future<void> load() async {
-    await ensureFileExists();
-    final file = await _localFile;
-    // Read the file
-    final jsonString = await file.readAsString();
-    //print("stored jsonString of $_name : $jsonString");
-    final data = jsonDecode(jsonString);
-    for (String key in data.keys) {
-      String id = key; //int.parse(key);
-      _recipesDict[id] = Recipe.fromJson(key, data[key]);
+    if (!kIsWeb) {
+      await ensureFileExists();
+      final file = await _localFile;
+      // Read the file
+      final jsonString = await file.readAsString();
+      //print("stored jsonString of $_name : $jsonString");
+      final data = jsonDecode(jsonString);
+      for (String key in data.keys) {
+        String id = key; //int.parse(key);
+        _recipesDict[id] = Recipe.fromJson(key, data[key]);
+      }
     }
-    //print("decoded dict for $_name : $recipesDict");
   }
 
   Future<bool> isLoaded() async {
@@ -170,7 +170,6 @@ class MyRecipes extends Iterable implements Iterator {
       print("${_recipesDict[recipeKey]!.name} has been removed from $_name");
       _recipesDict.remove(recipeKey);
       _notifyListeners();
-      
     } else {
       throw ArgumentError(
           "No such recipe in $_name with this ID $recipeKey: . Removal aborted");

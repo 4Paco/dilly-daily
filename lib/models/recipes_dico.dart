@@ -6,6 +6,7 @@ import 'package:dilly_daily/models/Personalization/my_recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/Step.dart';
 import 'package:flutter/material.dart' hide Step;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -99,30 +100,12 @@ class RecipesDico extends Iterable implements Iterator {
   }
 
   Future<void> load() async {
-    final String jsonString = await fetchRecipes();
-    //await rootBundle.loadString('assets/data/recipes.json');
+    final String jsonString = //await fetchRecipes();
+        await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
       String id = key;
       Recipe recipe = Recipe.fromJson(key, data[key]);
-      //for (String valKey in data[key].keys) {
-      //  if (valKey == "name") {
-      //    recipe.name = data[key][valKey];
-      //  } else if (valKey == "image") {
-      //    recipe.image = data[key][valKey];
-      //  } else if (valKey == "personalized") {
-      //    recipe.personalized = data[key][valKey];
-      //  } else if (valKey == "steps") {
-      //    recipe.steps = (data[key][valKey] as List)
-      //        .map((stepJson) => Step.fromJson(stepJson))
-      //        .toList();
-      //  } else if (valKey == "ingredients") {
-      //    recipe.ingredients = (data[key][valKey] as Map<String, dynamic>)
-      //        .map((key, value) => MapEntry(key, value as double));
-      //  } else if (valKey == "summary") {
-      //    recipe.summary = data[key][valKey];
-      //  }
-      //}
 
       databaseDict[id] = recipe;
     }

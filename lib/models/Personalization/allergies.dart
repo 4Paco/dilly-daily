@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Allergies extends Iterable implements Iterator {
@@ -38,14 +39,13 @@ class Allergies extends Iterable implements Iterator {
   Iterable<String> get keys => _allergiesDict.keys;
 
   Future<void> load() async {
-    await ensureFileExists();
-    final file = await _localFile;
-    // Read the file
-    final jsonString = await file.readAsString();
-    jsonDecode(jsonString);
-    // for (String key in json.keys) {
-    //   _allergiesDict[key] = json[key] as bool;
-    // }
+    if (!kIsWeb) {
+      await ensureFileExists();
+      final file = await _localFile;
+      // Read the file
+      final jsonString = await file.readAsString();
+      jsonDecode(jsonString);
+    }
   }
 
   Future<bool> isLoaded() async {

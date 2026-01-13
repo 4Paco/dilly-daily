@@ -1,6 +1,7 @@
 import 'package:dilly_daily/data/ingredients.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AutofillIngredient extends StatelessWidget {
   AutofillIngredient({
     super.key,

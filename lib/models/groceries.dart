@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Groceries extends Iterable implements Iterator {
@@ -47,15 +48,18 @@ class Groceries extends Iterable implements Iterator {
   }
 
   Future<void> load() async {
-    await ensureFileExists();
-    final file = await _localFile;
-    // Read the file
-    final jsonString = await file.readAsString();
-    final json = jsonDecode(jsonString);
-    for (String key in json.keys) {
-      _groceriesDict[key] = json[key] as double;
+    if (!kIsWeb) {
+      await ensureFileExists();
+      final file = await _localFile;
+      // Read the file
+      final jsonString = await file.readAsString();
+      final json = jsonDecode(jsonString);
+      for (String key in json.keys) {
+        _groceriesDict[key] = json[key] as double;
+      }
+
+      _extendedGroceriesDict = Map.from(_groceriesDict);
     }
-    _extendedGroceriesDict = Map.from(_groceriesDict);
   }
 
   Future<bool> isLoaded() async {
