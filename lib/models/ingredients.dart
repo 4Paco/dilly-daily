@@ -6,15 +6,15 @@ import 'package:http/http.dart' as http;
 class Ingredients extends Iterable implements Iterator {
   Map<String, dynamic> _dico = {};
   final List<String> ingredientCategories = [
-    "Produce",
-    "Dairy Products",
-    "Meat&Deli",
-    "Breads&Grains",
-    "Breakfast",
-    "Canned Goods",
+    "Fruits & Légumes",
+    "Produits Laitiers",
+    "Viande et charcuterie",
+    "Pains et céréales",
+    "Petit-Déjeuner",
+    "Produits en conserve",
     "Sauces&Condiments",
-    "Snacks&Drinks",
-    "Baking&Seasonings",
+    "Snacks & Boissons",
+    "Épicerie",
     "Other"
   ];
 

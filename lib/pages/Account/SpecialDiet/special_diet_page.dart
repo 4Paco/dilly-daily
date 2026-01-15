@@ -75,7 +75,7 @@ class _SpecialDietPageState extends State<SpecialDietPage> {
                     //Forbidden ingredients bloc
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      BlocTitle(texte: "Your forbidden ingredients"),
+                      BlocTitle(texte: "Vos ingrédients interdits"),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 200),
                         child: ListView(
@@ -99,7 +99,7 @@ class _SpecialDietPageState extends State<SpecialDietPage> {
                   child: Column(
                     //Curated List bloc
                     children: [
-                      BlocTitle(texte: "Curated Lists"),
+                      BlocTitle(texte: "Raccoucis"),
                       Expanded(
                         child: GridView.count(
                           padding: EdgeInsets.zero,
@@ -108,11 +108,11 @@ class _SpecialDietPageState extends State<SpecialDietPage> {
                           childAspectRatio: 1, // Adjust to control item size
                           children: [
                             CuratedBloc(
-                                texte: "vegetarian", onAddDiet: addDiet),
-                            CuratedBloc(texte: "hallal", onAddDiet: addDiet),
+                                texte: "Végétarien", onAddDiet: addDiet),
+                            CuratedBloc(texte: "Hallal", onAddDiet: addDiet),
                             CuratedBloc(
-                                texte: "glutenfree", onAddDiet: addDiet),
-                            CuratedBloc(texte: "vegan", onAddDiet: addDiet),
+                                texte: "Sans Gluten", onAddDiet: addDiet),
+                            CuratedBloc(texte: "Végan", onAddDiet: addDiet),
                           ],
                         ),
                       ),

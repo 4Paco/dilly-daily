@@ -68,7 +68,7 @@ class _AboutPageState extends State<AboutPage> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Version 1.0.0',
+                      'Version 2.1.0',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
@@ -81,15 +81,15 @@ class _AboutPageState extends State<AboutPage> {
               const SizedBox(height: 32),
 
               // Section: About the Project
-              BlocTitle(texte: "About the Project"),
+              BlocTitle(texte: "À propos du projet"),
               const SizedBox(height: 8),
               const Card(
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'DillyDaily is a mobile application for recipe management, meal planning, and grocery shopping. '
-                    'Created as part of the Design and Implementation of Mobile Applications course at Politecnico di Milano, '
-                    'it helps you organize your meals efficiently while respecting dietary restrictions and available cooking resources.',
+                    'DillyDaily est une application mobile pour la gestion de recettes, la planification de repas et les courses. '
+                    'Créée dans le cadre du cours Design and Implementation of Mobile Applications à Politecnico di Milano, '
+                    'elle vous aide à organiser vos repas efficacement tout en respectant les restrictions alimentaires et les ressources de cuisine disponibles.',
                     style: TextStyle(fontSize: 15, height: 1.5),
                   ),
                 ),
@@ -98,83 +98,62 @@ class _AboutPageState extends State<AboutPage> {
               const SizedBox(height: 24),
 
               // Section: Team
-              BlocTitle(texte: "Team"),
+              BlocTitle(texte: "Équipe"),
               const SizedBox(height: 8),
               const ListTile(
                 leading: Icon(Icons.person, color: Color(0xFF844c72)),
                 title: Text('Lyla Demange'),
-                subtitle: Text('Mobile Development'),
+                subtitle: Text('Développement Mobile'),
               ),
               const ListTile(
                 leading: Icon(Icons.person, color: Color(0xFF844c72)),
                 title: Text('Marion Henriot'),
-                subtitle: Text('Mobile Development & Documentation'),
+                subtitle: Text('Développement Mobile & Documentation'),
               ),
               const ListTile(
                 leading: Icon(Icons.person, color: Color(0xFF844c72)),
                 title: Text('Nils Mittelhockamp'),
-                subtitle: Text('Mobile Development & Testing'),
+                subtitle: Text('Développement Mobile & Tests'),
               ),
               const Divider(),
               const ListTile(
                 leading: Icon(Icons.school, color: Color(0xFF844c72)),
-                title: Text('Supervised by'),
-                subtitle: Text('Professor Luciano Baresi'),
+                title: Text('Supervisé par'),
+                subtitle: Text('Professeur Luciano Baresi'),
               ),
 
               const SizedBox(height: 24),
 
               // Section: Technologies
-              BlocTitle(texte: "Built With"),
-              const SizedBox(height: 8),
-              const ListTile(
-                leading: Icon(Icons.phone_android, color: Color(0xFF844c72)),
-                title: Text('Flutter & Dart'),
-                subtitle: Text('Cross-platform mobile framework'),
-              ),
-              const ListTile(
-                leading: Icon(Icons.cloud, color: Color(0xFF844c72)),
-                title: Text('FastAPI'),
-                subtitle: Text('Backend server for recipe database'),
-              ),
-              const ListTile(
-                leading: Icon(Icons.storage, color: Color(0xFF844c72)),
-                title: Text('Render'),
-                subtitle: Text('Cloud hosting platform'),
-              ),
-              const ListTile(
-                leading: Icon(Icons.analytics, color: Color(0xFF844c72)),
-                title: Text('Microsoft Clarity'),
-                subtitle: Text('User behavior analytics'),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Section: Credits
-              BlocTitle(texte: "Credits & Acknowledgments"),
+              BlocTitle(texte: "Technologies"),
               const SizedBox(height: 8),
               const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '• Icons: Material Design Icons',
-                        style: TextStyle(fontSize: 15, height: 1.8),
-                      ),
-                      Text(
-                        '• Flutter packages: image_picker, url_launcher, path_provider, and others',
-                        style: TextStyle(fontSize: 15, height: 1.8),
-                      ),
-                      Text(
-                        '• Special thanks to all beta testers who provided valuable feedback',
-                        style: TextStyle(fontSize: 15, height: 1.8),
-                      ),
-                    ],
+                  child: ListBody(
+                children: [
+                  ListTile(
+                    leading:
+                        Icon(Icons.phone_android, color: Color(0xFF844c72)),
+                    title: Text('Flutter & Dart'),
+                    subtitle: Text('Framework mobile multiplateforme'),
                   ),
-                ),
-              ),
+                  ListTile(
+                    leading: Icon(Icons.cloud, color: Color(0xFF844c72)),
+                    title: Text('FastAPI'),
+                    subtitle: Text(
+                        'Serveur backend pour la base de données de recettes'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.storage, color: Color(0xFF844c72)),
+                    title: Text('Render'),
+                    subtitle: Text('Plateforme d\'hébergement cloud'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.analytics, color: Color(0xFF844c72)),
+                    title: Text('Microsoft Clarity'),
+                    subtitle: Text('Analyse du comportement des utilisateurs'),
+                  ),
+                ],
+              )),
 
               const SizedBox(height: 24),
 
@@ -185,16 +164,17 @@ class _AboutPageState extends State<AboutPage> {
                 leading:
                     const Icon(Icons.description, color: Color(0xFF844c72)),
                 title: const Text('Documentation'),
-                subtitle: const Text('View full design document'),
+                subtitle: const Text('Voir notre design document'),
                 trailing: const Icon(Icons.open_in_new),
                 onTap: () {
-                  _launchURL(context, 'https://github.com/4Paco/dilly-daily');
+                  _launchURL(context,
+                      'https://github.com/4Paco/dilly-daily/blob/a821fcd1ee335d8f13561d997905065a766a6e70/design_doc/DIMA_%20Design%20Document%20of%20DillyDaily%20.pdf');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.code, color: Color(0xFF844c72)),
                 title: const Text('GitHub Repository'),
-                subtitle: const Text('View source code'),
+                subtitle: const Text('Voir le code source'),
                 trailing: const Icon(Icons.open_in_new),
                 onTap: () {
                   _launchURL(context, 'https://github.com/4Paco/dilly-daily');
@@ -202,8 +182,8 @@ class _AboutPageState extends State<AboutPage> {
               ),
               ListTile(
                 leading: const Icon(Icons.feedback, color: Color(0xFF844c72)),
-                title: const Text('Feedback Form'),
-                subtitle: const Text('Share your thoughts'),
+                title: const Text('Questionnaire Feedback'),
+                subtitle: const Text('Partage tes impressions !'),
                 trailing: const Icon(Icons.open_in_new),
                 onTap: () {
                   _launchURL(

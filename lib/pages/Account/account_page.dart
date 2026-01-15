@@ -49,29 +49,29 @@ class BlocTitle extends StatelessWidget {
 class AccountPage extends StatelessWidget {
   final List<AccountSubmenu> accountSubmenus = const [
     AccountSubmenu(
-      title: 'Special diet',
+      title: 'Préférences Alimentaires',
       icon: Icons.star,
       page: SpecialDietPage(),
     ),
     AccountSubmenu(
-      title: 'My cooking profile',
+      title: 'Mon Profil',
       icon: Icons.restaurant_menu,
       page: CookingProfilePage(),
     ),
     AccountSubmenu(
-      title: 'My favorite meals',
+      title: 'Mes plats favoris',
       icon: Icons.favorite_border,
       page: FavoritePage(),
     ),
     AccountSubmenu(
-      title: 'My kitchen',
+      title: 'Ma cuisine',
       icon: Icons.blender_rounded,
       page: KitchenPage(),
     ),
     AccountSubmenu(
-      title: 'My friends',
+      title: 'Mes amis',
       icon: Icons.handshake_outlined,
-      page: Text('My friends'),
+      page: Text('Work in progress !'),
     ),
     AccountSubmenu(
       title: 'Notifications',
@@ -79,12 +79,12 @@ class AccountPage extends StatelessWidget {
       page: Text('Notifications'),
     ),
     AccountSubmenu(
-      title: 'Help',
+      title: 'Aide',
       icon: Icons.help_outline,
       page: HelpPage(),
     ),
     AccountSubmenu(
-      title: 'About',
+      title: 'À propos',
       icon: Icons.info_outline_rounded,
       page: AboutPage(),
     ),

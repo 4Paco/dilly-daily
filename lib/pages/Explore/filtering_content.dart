@@ -35,7 +35,7 @@ class _FilteringContentState extends State<FilteringContent> {
               contentPadding: EdgeInsets.fromLTRB(10, 0, 5, 0),
               title: RichText(
                 text: TextSpan(
-                  text: "Use your ",
+                  text: "Utilise tes ",
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: [
                     TextSpan(
@@ -76,7 +76,7 @@ class _FilteringContentState extends State<FilteringContent> {
               contentPadding: EdgeInsets.symmetric(horizontal: 5),
               title: RichText(
                 text: TextSpan(
-                  text: "Use your ",
+                  text: "Utilise tes ",
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: [
                     TextSpan(
@@ -117,7 +117,7 @@ class _FilteringContentState extends State<FilteringContent> {
               contentPadding: EdgeInsets.symmetric(horizontal: 5),
               title: RichText(
                 text: TextSpan(
-                  text: "Use your ",
+                  text: "Utilise tes ",
                   style: Theme.of(context).textTheme.bodyMedium,
                   children: [
                     TextSpan(

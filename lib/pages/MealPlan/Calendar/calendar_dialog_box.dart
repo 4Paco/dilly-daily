@@ -149,7 +149,7 @@ class CalendarDialogBox extends StatelessWidget {
                                         Text("$nbMeals ",
                                             textScaler: TextScaler.linear(1.4)),
                                         Text(
-                                          nbMeals > 1 ? "meals" : "meal",
+                                          "repas",
                                           textScaler: TextScaler.linear(1.4),
                                         )
                                       ],
@@ -206,9 +206,9 @@ class CalendarDialogBox extends StatelessWidget {
                                       ],
                                     ),
                                     isAddedToGroceries
-                                        ? Text("Added to")
-                                        : Text("Add to"),
-                                    Text("groceries"),
+                                        ? Text("Ajouté")
+                                        : Text("Ajouter"),
+                                    Text("aux courses"),
                                   ],
                                 ))
                           ]),
@@ -249,7 +249,7 @@ class CalendarDialogBox extends StatelessWidget {
                             padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                         child: Tooltip(
                           message:
-                              "Long press to remove from \nyour Deck and your Timeline",
+                              "Appuyez longuement pour supprimer de \nvotre Menu et de votre Timeline",
                           triggerMode: TooltipTriggerMode.tap,
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),

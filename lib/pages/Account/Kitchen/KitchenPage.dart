@@ -1,7 +1,8 @@
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/models/KitchenGear.dart';
-import 'package:flutter/material.dart';
 import 'package:dilly_daily/pages/Account/Kitchen/kitchen_logic.dart';
+import 'package:flutter/material.dart';
+
 List<Gear> kitchenGear = [
   Gear(
     name: "Oven",
@@ -51,7 +52,7 @@ class _KitchenPageState extends State<KitchenPage> {
     personals.kitchenGear = selectedGear;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Profile updated and saved!")),
+      const SnackBar(content: Text("Profil mis à jour et enregistré !")),
     );
   }
 
@@ -60,7 +61,6 @@ class _KitchenPageState extends State<KitchenPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-
       body: ListView.builder(
         padding: const EdgeInsets.all(12),
         itemCount: kitchenGear.length,
@@ -111,7 +111,6 @@ class _KitchenPageState extends State<KitchenPage> {
           );
         },
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: _updateUserProfile,
         backgroundColor: Colors.white,

@@ -129,8 +129,8 @@ class RecipeDialogBox extends StatelessWidget {
                             onToggleMealPlan(recipeKey);
                           },
                           child: mealPlanRecipes.containsKey(recipeKey)
-                              ? Text("Remove")
-                              : Text("Add")),
+                              ? Text("Retirer")
+                              : Text("Ajouter")),
                     )),
                 if (!isSmallScreen) //Close button is less relevent on phone+problematic displaying of the text 'Close', so simpler to just remove it on 'small screens'
                   Expanded(

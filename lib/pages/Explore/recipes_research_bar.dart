@@ -192,8 +192,8 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
                                             themeScheme.onPrimaryFixedVariant,
                                       ),
                                       hintText: searchOption == "name"
-                                          ? 'Search recipes...'
-                                          : 'Add ingredient to search...',
+                                          ? 'Rechercher des recettes...'
+                                          : 'Ajouter un ingrédient...',
                                       hintStyle: TextStyle(
                                           color: themeScheme
                                               .onPrimaryFixedVariant),
@@ -220,45 +220,43 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
             ),
             Row(
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: isSmallScreen
-                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
-                        : const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
-                    child: ChoiceChip(
-                      labelPadding: EdgeInsets.zero,
-                      label: Row(
-                        mainAxisSize:
-                            isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
-                        children: [
-                          Icon(
-                            Icons.lunch_dining,
-                            size: 15,
-                          ),
-                          Text(" By Name"),
-                        ],
-                      ),
-                      selected: searchOption == "name",
-                      showCheckmark: false,
-                      onSelected: (selected) {
-                        if (searchOption != "name") {
-                          setState(() {
-                            searchOption = "name";
-                            valueKey = UniqueKey();
-                            _textController?.clear();
-
-                            widget.reload();
-                          });
-                        }
-                      },
+                Padding(
+                  padding: isSmallScreen
+                      ? const EdgeInsets.symmetric(vertical: 2, horizontal: 0)
+                      : const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                  child: ChoiceChip(
+                    labelPadding: EdgeInsets.zero,
+                    label: Row(
+                      mainAxisSize:
+                          isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.lunch_dining,
+                          size: 15,
+                        ),
+                        Text(" Par Nom"),
+                      ],
                     ),
+                    selected: searchOption == "name",
+                    showCheckmark: false,
+                    onSelected: (selected) {
+                      if (searchOption != "name") {
+                        setState(() {
+                          searchOption = "name";
+                          valueKey = UniqueKey();
+                          _textController?.clear();
+
+                          widget.reload();
+                        });
+                      }
+                    },
                   ),
                 ),
                 Expanded(
                   child: Padding(
                     padding: isSmallScreen
-                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
+                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 2)
                         : const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 15),
                     child: ChoiceChip(
@@ -271,7 +269,7 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
                             Icons.science_outlined,
                             size: 15,
                           ),
-                          Text(" By Ingredient"),
+                          Text(" Par Ingredient"),
                           if (widget.activeSearchIngredients.isNotEmpty) ...[
                             SizedBox(width: 4),
                             Container(
@@ -309,39 +307,37 @@ class _RecipesResearchBarState extends State<RecipesResearchBar> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: isSmallScreen
-                        ? const EdgeInsets.symmetric(vertical: 2, horizontal: 1)
-                        : const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
-                    child: ChoiceChip(
-                      labelPadding: EdgeInsets.zero,
-                      label: Row(
-                        mainAxisSize:
-                            isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
-                        children: [
-                          Icon(
-                            Icons.electric_bolt,
-                            size: 15,
-                          ),
-                          Text(" By Energy"),
-                        ],
-                      ),
-                      selected: searchOption == "energy",
-                      showCheckmark: false,
-                      onSelected: (selected) {
-                        if (searchOption != "energy") {
-                          setState(() {
-                            searchOption = "energy";
-                            valueKey = UniqueKey();
-                            _textController?.clear();
-
-                            widget.reload();
-                          });
-                        }
-                      },
+                Padding(
+                  padding: isSmallScreen
+                      ? const EdgeInsets.symmetric(vertical: 2, horizontal: 0)
+                      : const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                  child: ChoiceChip(
+                    labelPadding: EdgeInsets.zero,
+                    label: Row(
+                      mainAxisSize:
+                          isSmallScreen ? MainAxisSize.min : MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.electric_bolt,
+                          size: 15,
+                        ),
+                        Text(" Par Energie"),
+                      ],
                     ),
+                    selected: searchOption == "energy",
+                    showCheckmark: false,
+                    onSelected: (selected) {
+                      if (searchOption != "energy") {
+                        setState(() {
+                          searchOption = "energy";
+                          valueKey = UniqueKey();
+                          _textController?.clear();
+
+                          widget.reload();
+                        });
+                      }
+                    },
                   ),
                 ),
               ],

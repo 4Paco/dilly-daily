@@ -13,7 +13,7 @@ class GroceryList extends SliverChildBuilderDelegate {
           var items = <Widget>[];
           var others = <Widget>[];
           if (listeCourses.isEmpty) {
-            items.add(BlocTitle(texte: "No ingredients to shop yet"));
+            items.add(BlocTitle(texte: "Liste vide pour le moment"));
             return index < items.length ? items[index] : null;
           }
 

@@ -24,7 +24,6 @@ class _EditSubPageState extends State<EditSubPage> {
     if (widget.recette.personalized == "Nope") {
       //Dans ce cas, la recette vient d'être créée ou il faut la noter comme éditée
       if (recipesDict.databaseContains(widget.recette.id)) {
-        print("vient de la database");
         //Si la recette a été envoyée depuis bigDico
         //il faut voir si la version éditée n'existe pas déjà
         List<String> listeEditions = myRecipes.values
@@ -45,33 +44,74 @@ class _EditSubPageState extends State<EditSubPage> {
     super.initState();
   }
 
+  Future<bool?> _showDialog() {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Quitter sans sauvegarder ?'),
+          content: const Text(
+              'Toutes les modifications non sauvegardées seront perdues !'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Oui, annule mes changements !'),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+            ),
+            TextButton(
+              child: const Text('Non, je continue d\'éditer'),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme themeScheme = Theme.of(context).colorScheme;
-    return Scaffold(
-        body: CustomScrollView(slivers: [
-      // Fixed AppBar
-      SliverAppBar(
-          backgroundColor: themeScheme.primary,
-          foregroundColor: themeScheme.tertiaryFixed,
-          pinned: true,
-          centerTitle: true,
-          title: Text(
-            "${widget.recette.name == "" ? 'Create' : 'Edit'} Recipe",
-            style: TextStyle(fontWeight: FontWeight.w900),
-          )),
-      PinnedHeaderSliver(
-        child: Divider(
-          thickness: 5,
-          color: themeScheme.tertiaryFixedDim,
-          height: 5,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) async {
+        if (didPop) {
+          return;
+        }
+        final bool shouldPop = await _showDialog() ?? false;
+        if (shouldPop) {
+          if (mounted) {
+            Navigator.pop(context, true);
+          }
+        }
+      },
+      child: Scaffold(
+          body: CustomScrollView(slivers: [
+        // Fixed AppBar
+        SliverAppBar(
+            backgroundColor: themeScheme.primary,
+            foregroundColor: themeScheme.tertiaryFixed,
+            pinned: true,
+            centerTitle: true,
+            title: Text(
+              "${widget.recette.name == "" ? 'Création' : 'Édition'} de recette",
+              style: TextStyle(fontWeight: FontWeight.w900),
+            )),
+        PinnedHeaderSliver(
+          child: Divider(
+            thickness: 5,
+            color: themeScheme.tertiaryFixedDim,
+            height: 5,
+          ),
         ),
-      ),
 
-      // Scrollable Content
-      SliverList(
-          delegate: SliverChildListDelegate(
-              [RecipeForm(formKey: _formKey, widget: widget)]))
-    ]));
+        // Scrollable Content
+        SliverList(
+            delegate: SliverChildListDelegate(
+                [RecipeForm(formKey: _formKey, widget: widget)]))
+      ])),
+    );
   }
 }

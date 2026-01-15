@@ -22,12 +22,15 @@ class IngredientElement extends StatelessWidget {
     return ListTile(
       leading:
           IconButton(onPressed: onPressed, icon: Icon(Icons.delete_outline)),
-      title: Row(
-        children: [
-          Text(ingredientsDict[ingredient]!["icon"]),
-          SizedBox(width: 15),
-          Text(ingredient),
-        ],
+      title: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Text(ingredientsDict[ingredient]!["icon"]),
+            SizedBox(width: 15),
+            Text(ingredient),
+          ],
+        ),
       ),
       trailing: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),

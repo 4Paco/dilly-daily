@@ -54,7 +54,7 @@ class AutofillIngredient extends StatelessWidget {
               border: InputBorder.none,
               icon:
                   Icon(Icons.search, color: themeScheme.onPrimaryFixedVariant),
-              hintText: 'Search and Add ingredients...',
+              hintText: 'Cherche un ingrédient...',
               hintStyle: TextStyle(
                   color:
                       themeScheme.onPrimaryFixedVariant), // Placeholder style

@@ -1,4 +1,6 @@
 import 'package:clarity_flutter/clarity_flutter.dart';
+import 'package:dilly_daily/data/ingredients.dart';
+import 'package:dilly_daily/data/recipes.dart';
 import 'package:dilly_daily/pages/Account/account_page.dart';
 import 'package:dilly_daily/pages/Explore/explore_page.dart';
 import 'package:dilly_daily/pages/Groceries/groceries_page.dart';
@@ -80,54 +82,89 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  Future<void>? _loadDataBase;
+  @override
+  @override
+  void initState() {
+    super.initState();
+    _loadDataBase = recipesDict.isLoaded();
+    _loadDataBase = ingredientsDict.isLoaded(); // Call load() only once
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-          //color: Theme.of(context).colorScheme.primaryContainer,
-          child: pages[selectedIndex], // Display the selected page
-        ),
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-            canvasColor: Theme.of(context).colorScheme.primary,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-            child: BottomNavigationBar(
-              currentIndex: selectedIndex,
-              onTap: _onItemTapped,
-              unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
-              selectedItemColor: Theme.of(context).colorScheme.inversePrimary,
-              showUnselectedLabels: true,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons
-                      .auto_stories_rounded), //article_outlined //art_track_outlined
-                  label: 'Write',
+    return FutureBuilder(
+        future: _loadDataBase, // Wait for allergiesList to load
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting
+            return Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.manage_search),
-                  label: 'Explore',
+              ),
+            );
+          } else if (snapshot.hasError) {
+            // Handle errors
+            return Center(
+                child: Text(
+              "Error: ${snapshot.error}\n${snapshot.stackTrace}",
+            ));
+          } else {
+            return Scaffold(
+                body: Container(
+                  //color: Theme.of(context).colorScheme.primaryContainer,
+                  child: pages[selectedIndex], // Display the selected page
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_today_rounded),
-                  label: 'Meal Plan',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart_outlined),
-                  label: 'Groceries',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Account',
-                ),
-              ],
-            ),
-          ),
-        ));
+                bottomNavigationBar: Theme(
+                  data: Theme.of(context).copyWith(
+                    canvasColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(25),
+                      topLeft: Radius.circular(25),
+                    ),
+                    child: BottomNavigationBar(
+                      currentIndex: selectedIndex,
+                      onTap: _onItemTapped,
+                      unselectedItemColor:
+                          Theme.of(context).colorScheme.onPrimary,
+                      selectedItemColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                      showUnselectedLabels: true,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons
+                              .auto_stories_rounded), //article_outlined //art_track_outlined
+                          label: 'Créer',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.manage_search),
+                          label: 'Explorer',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.calendar_today_rounded),
+                          label: 'Menu',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.shopping_cart_outlined),
+                          label: 'Courses',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.person),
+                          label: 'Compte',
+                        ),
+                      ],
+                    ),
+                  ),
+                ));
+          }
+        });
   }
 }
 // ...

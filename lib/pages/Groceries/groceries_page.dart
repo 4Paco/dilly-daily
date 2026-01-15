@@ -98,21 +98,23 @@ class _GroceriesPageState extends State<GroceriesPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(6, 2, 2, 2),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'Add to Often Used',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            Text(
+                              'Ajouter aux items courants',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            CloseButton(),
+                            CloseButton(
+                              style: ButtonStyle(
+                                padding:
+                                    WidgetStateProperty.all(EdgeInsets.zero),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -120,7 +122,8 @@ class _GroceriesPageState extends State<GroceriesPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          'Add a non-edible item:',
+                          'Ajouter un item\nnon comestible:',
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
@@ -144,7 +147,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onPrimaryFixedVariant),
-                            hintText: 'e.g: Trash Bags, Soap...',
+                            hintText: 'ex: Déodorant, Savon...',
                             hintStyle: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme
@@ -160,8 +163,11 @@ class _GroceriesPageState extends State<GroceriesPage> {
                             Navigator.of(context).pop();
                           }
                         },
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                                Theme.of(context).colorScheme.primaryFixedDim)),
                         child: Text(
-                          'Add',
+                          'Ajouter',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -218,7 +224,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                               setState(() {});
                             },
                             child: Text(
-                              "Add",
+                              "Ajouter",
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
                             )),
@@ -232,7 +238,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                           children: [
                             // EDIBLE
                             ExpansionTile(
-                              title: Text("Edible 🍎",
+                              title: Text("Comestible 🍎",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
@@ -270,14 +276,16 @@ class _GroceriesPageState extends State<GroceriesPage> {
 
                             // NON-EDIBLE
                             ExpansionTile(
+                              tilePadding: EdgeInsets.fromLTRB(10, 5, 25, 5),
                               title: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text("Non-edible 🧻",
+                                  Text("Non-comestible",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold)),
-                                  Spacer(),
                                   IconButton(
+                                    padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                                     icon: Icon(Icons.add_circle_outline,
                                         size: 20),
                                     onPressed: () async {
@@ -355,9 +363,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
     return Scaffold(
       body: CustomScrollView(slivers: [
         // Fixed AppBar
-        CustomSliverAppBar(
-            title:
-                isSmallScreen ? "Wanted \n-fresh or canned-" : "Grocery list"),
+        CustomSliverAppBar(title: "Liste de courses"),
         if (!listeCourses.isEmpty)
           SliverToBoxAdapter(
             child: Container(
@@ -374,7 +380,7 @@ class _GroceriesPageState extends State<GroceriesPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Estimated total:",
+                        "Total estimé:",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -402,18 +408,18 @@ class _GroceriesPageState extends State<GroceriesPage> {
                           return AlertDialog(
                             title: Text('Confirmation'),
                             content: Text(
-                                'Do you really want to clear the entire grocery list?'),
+                                'Voulez-vous vraiment vider toute la liste de courses ?'),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                child: Text('Cancel'),
+                                child: Text('Annuler'),
                               ),
                               TextButton(
                                 onPressed: () {
                                   clearAllGroceries();
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('Empty',
+                                child: Text('Vider',
                                     style: TextStyle(color: themeScheme.error)),
                               ),
                             ],

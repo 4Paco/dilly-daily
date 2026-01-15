@@ -58,65 +58,66 @@ class _HelpPageState extends State<HelpPage> {
             delegate: SliverChildListDelegate(
               [
                 // Section FAQ
-                BlocTitle(texte: 'Frequently Asked Questions'),
+                BlocTitle(texte: 'FAQ'),
 
                 ListTile(
                   leading:
                       const Icon(Icons.help_outline, color: Color(0xFF844c72)),
-                  title: const Text('How do I add a recipe to my meal plan?'),
+                  title: const Text('Comment ajouter une recette à mon Menu ?'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Add Recipe to Meal Plan',
-                    'Go to the Explore page, tap on a recipe to preview it, then click the "Add" button. The recipe will appear in your Meal Plan carousel where you can drag it to any day and meal slot.',
+                    'Ajouter une recette au Menu',
+                    'Accédez à la page Explorer, appuyez sur une recette pour l\'afficher, puis cliquez sur le bouton "Ajouter". La recette apparaîtra dans le carrousel de votre menu où vous pourrez la glisser vers n\'importe quel jour et créneau repas.',
                   ),
                 ),
 
                 ListTile(
                   leading:
                       const Icon(Icons.help_outline, color: Color(0xFF844c72)),
-                  title: const Text('How does drag-and-drop work?'),
+                  title: const Text('Comment modifier ma Semaine ?'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Drag-and-Drop',
-                    'In the Meal Plan page, long-press on a recipe from the carousel or timeline, then drag it to your desired meal slot. You can also drag recipes between slots to reorganize your week.',
+                    'Drad&Drop',
+                    'Dans la page Menu, appuyez longuement sur une recette du carrousel ou de la chronologie, puis faites-la glisser vers le créneau repas souhaité. Vous pouvez également déplacer des recettes entre les créneaux pour réorganiser votre semaine.',
                   ),
                 ),
 
                 ListTile(
                   leading:
                       const Icon(Icons.help_outline, color: Color(0xFF844c72)),
-                  title: const Text('Why don\'t I see some recipes?'),
+                  title: const Text(
+                      'Pourquoi certaines recettes ne s\'affichent pas ?'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Recipe Filtering',
-                    'Recipes are automatically filtered based on your dietary restrictions, available equipment, and cooking patience level. You can disable these filters by tapping the settings icon on the Explore page.',
+                    'Filtrage des recettes',
+                    'Les recettes sont automatiquement filtrées en fonction de vos restrictions alimentaires, de l\'équipement disponible et de votre niveau de patience en cuisine. Vous pouvez désactiver ces filtres en appuyant sur l\'icône à droite de la barre de recherche dans la page Explorer.',
                   ),
                 ),
 
                 ListTile(
                   leading:
                       const Icon(Icons.help_outline, color: Color(0xFF844c72)),
-                  title: const Text('How do I edit my custom recipes?'),
+                  title: const Text('Comment modifier mes recettes ?'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Edit Recipes',
-                    'Tap on any recipe to open its preview, then click the edit icon (pencil) in the top right corner. You can modify all fields and save your changes.',
+                    'Modifier les recettes',
+                    'Depuis la page "Créer" ou "Explorer", appuyez sur une recette pour ouvrir son aperçu, puis cliquez sur l\'icône d\'édition (crayon) en haut à droite. Vous pouvez modifier tous les champs et enregistrer vos modifications.',
                   ),
                 ),
 
                 ListTile(
                   leading:
                       const Icon(Icons.help_outline, color: Color(0xFF844c72)),
-                  title: const Text('How do I generate my grocery list?'),
+                  title: const Text('Comment générer ma liste de courses ?'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Grocery List',
-                    'Open a recipe from your Meal Plan, adjust the quantity with +/- buttons, then tap "Add to Groceries". The ingredients will be automatically added to your shopping list in the Groceries page.',
+                    'Liste de courses',
+                    'Ouvrez une recette de votre Menu, ajustez la quantité avec les boutons +/- puis appuyez sur "Ajouter aux courses". Les ingrédients seront automatiquement ajoutés à votre liste de courses dans la page Courses.',
                   ),
                 ),
 
@@ -128,42 +129,42 @@ class _HelpPageState extends State<HelpPage> {
                 ListTile(
                   leading: const Icon(Icons.school_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Set up your cooking profile'),
+                  title: const Text('Configurer votre profil de cuisine'),
                   subtitle:
-                      const Text('Configure your preferences and restrictions'),
+                      const Text('Définissez vos préférences et restrictions'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Cooking Profile',
-                    'Go to Account → My Cooking Profile to set the number of portions you cook for and your cooking patience level. Visit Special Diet to configure dietary restrictions and allergens.',
+                    'Profil de Cuisine',
+                    'Accédez à Compte → Mon Profil pour définir le nombre de portions que vous cuisinez et votre niveau de patience en cuisine. Rendez-vous dans Préférences Alimentaires pour configurer vos restrictions alimentaires et allergies.',
                   ),
                 ),
 
                 ListTile(
                   leading: const Icon(Icons.school_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Plan your first week'),
-                  subtitle:
-                      const Text('Learn to use the meal planning feature'),
+                  title: const Text('Planifiez votre première semaine'),
+                  subtitle: const Text(
+                      'Apprenez à utiliser la fonctionnalité de planification des repas'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Meal Planning',
-                    '1. Browse recipes in Explore\n2. Add favorites to your Meal Plan\n3. Drag recipes to specific days and meal slots\n4. Generate your grocery list from planned meals',
+                    'Planification des repas',
+                    '1. Parcourez les recettes dans Explorer\n2. Ajoutez vos favoris à votre Menu\n3. Glissez les recettes vers des jours et créneaux spécifiques\n4. Générez votre liste de courses à partir des repas planifiés',
                   ),
                 ),
 
                 ListTile(
                   leading: const Icon(Icons.school_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Create your first recipe'),
-                  subtitle:
-                      const Text('Add personalized recipes to your collection'),
+                  title: const Text('Créer votre première recette'),
+                  subtitle: const Text(
+                      'Ajoutez des recettes personnalisées à votre collection'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Create Recipe',
-                    'Go to the Write page (+ tab), fill in the recipe name, add ingredients and steps, optionally add a photo, then save. Your recipe will appear in Explore with a "My recipes" badge.',
+                    'Créer une recette',
+                    'Accédez à la page Créer, cliquez sur le bouton "+", remplissez le nom de la recette, ajoutez les ingrédients et les étapes, ajoutez éventuellement une photo, puis enregistrez. Votre recette apparaîtra dans Créer et dans vos résultats de recherche.',
                   ),
                 ),
 
@@ -171,13 +172,12 @@ class _HelpPageState extends State<HelpPage> {
 
                 // Section Feedback & Contact
                 BlocTitle(texte: "Feedback & Support"),
-
                 ListTile(
                   leading: const Icon(Icons.feedback_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Send Feedback'),
+                  title: const Text('Envoyer des commentaires'),
                   subtitle:
-                      const Text('Share your suggestions or report a bug'),
+                      const Text('Partagez vos suggestions ou signalez un bug'),
                   trailing: const Icon(Icons.open_in_new),
                   onTap: () => _launchFeedbackForm(context),
                 ),
@@ -185,14 +185,14 @@ class _HelpPageState extends State<HelpPage> {
                 ListTile(
                   leading: const Icon(Icons.email_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Contact Us'),
+                  title: const Text('Nous contacter'),
                   subtitle: const Text('marion.henriot@mail.polimit.it'),
                   trailing: const Icon(Icons.copy),
                   onTap: () {
                     // Copier l'email dans le presse-papier (optionnel)
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Email copied to clipboard'),
+                        content: Text('Email copié dans le presse-papier'),
                         duration: Duration(seconds: 2),
                       ),
                     );
@@ -202,31 +202,33 @@ class _HelpPageState extends State<HelpPage> {
                 const Divider(height: 32),
 
                 // Section Troubleshooting
-                BlocTitle(texte: "Troubleshooting"),
+                BlocTitle(texte: "Dépannage"),
 
                 ListTile(
                   leading: const Icon(Icons.refresh, color: Color(0xFF844c72)),
-                  title: const Text('App not loading recipes?'),
-                  subtitle:
-                      const Text('Check your internet connection at startup'),
+                  title:
+                      const Text('L\'application ne charge pas les recettes ?'),
+                  subtitle: const Text(
+                      'Vérifiez votre connexion Internet au démarrage'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Loading Issues',
-                    'DillyDaily needs an internet connection when you first open the app to download the recipe database. After that, you can use the app offline. Try restarting the app with a stable connection.',
+                    'Problèmes de chargement',
+                    'DillyDaily nécessite une connexion Internet lors du premier lancement pour télécharger la base de données des recettes. Ensuite, vous pouvez utiliser l\'application hors ligne. Essayez de redémarrer l\'application avec une connexion stable.',
                   ),
                 ),
 
                 ListTile(
                   leading: const Icon(Icons.storage_outlined,
                       color: Color(0xFF844c72)),
-                  title: const Text('Data not saving?'),
-                  subtitle: const Text('Check app permissions'),
+                  title: const Text('Les données ne sont pas sauvegardées ?'),
+                  subtitle: const Text(
+                      'Vérifiez les autorisations de l\'application'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showFAQDialog(
                     context,
-                    'Storage Permissions',
-                    'Make sure DillyDaily has permission to access storage on your device. Go to your device Settings → Apps → DillyDaily → Permissions and enable storage access.',
+                    'Autorisations de stockage',
+                    'Assurez-vous que DillyDaily a l\'autorisation d\'accéder au stockage de votre appareil. Allez dans les Paramètres de votre appareil → Applications → DillyDaily → Permissions et activez l\'accès au stockage.',
                   ),
                 ),
 

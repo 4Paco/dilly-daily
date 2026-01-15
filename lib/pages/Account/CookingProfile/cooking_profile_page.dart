@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:dilly_daily/data/personalisation.dart';
 import 'package:dilly_daily/pages/MealPlan/plus_minus_button.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,9 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
 
     return Column(
       children: [
-        BlocTitle(texte: "Number of portions per meal"),
+        BlocTitle(
+            texte:
+                "Nombre de portion${personals.defaultPersonNumber > 1 ? "s" : ""} par repas"),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           PlusMinusButton(
             function: setDefaultMealsNumber,
@@ -57,7 +58,7 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             icondata: Icons.add,
           )
         ]),
-        BlocTitle(texte: "Patience for cooking"),
+        BlocTitle(texte: "Patience pour cuisiner"),
         Stack(children: [
           GradientSlider(
             thumbAsset: 'assets/image/slider_thumb_cute_primary.png',
@@ -65,9 +66,9 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             thumbWidth: 30,
             trackHeight: 20,
             activeTrackGradient:
-            const LinearGradient(colors: [Colors.blue, Colors.pink]),
+                const LinearGradient(colors: [Colors.blue, Colors.pink]),
             inactiveTrackGradient:
-            const LinearGradient(colors: [Colors.blue, Colors.pink]),
+                const LinearGradient(colors: [Colors.blue, Colors.pink]),
             slider: Slider(
               value: personals.patience,
               onChanged: (value) => updatePatience(value),
@@ -100,11 +101,11 @@ class _CookingProfilePageState extends State<CookingProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Might not\neat",
+                "Pourrait ne\npas manger",
                 style: sliderLabelStyle,
               ),
               Text(
-                "Love elaborate\nmeals",
+                "Adore les repas\nélaborés",
                 textAlign: TextAlign.end,
                 style: sliderLabelStyle,
               ),

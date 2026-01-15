@@ -12,7 +12,7 @@ import 'package:dilly_daily/pages/Write/Modules/ingredient_element.dart';
 import 'package:dilly_daily/pages/Write/Modules/input_ingredient.dart'
     show InputIngredient;
 import 'package:dilly_daily/pages/Write/Modules/photo_cropper.dart';
-import 'package:dilly_daily/pages/Write/Modules/step_editor.dart';
+import 'package:dilly_daily/pages/Write/step_editor.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Step;
@@ -170,6 +170,7 @@ class _RecipeFormState extends State<RecipeForm> {
           ),
         ],
       );
+
       if (croppedFile != null) {
         final String permanentPath =
             await _saveImagePermanently(croppedFile.path);
@@ -215,7 +216,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 controller: nameController,
                 themeScheme: themeScheme,
                 fillColor: themeScheme.surfaceContainer,
-                hintText: "Name of the recipe",
+                hintText: "Nom de la recette",
                 textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w700),
@@ -249,8 +250,8 @@ class _RecipeFormState extends State<RecipeForm> {
                           controller: linkController,
                           themeScheme: themeScheme,
                           fillColor: themeScheme.surfaceContainerLow,
-                          hintText: 'Website link -if relevant',
-                          labelText: '(Website link)',
+                          hintText: 'Lien du site web - si pertinent',
+                          labelText: '(Lien du site web)',
                           textStyle: Theme.of(context).textTheme.bodyMedium!,
                           multilignes: 1,
                           validation: false,
@@ -259,7 +260,7 @@ class _RecipeFormState extends State<RecipeForm> {
                           controller: descriptionController,
                           themeScheme: themeScheme,
                           fillColor: themeScheme.surfaceContainerLow,
-                          hintText: 'Short description',
+                          hintText: 'Courte description',
                           textStyle: Theme.of(context).textTheme.bodyMedium!,
                           validation: false,
                         ),
@@ -281,7 +282,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CategoryTitleBloc(cat: "Dish type(s)"),
+                    CategoryTitleBloc(cat: "Type(s) de plat"),
                     Icon(
                       isDishTypeExpanded
                           ? Icons.keyboard_arrow_down_rounded
@@ -358,7 +359,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CategoryTitleBloc(cat: "Necessary cookware"),
+                    CategoryTitleBloc(cat: "Ustensiles nécessaires"),
                     Icon(
                       isUtensilsExpanded
                           ? Icons.keyboard_arrow_down_rounded
@@ -444,7 +445,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CategoryTitleBloc(cat: "Ingredients"),
+                    CategoryTitleBloc(cat: "Ingrédients"),
                     Icon(
                       isIngredientExpanded
                           ? Icons.keyboard_arrow_down_rounded
@@ -498,7 +499,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         ),
                         title: Row(
                           children: [
-                            Text("Add ingredient"),
+                            Text("Ajouter un ingrédient"),
                           ],
                         ),
                         iconColor: themeScheme.onTertiaryFixedVariant,
@@ -529,7 +530,7 @@ class _RecipeFormState extends State<RecipeForm> {
                                 _isAddingIngredient = false;
                               });
                             },
-                            child: Text("Cancel",
+                            child: Text("Annuler",
                                 style: TextStyle(color: themeScheme.error)),
                           ),
                         ],
@@ -561,7 +562,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CategoryTitleBloc(cat: "Steps"),
+                    CategoryTitleBloc(cat: "Étapes"),
                     Icon(
                       isStepExpanded
                           ? Icons.keyboard_arrow_down_rounded
@@ -755,7 +756,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         Navigator.pop(context);
                       }
                     },
-                    child: const Text('Save recipe'),
+                    child: const Text('Sauvegarder la recette'),
                   ),
                 ),
               ),
@@ -863,7 +864,7 @@ class _TextFieldState extends State<TextField> {
         validator: widget.validation
             ? (String? value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return 'Veuillez entrer un titre';
                 }
                 return null;
               }

@@ -46,7 +46,6 @@ class _MealPlanPageState extends State<MealPlanPage> {
         mealPlanRecipes.removeRecipe(recipeKey);
 
         for (int day = 0; day < personals.weekMeals.length; day++) {
-
           if (personals.weekMeals[day][0] == recipeKey) {
             personals.weekMeals[day][0] = "";
           }
@@ -65,7 +64,6 @@ class _MealPlanPageState extends State<MealPlanPage> {
           mealPlanRecipes.removeRecipe(personalized);
 
           for (int day = 0; day < personals.weekMeals.length; day++) {
-            
             if (personals.weekMeals[day][0] == personalized) {
               personals.weekMeals[day][0] = "";
             }
@@ -74,7 +72,6 @@ class _MealPlanPageState extends State<MealPlanPage> {
             }
           }
         } else {
-
           if (recette.personalized != "Nope") {
             print("recette.personalized != 'Nope'");
             recetteId = recette.personalized;
@@ -100,7 +97,8 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
   void removeGroceries(String recipeKey, {int nbMeals = 0}) {
     for (String ingredient in recipesDict[recipeKey]!.ingredients.keys) {
-      if (listeCourses.contains(ingredient) || listeCourses.appearsInList(ingredient)) {
+      if (listeCourses.contains(ingredient) ||
+          listeCourses.appearsInList(ingredient)) {
         listeCourses.forceRemoveIngredient(ingredient);
       }
     }
@@ -174,22 +172,23 @@ class _MealPlanPageState extends State<MealPlanPage> {
       body: CustomScrollView(
         slivers: [
           // Fixed AppBar
-          CustomSliverAppBar(title: "Your Meal Plan"),
+          CustomSliverAppBar(title: "Menu de la semaine"),
 
           // Scrollable Content
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 if (mealPlanRecipes.isNotEmpty) ...[
-                  BlocTitle(texte: "Meal Deck"),
+                  BlocTitle(texte: "Menu à la carte"),
                   MealPlanCarousel(showMealPlanDialog: showMealPlanDialog),
                 ],
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    BlocTitle(texte: "Menu Timeline"),
+                    BlocTitle(texte: "Timeline de la semaine"),
                     Tooltip(
-                        message: 'Drag and drop recipes to fill your Timeline!',
+                        message:
+                            'Fais glisser et déposez des recettes pour remplir ta Timeline !',
                         preferBelow: false,
                         //decoration: Decoration,
                         triggerMode: TooltipTriggerMode.tap,

@@ -9,7 +9,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Tomate": {
     "icon": "tomato",
@@ -21,7 +21,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Oignon": {
     "icon": "onion",
@@ -33,7 +33,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Vert d'oignon": {
     "icon": "onion",
@@ -45,7 +45,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Maïs": {
     "icon": "corn",
@@ -57,7 +57,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Ail": {
     "icon": "garlic",
@@ -69,7 +69,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Pomme de terre": {
     "icon": "potato",
@@ -81,7 +81,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Carrotte": {
     "icon": "carrot",
@@ -93,7 +93,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Concombre": {
     "icon": "cucumber",
@@ -105,7 +105,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Poivron": {
     "icon": "bell_pepper",
@@ -117,7 +117,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Courgette": {
     "icon": "cucumber",
@@ -129,7 +129,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Épinard": {
     "icon": "leafy_green",
@@ -141,7 +141,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Salade": {
     "icon": "leafy_green",
@@ -153,7 +153,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Broccoli": {
     "icon": "broccoli",
@@ -165,7 +165,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Chou-Fleur": {
     "icon": "broccoli",
@@ -177,7 +177,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
   "Champignon": {
     "icon": "mushroom",
@@ -189,7 +189,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Produce"
+    "category": "Fruits & Légumes"
   },
 
   "Lait de coco": {
@@ -202,7 +202,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Lait": {
     "icon": "glass_of_milk",
@@ -214,7 +214,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Eau": {
     "icon": "water_glass",
@@ -238,7 +238,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Pâte feuilletée": {
     "icon": "pizza",
@@ -250,7 +250,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Pâte brisée": {
     "icon": "pizza",
@@ -262,7 +262,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Fromage râpé": {
     "icon": "cheese_wedge",
@@ -274,7 +274,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Cheddar": {
     "icon": "cheese_wedge",
@@ -286,7 +286,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Mozzarella": {
     "icon": "cheese_wedge",
@@ -298,7 +298,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Parmesan": {
     "icon": "cheese_wedge",
@@ -310,7 +310,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Beurre": {
     "icon": "butter",
@@ -322,7 +322,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Yaourt": {
     "icon": "glass_of_milk",
@@ -334,7 +334,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Crème": {
     "icon": "glass_of_milk",
@@ -346,7 +346,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
   "Oeuf": {
     "icon": "egg",
@@ -358,7 +358,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Dairy Products"
+    "category": "Produits Laitiers"
   },
 
   "Poulet": {
@@ -371,7 +371,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Blanc de poulet": {
     "icon": "chicken",
@@ -383,7 +383,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Bacon": {
     "icon": "bacon",
@@ -395,7 +395,7 @@
       "hallal": false,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Boeuf haché": {
     "icon": "cut_of_meat",
@@ -407,7 +407,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Poisson": {
     "icon": "fish",
@@ -419,7 +419,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Saumon": {
     "icon": "fish",
@@ -431,7 +431,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
   "Crevette": {
     "icon": "shrimp",
@@ -443,7 +443,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Meat&Deli"
+    "category": "Viande et charcuterie"
   },
 
   "Pain": {
@@ -456,7 +456,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Crouton": {
     "icon": "bread",
@@ -468,7 +468,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Chapelure": {
     "icon": "bread",
@@ -480,7 +480,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Tacos": {
     "icon": "taco",
@@ -491,7 +491,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Pain à burger": {
     "icon": "bread",
@@ -503,7 +503,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Bagel": {
     "icon": "bread",
@@ -515,7 +515,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Granola": {
     "icon": "bowl_with_spoon",
@@ -527,7 +527,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Flocons d'avoine": {
     "icon": "bowl_with_spoon",
@@ -539,7 +539,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Céréales": {
     "icon": "bowl_with_spoon",
@@ -551,7 +551,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Riz": {
     "icon": "rice",
@@ -563,7 +563,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Pâtes": {
     "icon": "spaghetti",
@@ -575,7 +575,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
   "Spaghetti": {
     "icon": "spaghetti",
@@ -587,7 +587,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Breads&Grains"
+    "category": "Pains et céréales"
   },
 
   "Sauce tomate": {
@@ -600,7 +600,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Canned Goods"
+    "category": "Produits en conserve"
   },
   "Cornichon": {
     "icon": "pickles",
@@ -612,7 +612,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Canned Goods"
+    "category": "Produits en conserve"
   },
 
   "Sauce César": {
@@ -819,7 +819,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Miel": {
     "icon": "honey",
@@ -831,7 +831,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Cassonade": {
     "icon": "salt",
@@ -843,7 +843,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Farine de blé": {
     "icon": "ear_of_rice",
@@ -855,7 +855,7 @@
       "hallal": true,
       "glutenfree": false
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Farine de châtaigne": {
     "icon": "chestnut",
@@ -867,7 +867,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Farine de sarrasin": {
     "icon": "ear_of_rice",
@@ -879,7 +879,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Farine de riz": {
     "icon": "cooked_rice",
@@ -891,7 +891,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Levure": {
     "icon": "cupcake",
@@ -903,7 +903,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Cannelle": {
     "icon": "ginger_root",
@@ -915,7 +915,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Origan": {
     "icon": "herb",
@@ -927,7 +927,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Basilic": {
     "icon": "herb",
@@ -939,7 +939,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Romarin": {
     "icon": "herb",
@@ -951,7 +951,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Thym": {
     "icon": "herb",
@@ -963,7 +963,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Graines de sésame": {
     "icon": "beans",
@@ -975,7 +975,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
 
   "Extrait de vanille": {
@@ -988,7 +988,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Muscade": {
     "icon": "potato",
@@ -1000,7 +1000,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Paprika": {
     "icon": "hot_pepper",
@@ -1012,7 +1012,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Herbes de provence": {
     "icon": "herb",
@@ -1024,7 +1024,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Épices à Chili": {
     "icon": "hot_pepper",
@@ -1036,7 +1036,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Gingembre": {
     "icon": "ginger_root",
@@ -1048,7 +1048,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Curry": {
     "icon": "ginger_root",
@@ -1060,7 +1060,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Cumin": {
     "icon": "ginger_root",
@@ -1072,7 +1072,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Bouillon de légumes": {
     "icon": "pot_of_food",
@@ -1084,7 +1084,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Bouillon de poulet": {
     "icon": "pot_of_food",
@@ -1096,7 +1096,7 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   },
   "Bouillon de boeuf": {
     "icon": "pot_of_food",
@@ -1108,6 +1108,6 @@
       "hallal": true,
       "glutenfree": true
     },
-    "category": "Baking&Seasonings"
+    "category": "Épicerie"
   }
 }

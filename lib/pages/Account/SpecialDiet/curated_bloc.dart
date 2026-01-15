@@ -25,7 +25,17 @@ class CuratedBloc extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          onAddDiet(texte);
+          String search = "";
+          if (texte == "Végan") {
+            search = "vegan";
+          } else if (texte == "Végétarien") {
+            search = "vegetarian";
+          } else if (texte == "Hallal") {
+            search = "hallal";
+          } else {
+            search = "glutenfree";
+          }
+          onAddDiet(search);
         },
         child: Text(texte.toUpperCase(),
             style:

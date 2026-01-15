@@ -1,5 +1,5 @@
 import 'package:dilly_daily/pages/Write/Modules/input_ingredient.dart';
-import 'package:dilly_daily/pages/Write/Modules/step_editor.dart';
+import 'package:dilly_daily/pages/Write/step_editor.dart';
 import 'package:flutter/material.dart' hide TextField;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dilly_daily/pages/Write/recipe_form.dart';
@@ -79,7 +79,6 @@ void main() {
       await tester.tap(firstUtensilChip);
       await tester.pumpAndSettle();
 
-
       final addIngredientButton = find.text('Add ingredient');
       await tester.tap(addIngredientButton);
       await tester.pumpAndSettle();
@@ -104,7 +103,7 @@ void main() {
 
 // Call the onSelected callback manually
       final autoCompleteWidget =
-      tester.widget<Autocomplete<String>>(autoCompleteFinder);
+          tester.widget<Autocomplete<String>>(autoCompleteFinder);
       autoCompleteWidget.onSelected!('Tomato');
 
 // Rebuild to register the added ingredient
@@ -112,7 +111,6 @@ void main() {
 
 // Verify ingredient is now in the tempIngredients or displayed widget
       expect(find.textContaining('Tomato'), findsOneWidget);
-
 
       final addStepButton = find.text('Add step');
 // Ensure the widget is built and laid out
@@ -126,10 +124,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now inside StepEditor, find the description TextFormField
-      final stepDescriptionField = find.descendant(
-        of: find.byType(StepEditor),
-        matching: find.byType(TextFormField),
-      ).first;
+      final stepDescriptionField = find
+          .descendant(
+            of: find.byType(StepEditor),
+            matching: find.byType(TextFormField),
+          )
+          .first;
 
       // Enter the step description
       await tester.enterText(stepDescriptionField, 'Mix ingredients');
@@ -149,11 +149,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Scroll to and tap the "Save recipe" button
-      final saveRecipeButton = find.widgetWithText(ElevatedButton, 'Save recipe');
+      final saveRecipeButton =
+          find.widgetWithText(ElevatedButton, 'Save recipe');
       await tester.ensureVisible(saveRecipeButton);
       await tester.tap(saveRecipeButton);
       await tester.pumpAndSettle();
-
 
       // --- Verify recipe was added to myRecipes ---
       expect(myRecipes.recipesDict.length, 1);

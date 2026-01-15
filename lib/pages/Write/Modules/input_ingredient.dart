@@ -54,7 +54,7 @@ class InputIngredient extends StatelessWidget {
               border: InputBorder.none, // Removes the bottom line
               icon:
                   Icon(Icons.search, color: themeScheme.onPrimaryFixedVariant),
-              hintText: 'Search ingredients...',
+              hintText: 'Chercher un ingrédient...',
               hintStyle: TextStyle(
                   color:
                       themeScheme.onPrimaryFixedVariant), // Placeholder style

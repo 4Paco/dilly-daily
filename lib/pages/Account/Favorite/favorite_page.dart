@@ -5,8 +5,6 @@ import 'package:dilly_daily/pages/Explore/recipe_preview.dart';
 import 'package:dilly_daily/pages/Write/edit_recipe_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/ui/bloc_title.dart';
-
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
 
@@ -135,7 +133,8 @@ class _FavoritePageState extends State<FavoritePage> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          "No favorites yet !",
+                          "Aucune recette en favoris ! \n(pour l'instant)",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: themeScheme.onSurfaceVariant,
                             fontSize: 18,

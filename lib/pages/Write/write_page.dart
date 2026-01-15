@@ -116,7 +116,7 @@ class _WritePageState extends State<WritePage> {
     setState(() {});
   }
 
-  void showMealPlanDialog(BuildContext context, String recipeKey) {
+  void showEditDialog(BuildContext context, String recipeKey) {
     showAdaptiveDialog(
       context: context,
       builder: (context) {
@@ -178,7 +178,7 @@ class _WritePageState extends State<WritePage> {
               pinned: true,
               centerTitle: true,
               title: Text(
-                "Your Recipes",
+                "Tes recettes",
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: isSmallScreen ? null : 40),
@@ -196,29 +196,21 @@ class _WritePageState extends State<WritePage> {
             delegate: SliverChildListDelegate(
               [
                 if (myRecipes.isNotEmpty) ...[
-                  BlocTitle(texte: "Your original recipes"),
+                  BlocTitle(texte: "Tes recettes originales"),
                   WriteCarousel(
-                      showMealPlanDialog: showMealPlanDialog,
-                      personalized: "Nope"),
+                      showMealPlanDialog: showEditDialog, personalized: "Nope"),
                 ] else
                   BlocTitle(
                       texte:
-                          "You haven't added any custom ${isSmallScreen ? "\n" : ""}recipe yet !"),
+                          "Tu n'as pas encore personalisé ${isSmallScreen ? "\n" : ""}de recettes !"),
                 if (myRecipes.values
                     .where((recette) => recette.personalized != "Nope")
                     .isNotEmpty) ...[
-                  BlocTitle(texte: "Your edited recipes"),
+                  BlocTitle(texte: "Tes recettes éditées"),
                   WriteCarousel(
-                    showMealPlanDialog: showMealPlanDialog,
+                    showMealPlanDialog: showEditDialog,
                   ),
                 ]
-
-                //Row(
-                //  mainAxisSize: MainAxisSize.min,
-                //  children: [
-                //    BlocTitle(texte: "Your edited recipes"),
-                //  ],
-                //),
               ],
             ),
           ),
@@ -227,7 +219,7 @@ class _WritePageState extends State<WritePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: themeScheme.primary,
         foregroundColor: themeScheme.onPrimary,
-        tooltip: 'Create new recipe',
+        tooltip: 'Création de recette',
         onPressed: () async {
           await Navigator.push(
             context,

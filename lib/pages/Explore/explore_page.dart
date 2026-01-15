@@ -105,10 +105,8 @@ class _ExplorePageState extends State<ExplorePage>
   void toggleMealPlan(String recipeKey) {
     setState(() {
       if (mealPlanRecipes.containsKey(recipeKey)) {
-        print("1");
         removeGroceries(recipeKey);
         mealPlanRecipes.removeRecipe(recipeKey);
-        print("2");
         for (int day = 0; day < personals.weekMeals.length; day++) {
           //also delete from Timeline
           if (personals.weekMeals[day][0] == recipeKey) {
@@ -118,15 +116,12 @@ class _ExplorePageState extends State<ExplorePage>
             personals.weekMeals[day][1] = "";
           }
         }
-        print("3");
       } else {
-        print("4");
         Recipe recette = recipesDict.getRecipe(recipeKey);
         String recetteId = recipeKey;
         String personalized = recette.personalized;
 
         if (mealPlanRecipes.containsKey(personalized)) {
-          print("5");
           removeGroceries(personalized);
           //if the recipe is edited and original is in MealPlan
           mealPlanRecipes.removeRecipe(personalized);
@@ -140,16 +135,12 @@ class _ExplorePageState extends State<ExplorePage>
               personals.weekMeals[day][1] = "";
             }
           }
-          print("6");
         } else {
-          print("7");
           if (recette.personalized != "Nope") {
-            print("8");
             recetteId = recette.personalized;
           }
 
           mealPlanRecipes.addRecipe(recette, recipeKey: recetteId);
-          print("9");
         }
       }
     });
@@ -307,7 +298,7 @@ class _ExplorePageState extends State<ExplorePage>
       body: CustomScrollView(
         slivers: [
           // Fixed AppBar
-          CustomSliverAppBar(title: "Explore"),
+          CustomSliverAppBar(title: "Explorer"),
 
           PinnedHeaderSliver(
               child: RecipesResearchBar(

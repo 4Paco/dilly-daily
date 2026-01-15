@@ -57,7 +57,7 @@ class _StepEditorState extends State<StepEditor> {
             children: [
               Text("Type: ", style: Theme.of(context).textTheme.labelLarge),
               ChoiceChip(
-                label: Text("Preparation"),
+                label: Text("Préparation"),
                 selected: _selectedType == StepType.preparation,
                 onSelected: (selected) {
                   if (selected) {
@@ -67,7 +67,7 @@ class _StepEditorState extends State<StepEditor> {
               ),
               SizedBox(width: 8),
               ChoiceChip(
-                label: Text("Cooking"),
+                label: Text("Cuisson"),
                 selected: _selectedType == StepType.cooking,
                 onSelected: (selected) {
                   if (selected) {
@@ -83,7 +83,7 @@ class _StepEditorState extends State<StepEditor> {
           TextFormField(
             controller: _descriptionController,
             decoration: InputDecoration(
-              labelText: 'Step description',
+              labelText: 'Description de l\'étape',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -95,7 +95,7 @@ class _StepEditorState extends State<StepEditor> {
           // Durée
           Row(
             children: [
-              Text("Duration: ", style: Theme.of(context).textTheme.labelLarge),
+              Text("Durée: ", style: Theme.of(context).textTheme.labelLarge),
               SizedBox(width: 8),
               SizedBox(
                 width: 80,
@@ -123,7 +123,7 @@ class _StepEditorState extends State<StepEditor> {
             children: [
               TextButton(
                 onPressed: widget.onCancel,
-                child: Text("Cancel"),
+                child: Text("Annuler"),
               ),
               SizedBox(width: 8),
               ElevatedButton(
@@ -136,7 +136,7 @@ class _StepEditorState extends State<StepEditor> {
                     ));
                   }
                 },
-                child: Text("Save step"),
+                child: Text("Enregistrer l'étape"),
               ),
             ],
           ),
