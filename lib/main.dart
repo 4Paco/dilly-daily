@@ -13,11 +13,11 @@ void main() {
           .None // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
       );
 
-  runApp(ClarityWidget(
-    app: MyApp(),
-    clarityConfig: config,
-  ));
-  //runApp(MyApp());
+  //runApp(ClarityWidget(
+  //  app: MyApp(),
+  //  clarityConfig: config,
+  //));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {

@@ -1,5 +1,5 @@
 {
-  "Lemon": {
+  "Citron": {
     "icon": "lemon",
     "unit": "",
     "price": 0.5,
@@ -11,7 +11,7 @@
     },
     "category": "Produce"
   },
-  "Tomato": {
+  "Tomate": {
     "icon": "tomato",
     "unit": "g",
     "price": 0.003,
@@ -23,7 +23,7 @@
     },
     "category": "Produce"
   },
-  "Onion": {
+  "Oignon": {
     "icon": "onion",
     "unit": "",
     "price": 0.4,
@@ -35,7 +35,7 @@
     },
     "category": "Produce"
   },
-  "Green Onion": {
+  "Vert d'oignon": {
     "icon": "onion",
     "unit": "",
     "price": 0.3,
@@ -47,7 +47,7 @@
     },
     "category": "Produce"
   },
-  "Corn": {
+  "Maïs": {
     "icon": "corn",
     "unit": "g",
     "price": 0.004,
@@ -59,9 +59,9 @@
     },
     "category": "Produce"
   },
-  "Garlic": {
+  "Ail": {
     "icon": "garlic",
-    "unit": "clove",
+    "unit": "gousse",
     "price": 0.1,
     "diet": {
       "vegetarian": true,
@@ -71,7 +71,7 @@
     },
     "category": "Produce"
   },
-  "Potato": {
+  "Pomme de terre": {
     "icon": "potato",
     "unit": "",
     "price": 0.3,
@@ -83,7 +83,7 @@
     },
     "category": "Produce"
   },
-  "Carrot": {
+  "Carrotte": {
     "icon": "carrot",
     "unit": "",
     "price": 0.2,
@@ -95,7 +95,7 @@
     },
     "category": "Produce"
   },
-  "Cucumber": {
+  "Concombre": {
     "icon": "cucumber",
     "unit": "",
     "price": 0.8,
@@ -107,7 +107,7 @@
     },
     "category": "Produce"
   },
-  "Bell Pepper": {
+  "Poivron": {
     "icon": "bell_pepper",
     "unit": "",
     "price": 1.2,
@@ -119,7 +119,7 @@
     },
     "category": "Produce"
   },
-  "Zucchini": {
+  "Courgette": {
     "icon": "cucumber",
     "unit": "",
     "price": 0.9,
@@ -131,7 +131,7 @@
     },
     "category": "Produce"
   },
-  "Spinach": {
+  "Épinard": {
     "icon": "leafy_green",
     "unit": "g",
     "price": 0.01,
@@ -143,7 +143,7 @@
     },
     "category": "Produce"
   },
-  "Lettuce": {
+  "Salade": {
     "icon": "leafy_green",
     "unit": "",
     "price": 1.5,
@@ -167,7 +167,7 @@
     },
     "category": "Produce"
   },
-  "Cauliflower": {
+  "Chou-Fleur": {
     "icon": "broccoli",
     "unit": "",
     "price": 2.8,
@@ -179,7 +179,7 @@
     },
     "category": "Produce"
   },
-  "Mushroom": {
+  "Champignon": {
     "icon": "mushroom",
     "unit": "",
     "price": 1.5,
@@ -192,7 +192,7 @@
     "category": "Produce"
   },
 
-  "Coconut Milk": {
+  "Lait de coco": {
     "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.005,
@@ -204,7 +204,7 @@
     },
     "category": "Dairy Products"
   },
-  "Milk": {
+  "Lait": {
     "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.001,
@@ -216,7 +216,7 @@
     },
     "category": "Dairy Products"
   },
-  "Water": {
+  "Eau": {
     "icon": "water_glass",
     "unit": "mL",
     "price": 0.0,
@@ -228,7 +228,7 @@
     },
     "category": "Other"
   },
-  "Pizza Dough": {
+  "Pâte à pizza": {
     "icon": "pizza",
     "unit": "",
     "price": 2.0,
@@ -240,7 +240,31 @@
     },
     "category": "Dairy Products"
   },
-  "Cheese": {
+  "Pâte feuilletée": {
+    "icon": "pizza",
+    "unit": "",
+    "price": 2.0,
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Pâte brisée": {
+    "icon": "pizza",
+    "unit": "",
+    "price": 2.0,
+    "diet": {
+      "vegetarian": true,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Dairy Products"
+  },
+  "Fromage râpé": {
     "icon": "cheese_wedge",
     "unit": "g",
     "price": 0.015,
@@ -288,7 +312,7 @@
     },
     "category": "Dairy Products"
   },
-  "Butter": {
+  "Beurre": {
     "icon": "butter",
     "unit": "g",
     "price": 0.008,
@@ -300,7 +324,7 @@
     },
     "category": "Dairy Products"
   },
-  "Yogurt": {
+  "Yaourt": {
     "icon": "glass_of_milk",
     "unit": "",
     "price": 0.5,
@@ -312,7 +336,7 @@
     },
     "category": "Dairy Products"
   },
-  "Cream": {
+  "Crème": {
     "icon": "glass_of_milk",
     "unit": "mL",
     "price": 0.008,
@@ -324,7 +348,7 @@
     },
     "category": "Dairy Products"
   },
-  "Egg": {
+  "Oeuf": {
     "icon": "egg",
     "unit": "",
     "price": 0.25,
@@ -337,7 +361,19 @@
     "category": "Dairy Products"
   },
 
-  "Chicken": {
+  "Poulet": {
+    "icon": "chicken",
+    "unit": "g",
+    "price": 0.012,
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Blanc de poulet": {
     "icon": "chicken",
     "unit": "g",
     "price": 0.012,
@@ -361,7 +397,7 @@
     },
     "category": "Meat&Deli"
   },
-  "Ground Beef": {
+  "Boeuf haché": {
     "icon": "cut_of_meat",
     "unit": "g",
     "price": 0.015,
@@ -373,7 +409,7 @@
     },
     "category": "Meat&Deli"
   },
-  "Fish": {
+  "Poisson": {
     "icon": "fish",
     "unit": "g",
     "price": 0.018,
@@ -385,7 +421,19 @@
     },
     "category": "Meat&Deli"
   },
-  "Shrimp": {
+  "Saumon": {
+    "icon": "fish",
+    "unit": "g",
+    "price": 0.018,
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Meat&Deli"
+  },
+  "Crevette": {
     "icon": "shrimp",
     "unit": "g",
     "price": 0.03,
@@ -398,7 +446,7 @@
     "category": "Meat&Deli"
   },
 
-  "Bread": {
+  "Pain": {
     "icon": "bread",
     "unit": "g",
     "price": 0.005,
@@ -422,7 +470,19 @@
     },
     "category": "Breads&Grains"
   },
-  "Taco Shell": {
+  "Chapelure": {
+    "icon": "bread",
+    "unit": "g",
+    "price": 0.012,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": false
+    },
+    "category": "Breads&Grains"
+  },
+  "Tacos": {
     "icon": "taco",
     "price": 0.4,
     "diet": {
@@ -433,7 +493,7 @@
     },
     "category": "Breads&Grains"
   },
-  "Hamburger Bun": {
+  "Pain à burger": {
     "icon": "bread",
     "unit": "",
     "price": 0.5,
@@ -469,7 +529,7 @@
     },
     "category": "Breads&Grains"
   },
-  "Oatmeal": {
+  "Flocons d'avoine": {
     "icon": "bowl_with_spoon",
     "unit": "g",
     "price": 0.003,
@@ -481,7 +541,7 @@
     },
     "category": "Breads&Grains"
   },
-  "Cereal": {
+  "Céréales": {
     "icon": "bowl_with_spoon",
     "unit": "g",
     "price": 0.008,
@@ -493,7 +553,7 @@
     },
     "category": "Breads&Grains"
   },
-  "Rice": {
+  "Riz": {
     "icon": "rice",
     "unit": "g",
     "price": 0.002,
@@ -505,7 +565,7 @@
     },
     "category": "Breads&Grains"
   },
-  "Pasta": {
+  "Pâtes": {
     "icon": "spaghetti",
     "unit": "g",
     "price": 0.003,
@@ -530,7 +590,7 @@
     "category": "Breads&Grains"
   },
 
-  "Tomato Sauce": {
+  "Sauce tomate": {
     "icon": "tomato",
     "unit": "mL",
     "price": 0.005,
@@ -555,7 +615,7 @@
     "category": "Canned Goods"
   },
 
-  "Caesar Sauce": {
+  "Sauce César": {
     "icon": "wine_glass",
     "unit": "mL",
     "price": 0.01,
@@ -567,9 +627,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Balsamic Vinegar": {
+  "Vinaigre balsamique": {
     "icon": "wine_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.2,
     "diet": {
       "vegetarian": true,
@@ -579,9 +639,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Cider Vinegar": {
+  "Vinaigre de cidre": {
     "icon": "wine_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.1,
     "diet": {
       "vegetarian": true,
@@ -591,9 +651,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Olive Oil": {
+  "Huile d'olive": {
     "icon": "tumbler_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.15,
     "diet": {
       "vegetarian": true,
@@ -603,9 +663,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Cooking Oil": {
+  "Huile de cuisson": {
     "icon": "tumbler_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.05,
     "diet": {
       "vegetarian": true,
@@ -615,9 +675,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Sesame Oil": {
+  "Huile de sésame": {
     "icon": "tumbler_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.25,
     "diet": {
       "vegetarian": true,
@@ -627,9 +687,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Soy Sauce": {
+  "Sauce soja": {
     "icon": "tumbler_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.1,
     "diet": {
       "vegetarian": true,
@@ -665,7 +725,7 @@
   },
   "Ketchup": {
     "icon": "tomato",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.05,
     "diet": {
       "vegetarian": true,
@@ -675,9 +735,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Mustard": {
+  "Moutarde": {
     "icon": "hot_pepper",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.08,
     "diet": {
       "vegetarian": true,
@@ -687,9 +747,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Salt": {
+  "Sel": {
     "icon": "salt",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.01,
     "diet": {
       "vegetarian": true,
@@ -699,9 +759,9 @@
     },
     "category": "Sauces&Condiments"
   },
-  "Pepper": {
+  "Poivre": {
     "icon": "salt",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.02,
     "diet": {
       "vegetarian": true,
@@ -712,7 +772,7 @@
     "category": "Sauces&Condiments"
   },
 
-  "Chocolate": {
+  "Chocolat": {
     "icon": "chocolate_bar",
     "unit": "g",
     "price": 0.015,
@@ -724,9 +784,21 @@
     },
     "category": "Snacks&Drinks"
   },
-  "Wine": {
+  "Pépites de chocolat": {
+    "icon": "chocolate_bar",
+    "unit": "g",
+    "price": 0.025,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Snacks&Drinks"
+  },
+  "Vin": {
     "icon": "wine_glass",
-    "unit": "tbsp",
+    "unit": "c. à soupe",
     "price": 0.3,
     "diet": {
       "vegetarian": true,
@@ -737,7 +809,7 @@
     "category": "Snacks&Drinks"
   },
 
-  "Sugar": {
+  "Sucre": {
     "icon": "salt",
     "unit": "g",
     "price": 0.002,
@@ -749,7 +821,31 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Wheat Flour": {
+  "Miel": {
+    "icon": "honey",
+    "unit": "g",
+    "price": 0.002,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Cassonade": {
+    "icon": "salt",
+    "unit": "g",
+    "price": 0.003,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Farine de blé": {
     "icon": "ear_of_rice",
     "unit": "g",
     "price": 0.001,
@@ -761,7 +857,7 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Chestnut Flour": {
+  "Farine de châtaigne": {
     "icon": "chestnut",
     "unit": "g",
     "price": 0.01,
@@ -773,7 +869,7 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Buckwheat Flour": {
+  "Farine de sarrasin": {
     "icon": "ear_of_rice",
     "unit": "g",
     "price": 0.01,
@@ -785,7 +881,7 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Rice Flour": {
+  "Farine de riz": {
     "icon": "cooked_rice",
     "unit": "g",
     "price": 0.003,
@@ -797,9 +893,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Baking Powder": {
+  "Levure": {
     "icon": "cupcake",
-    "unit": "bag",
+    "unit": "sachet",
     "price": 1.5,
     "diet": {
       "vegetarian": true,
@@ -809,9 +905,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Cinnamon": {
+  "Cannelle": {
     "icon": "ginger_root",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.05,
     "diet": {
       "vegetarian": true,
@@ -821,9 +917,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Oregano": {
+  "Origan": {
     "icon": "herb",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.03,
     "diet": {
       "vegetarian": true,
@@ -833,9 +929,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Basil": {
+  "Basilic": {
     "icon": "herb",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.03,
     "diet": {
       "vegetarian": true,
@@ -845,9 +941,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Rosemary": {
+  "Romarin": {
     "icon": "herb",
-    "unit": "branch",
+    "unit": "branche",
     "price": 0.2,
     "diet": {
       "vegetarian": true,
@@ -857,9 +953,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Thyme": {
+  "Thym": {
     "icon": "herb",
-    "unit": "branch",
+    "unit": "branche",
     "price": 0.2,
     "diet": {
       "vegetarian": true,
@@ -869,7 +965,7 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Sesame Seeds": {
+  "Graines de sésame": {
     "icon": "beans",
     "unit": "g",
     "price": 0.01,
@@ -882,9 +978,9 @@
     "category": "Baking&Seasonings"
   },
 
-  "Vanilla Extract": {
+  "Extrait de vanille": {
     "icon": "soft_ice_cream",
-    "unit": "droplet",
+    "unit": "goutte",
     "price": 0.5,
     "diet": {
       "vegetarian": true,
@@ -894,9 +990,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Nutmeg": {
+  "Muscade": {
     "icon": "potato",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.05,
     "diet": {
       "vegetarian": true,
@@ -908,7 +1004,7 @@
   },
   "Paprika": {
     "icon": "hot_pepper",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.03,
     "diet": {
       "vegetarian": true,
@@ -918,9 +1014,21 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Chili Powder": {
+  "Herbes de provence": {
+    "icon": "herb",
+    "unit": "pincée",
+    "price": 0.03,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Épices à Chili": {
     "icon": "hot_pepper",
-    "unit": "pinch",
+    "unit": "pincée",
     "price": 0.03,
     "diet": {
       "vegetarian": true,
@@ -930,7 +1038,7 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Ginger": {
+  "Gingembre": {
     "icon": "ginger_root",
     "unit": "cm",
     "price": 0.2,
@@ -942,9 +1050,9 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Curry Powder": {
+  "Curry": {
     "icon": "ginger_root",
-    "unit": "tsp",
+    "unit": "c. à café",
     "price": 0.1,
     "diet": {
       "vegetarian": true,
@@ -954,7 +1062,19 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Vegetable Broth": {
+  "Cumin": {
+    "icon": "ginger_root",
+    "unit": "c. à café",
+    "price": 0.1,
+    "diet": {
+      "vegetarian": true,
+      "vegan": true,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Bouillon de légumes": {
     "icon": "pot_of_food",
     "unit": "cube",
     "price": 0.3,
@@ -966,7 +1086,19 @@
     },
     "category": "Baking&Seasonings"
   },
-  "Chicken Broth": {
+  "Bouillon de poulet": {
+    "icon": "pot_of_food",
+    "unit": "cube",
+    "price": 0.3,
+    "diet": {
+      "vegetarian": false,
+      "vegan": false,
+      "hallal": true,
+      "glutenfree": true
+    },
+    "category": "Baking&Seasonings"
+  },
+  "Bouillon de boeuf": {
     "icon": "pot_of_food",
     "unit": "cube",
     "price": 0.3,

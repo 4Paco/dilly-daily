@@ -31,9 +31,10 @@ class InputIngredient extends StatelessWidget {
             return const Iterable<String>.empty();
           }
           return ingredientsDict.where((option) {
-            return option
-                .toLowerCase()
-                .startsWith(textEditingValue.text.toLowerCase());
+            final String ingredient = option as String;
+            final query = textEditingValue.text.toLowerCase();
+            final words = ingredient.toLowerCase().split(' ');
+            return words.any((word) => word.startsWith(query));
           }).cast<String>();
         },
         optionsViewOpenDirection: OptionsViewOpenDirection.up,

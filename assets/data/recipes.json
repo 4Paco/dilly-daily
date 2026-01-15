@@ -4,52 +4,37 @@
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Ground Beef": 200.0,
-      "Zucchini": 2.0,
-      "Cheese": 100.0,
-      "Cream": 100.0
+      "Boeuf haché": 200.0,
+      "Courgette": 2.0,
+      "Fromage râpé": 100.0,
+      "Crème": 100.0
     },
-    "dishTypes": [
-      "main course",
-      "side dish",
-      "dessert",
-      "appetizer",
-      "salad",
-      "bread",
-      "breakfast",
-      "soup",
-      "beverage",
-      "sauce",
-      "marinade",
-      "fingerfood",
-      "snack",
-      "drink"
-    ],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["plat principal", "accompagnement", "entrée"],
+    "gear": ["Four"],
+    "summary": "Cette recette sert 4 personnes et prend environ 30 minutes à préparer.\nUne portion de ce plat coûte environ :",
     "steps": [
       {
-        "description": "Preheat oven to 180°C.",
+        "description": "Préchauffez le four à 180°C.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Slice zucchini into thin rounds.",
+        "description": "Coupez les courgettes en rondelles fines.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Brown ground beef in a skillet.",
+        "description": "Faites revenir le boeuf haché dans une poêle.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Layer zucchini and beef in a baking dish, pour cream over the top, sprinkle with cheese.",
+        "description": "Disposez les courgettes et le boeuf en couches dans un plat à gratin, versez la crème par-dessus, saupoudrez de fromage.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Bake for 20 minutes until the cheese is golden and bubbly.",
+        "description": "Faites cuire au four pendant 20 minutes jusqu'à ce que le fromage soit doré et bouillonnant.",
         "duration": 20,
         "type": "cooking"
       }
@@ -57,53 +42,53 @@
   },
 
   "11": {
-    "name": "Breakfast muffins",
+    "name": "Muffins à la châtaigne",
     "ingredients": {
-      "Chestnut Flour": 200.0,
-      "Egg": 4.0,
-      "Sugar": 150.0,
-      "Milk": 60.0,
-      "Cooking Oil": 40.0,
-      "Baking Powder": 0.5,
-      "Rosemary": 2.0
+      "Farine de châtaigne": 200.0,
+      "Oeuf": 4.0,
+      "Sucre": 150.0,
+      "Lait": 60.0,
+      "Huile de cuisson": 40.0,
+      "Levure": 0.5,
+      "Romarin": 2.0
     },
     "recipeLink": "https://saveurs-d-ici.blogspot.com/2015/01/muffin-la-farine-de-chataigne.html",
-    "summary": "This recipe serves 1 week of breakfast for 1 and takes around 30min to make.\nOne portion of this dish costs about :",
-    "dishTypes": ["dessert", "bread", "breakfast", "fingerfood", "snack"],
-    "gear": ["Oven"],
+    "dishTypes": ["dessert", "pain", "petit-déjeuner", "apéritif", "snack"],
+    "summary": "Cette recette sert pour 1 semaine de petit-déjeuner pour 1 personne et prend environ 30 minutes à préparer.\nUne portion de ce plat coûte environ :",
+    "gear": ["Four"],
     "steps": [
       {
-        "description": "Dans un saladier, battez les oeufs et ajoutez-y l'huile et le lait",
+        "description": "Dans un saladier, battez les oeufs et ajoutez-y l'huile et le lait.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Dans un autre récipient, ajoutez la farine de châtaigne, le sucre brun et la levure",
+        "description": "Dans un autre récipient, ajoutez la farine de châtaigne, le sucre brun et la levure.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Vous pouvez ensuite mélanger les 2 préparations et bien homogénéiser pour un aspect lisse et onctueux",
+        "description": "Mélangez les deux préparations et homogénéisez pour obtenir une texture lisse et onctueuse.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Hachez grossièrement votre chocolat et le mélange de noix (quelques cranberries et graines de lupin seront aussi délicieuses !)",
+        "description": "Hachez grossièrement le chocolat et le mélange de noix (quelques cranberries et graines de lupin seront aussi délicieuses !).",
         "duration": 15,
         "type": "preparation"
       },
       {
-        "description": "Incorporez à la préparation et laissez reposer au frais pendant une heure",
+        "description": "Incorporez à la préparation et laissez reposer au frais pendant une heure.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Versez votre pâte dans des moules à muffin beurrés",
+        "description": "Versez votre pâte dans des moules à muffin beurrés.",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "Enfournez à 180°C pendant 17 minutes (Plantez un couteau, s'il ressort 'sec', le muffin est cuit!)",
+        "description": "Enfournez à 180°C pendant 17 minutes (plantez un couteau, s'il ressort 'sec', le muffin est cuit !).",
         "duration": 17,
         "type": "cooking"
       }
@@ -111,27 +96,27 @@
   },
 
   "12": {
-    "name": "Telebreizh crepes (original)",
+    "name": "Crêpes Télébreizh (original)",
     "ingredients": {
-      "Buckwheat Flour": 1000.0,
-      "Egg": 4.0,
-      "Water": 2000.0,
-      "Milk": 250.0,
-      "Butter": 250.0
+      "Farine de sarrasin": 1000.0,
+      "Oeuf": 4.0,
+      "Eau": 2000.0,
+      "Lait": 250.0,
+      "Beurre": 250.0
     },
     "servings": 6,
     "mealType": {},
     "recipeLink": "",
     "dishTypes": [
-      "main course",
-      "side dish",
+      "plat principal",
+      "accompagnement",
       "dessert",
-      "appetizer",
-      "breakfast",
-      "fingerfood",
+      "apéritif",
+      "petit-déjeuner",
+      "apéritif",
       "snack"
     ],
-    "summary": "This recipe serves 40 crepes and takes around 2h to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 40 crêpes and prend environ 2h à faire.\nUne portion de ce plat coûte environ :",
     "steps": [
       {
         "description": "Dans un saladier, battez les oeufs avec le lait et le beurre",
@@ -152,24 +137,24 @@
   },
 
   "13": {
-    "name": "Telebreizh crepes (sweet edition)",
+    "name": "Crêpes Télébreizh (version sucrée)",
     "ingredients": {
-      "Wheat Flour": 1000.0,
-      "Egg": 10.0,
-      "Milk": 2000.0,
-      "Butter": 100.0,
-      "Sugar": 0.0
+      "Farine de blé": 1000.0,
+      "Oeuf": 10.0,
+      "Lait": 2000.0,
+      "Beurre": 100.0,
+      "Sucre": 0.0
     },
     "servings": 6,
     "recipeLink": "",
-    "summary": "This recipe serves 40 crepes and takes around 2h to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 40 crêpes and prend environ 2h à faire.\nUne portion de ce plat coûte environ :",
     "dishTypes": [
-      "main course",
-      "side dish",
+      "plat principal",
+      "accompagnement",
       "dessert",
-      "appetizer",
-      "breakfast",
-      "fingerfood",
+      "apéritif",
+      "petit-déjeuner",
+      "apéritif",
       "snack"
     ],
     "steps": [
@@ -199,19 +184,19 @@
   "14": {
     "name": "Brioche de Micheline (26ème rencontre)",
     "ingredients": {
-      "Wheat Flour": 500.0,
-      "Baking Powder": 7.0,
-      "Egg": 2.0,
-      "Milk": 130.0,
-      "Butter": 63.0,
-      "Sugar": 63.0,
-      "Salt": 2.0
+      "Farine de blé": 500.0,
+      "Levure": 7.0,
+      "Oeuf": 2.0,
+      "Lait": 130.0,
+      "Beurre": 63.0,
+      "Sucre": 63.0,
+      "Sel": 2.0
     },
     "servings": 2,
-    "dishTypes": ["bread", "breakfast", "snack"],
+    "dishTypes": ["pain", "petit-déjeuner", "snack"],
     "recipeLink": "https://www.marmiton.org/recettes/recette_brioche-de-micheline-26eme-rencontre_40232.aspx",
-    "summary": "This recipe serves 1 brioche and takes around 2h to make.\nOne portion of this dish costs about :",
-    "gear": ["Oven"],
+    "summary": "Cette recette fait 1 brioche and prend autour de 2h à faire.\nUne portion de ce plat coûte environ : ",
+    "gear": ["Four"],
     "steps": [
       {
         "description": "Mélanger la farine,la levure, le sucre et le sel.",
@@ -267,107 +252,106 @@
   },
 
   "2": {
-    "name": "Pasta Carbonara",
-    "image": "",
-    "personalized": "Nope",
+    "name": "Pâtes Carbonara",
     "ingredients": {
-      "Chicken": 300.0,
-      "Coconut Milk": 200.0,
-      "Curry Powder": 2.0,
-      "Onion": 1.0,
-      "Garlic": 2.0
+      "Poulet": 300.0,
+      "Lait de coco": 200.0,
+      "Poudre de curry": 2.0,
+      "Oignon": 1.0,
+      "Ail": 2.0
     },
-    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :",
-
+    "dishTypes": ["plat principal"],
+    "summary": "Cette recette sert 2 personnes et prend environ 20 minutes à préparer.\nUne portion de ce plat coûte environ :",
+    "gear": [],
     "steps": [
       {
-        "description": "Boil water and cook pasta.",
+        "description": "Faites bouillir de l'eau et cuisez les pâtes.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Cook bacon in pan.",
+        "description": "Faites cuire le bacon dans une poêle.",
         "duration": 5,
         "type": "cooking"
       },
       {
-        "description": "Mix pasta with eggs and bacon.",
+        "description": "Mélangez les pâtes avec les œufs et le bacon.",
         "duration": null,
         "type": "preparation"
       }
     ]
   },
   "3": {
-    "name": "Chicken Curry",
+    "name": "Poulet curry",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Chicken": 300.0,
-      "Coconut Milk": 200.0,
-      "Curry Powder": 2.0,
-      "Onion": 1.0,
-      "Garlic": 2.0
+      "Poulet": 300.0,
+      "Lait de coco": 200.0,
+      "Curry": 2.0,
+      "Oignon": 1.0,
+      "Ail": 2.0
     },
-    "summary": "This recipe serves 4 and takes around 40min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette sert 4 personnes et prend autour de 40min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Chop onion and garlic.",
+        "description": "Hachez l'oignon et l'ail.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Sauté onion and garlic until soft.",
+        "description": "Faites revenir l'oignon et l'ail jusqu'à ce qu'ils soient tendres.",
         "duration": 5,
         "type": "cooking"
       },
       {
-        "description": "Add chicken pieces and brown on all sides.",
+        "description": "Ajoutez les morceaux de poulet et faites-les dorer de tous les côtés.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Add curry powder and stir well.",
+        "description": "Ajoutez la poudre de curry et mélangez bien.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Pour in coconut milk and simmer for 15 minutes until chicken is cooked through.",
+        "description": "Versez le lait de coco et laissez mijoter pendant 15 minutes jusqu'à ce que le poulet soit bien cuit.",
         "duration": 15,
         "type": "cooking"
       }
     ]
   },
   "4": {
-    "name": "Vegetable Stir Fry",
+    "name": "Sauté de légumes",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
       "Broccoli": 0.5,
-      "Carrot": 2.0,
-      "Bell Pepper": 1.0,
-      "Soy Sauce": 2.0,
-      "Ginger": 0.5,
-      "Garlic": 2.0
+      "Carrotte": 2.0,
+      "Poivron": 1.0,
+      "Sauce soja": 2.0,
+      "Gingembre": 0.5,
+      "Ail": 2.0
     },
-    "summary": "This recipe serves 2 and takes around 15min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 2 personnes et prend autour de 15min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Chop all vegetables into bite-sized pieces.",
+        "description": "Coupez tous les légumes en morceaux de la taille d'une bouchée.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Heat oil in a pan and sauté garlic and ginger for 1-2 minutes.",
+        "description": "Chauffez de l'huile dans une poêle et faites revenir l'ail et le gingembre pendant 1-2 minutes.",
         "duration": 2,
         "type": "cooking"
       },
       {
-        "description": "Add vegetables and stir-fry on high heat for 8-10 minutes.",
+        "description": "Ajoutez les légumes et faites-les sauter à feu vif pendant 8-10 minutes.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Add soy sauce and stir for another 1-2 minutes before serving.",
+        "description": "Ajoutez la sauce soja et mélangez pendant encore 1-2 minutes avant de servir.",
         "duration": 2,
         "type": "preparation"
       }
@@ -378,203 +362,203 @@
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Wheat Flour": 200.0,
-      "Milk": 300.0,
-      "Egg": 1.0,
-      "Sugar": 25.0,
-      "Butter": 50.0
+      "Farine de blé": 200.0,
+      "Lait": 300.0,
+      "Oeuf": 1.0,
+      "Sucre": 25.0,
+      "Beurre": 50.0
     },
-    "summary": "This recipe serves 4 and takes around 20min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 20min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Mix flour, sugar, milk, and egg to make a smooth batter.",
+        "description": "Mélangez la farine, le sucre, le lait et l'œuf pour obtenir une pâte lisse.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Heat butter in a skillet over medium heat.",
+        "description": "Faites chauffer le beurre dans une poêle à feu moyen.",
         "duration": 2,
         "type": "cooking"
       },
       {
-        "description": "Pour batter into skillet and cook each pancake for 2-3 minutes per side until golden.",
+        "description": "Versez la pâte dans la poêle et faites cuire chaque pancake pendant 2-3 minutes de chaque côté jusqu'à ce qu'ils soient dorés.",
         "duration": 10,
         "type": "cooking"
       }
     ]
   },
   "6": {
-    "name": "Beef Tacos",
+    "name": "Tacos au Boeuf",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Ground Beef": 300.0,
-      "Taco Shells": 6.0,
-      "Lettuce": 0.25,
+      "Boeuf haché": 300.0,
+      "Tacos": 6.0,
+      "Salade": 0.25,
       "Cheddar": 100.0,
       "Salsa": 100.0
     },
-    "summary": "This recipe serves 3 and takes around 25min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 3 personnes et prend autour de 25min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Cook ground beef in a skillet until browned.",
+        "description": "Faites cuire le boeuf haché dans une poêle jusqu'à ce qu'il soit doré.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Warm taco shells in the oven for 5 minutes.",
+        "description": "Réchauffez les coquilles de tacos au four pendant 5 minutes.",
         "duration": 5,
         "type": "cooking"
       },
       {
-        "description": "Assemble tacos with beef, lettuce, cheddar, and salsa.",
+        "description": "Assemblez les tacos avec le boeuf, la laitue, le cheddar et la salsa.",
         "duration": 5,
         "type": "preparation"
       }
     ]
   },
   "7": {
-    "name": "Margarita Pizza",
+    "name": "Pizza Margarita",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Pizza Dough": 1.0,
-      "Tomato Sauce": 100.0,
+      "Pâte à pizza": 1.0,
+      "Sauce tomate": 100.0,
       "Mozzarella": 1.0,
-      "Basil": 3.0,
-      "Olive Oil": 1.0
+      "Basilic": 3.0,
+      "Huile d'olive": 1.0
     },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Preheat oven to 220°C.",
+        "description": "Préchauffez le four à 220°C.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Roll out pizza dough and place on a baking tray.",
+        "description": "Étalez la pâte à pizza et placez-la sur une plaque de cuisson.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Spread tomato sauce, add mozzarella slices, and sprinkle basil on top.",
+        "description": "Étalez la sauce tomate, ajoutez les tranches de mozzarella et parsemez de basilic.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Bake for 12-15 minutes until crust is golden and cheese melted.",
+        "description": "Faites cuire pendant 12-15 minutes jusqu'à ce que la croûte soit dorée et le fromage fondu.",
         "duration": 15,
         "type": "cooking"
       }
     ]
   },
   "8": {
-    "name": "Caesar Salad",
+    "name": "Salade César",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Lettuce": 1.0,
+      "Salade": 1.0,
       "Crouton": 50.0,
       "Parmesan": 30.0,
-      "Caesar Sauce": 50.0,
-      "Chicken": 150.0
+      "Sauce César": 50.0,
+      "Poulet": 150.0
     },
-    "summary": "This recipe serves 2 and takes around 20min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 2 personnes et prend autour de 20min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Grill or pan-fry chicken until fully cooked.",
+        "description": "Grillez ou faites cuire le poulet à la poêle jusqu'à ce qu'il soit bien cuit.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Chop lettuce and place in a large bowl.",
+        "description": "Coupez la salade et placez-la dans un grand bol.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Add croutons, Parmesan, Caesar sauce, and sliced chicken. Toss to combine.",
+        "description": "Ajoutez les croûtons, le Parmesan, la sauce César et le poulet tranché. Mélangez pour combiner.",
         "duration": 5,
         "type": "preparation"
       }
     ]
   },
   "9": {
-    "name": "Chocolate Cake",
+    "name": "Gâteau au chocolat",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Wheat Flour": 200.0,
-      "Sugar": 150.0,
-      "Chocolate": 100.0,
-      "Butter": 100.0,
-      "Egg": 2.0
+      "Farine de blé": 200.0,
+      "Sucre": 150.0,
+      "Chocolat": 100.0,
+      "Beurre": 100.0,
+      "Oeuf": 2.0
     },
-    "summary": "This recipe serves 8 and takes around 60min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 8 personnes et prend autour de 60min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Preheat oven to 180°C and grease a cake pan.",
+        "description": "Préchauffez le four à 180°C et graissez un moule à gâteau.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Melt chocolate and butter together.",
+        "description": "Faites fondre le chocolat et le beurre ensemble.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Mix in sugar and eggs until smooth.",
+        "description": "Mélangez avec le sucre et les œufs jusqu'à obtenir une texture lisse.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Fold in flour and pour batter into pan.",
+        "description": "Incorporez la farine et versez la pâte dans le moule.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Bake for 25-30 minutes until a toothpick comes out clean.",
+        "description": "Faites cuire pendant 25-30 minutes jusqu'à ce qu'un cure-dent en ressorte propre.",
         "duration": 30,
         "type": "cooking"
       }
     ]
   },
   "10": {
-    "name": "Tomato Soup",
+    "name": "Soupe à la tomate",
     "personalized": "Nope",
     "image": "",
     "ingredients": {
-      "Tomato": 5.0,
-      "Onion": 1.0,
-      "Garlic": 2.0,
-      "Vegetable Broth": 1.0,
-      "Cream": 50.0
+      "Tomate": 5.0,
+      "Oignon": 1.0,
+      "Ail": 2.0,
+      "Bouillon de légumes": 1.0,
+      "Crème": 50.0
     },
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Chop tomatoes, onion, and garlic.",
+        "description": "Hachez les tomates, l'oignon et l'ail.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Sauté onion and garlic in a pot until soft.",
+        "description": "Faites revenir l'oignon et l'ail dans une casserole jusqu'à ce qu'ils soient tendres.",
         "duration": 5,
         "type": "cooking"
       },
       {
-        "description": "Add tomatoes and vegetable broth. Simmer for 15 minutes.",
+        "description": "Ajoutez les tomates et le bouillon de légumes. Laissez mijoter pendant 15 minutes.",
         "duration": 15,
         "type": "cooking"
       },
       {
-        "description": "Blend soup until smooth and stir in cream before serving.",
+        "description": "Mixez la soupe jusqu'à obtenir une texture lisse et incorporez la crème avant de servir.",
         "duration": 5,
         "type": "preparation"
       }
     ]
   },
   "0": {
-    "name": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+    "name": "Pâtes à l'ail, oignons verts, chou-fleur et chapelure",
     "personalized": "Nope",
     "image": "",
     "servings": 2,
@@ -584,77 +568,77 @@
     "recipeOutside": false,
     "steps": [
       {
-        "description": "In a large skillet, melt butter over medium heat until foamy.",
+        "description": "Dans une grande poêle, faites fondre le beurre à feu moyen jusqu'à ce qu'il mousse.",
         "duration": 2
       },
       {
-        "description": "Then add bread crumbs, tossing to coat in butter, until toasted and lightly browned.",
+        "description": "Ajoutez ensuite la chapelure, en remuant pour l'enrober de beurre, jusqu'à ce qu'elle soit grillée et légèrement dorée.",
         "duration": 3
       },
       {
-        "description": "Remove from pan into small bowl; mix in cheese and about a tablespoon of the green scallion tops.",
+        "description": "Retirez du feu et mettez dans un petit bol ; mélangez avec le fromage et environ une cuillère à soupe des parties vertes des oignons nouveaux.",
         "duration": 2
       },
       {
-        "description": "In the meantime, begin to prepare your pasta according to the directions on the package.",
+        "description": "Pendant ce temps, commencez à préparer vos pâtes selon les instructions sur l'emballage.",
         "duration": 10
       },
       {
-        "description": "While the pasta is cooking, put about a tablespoon of olive oil in the same pan you used for the bread crumbs.",
+        "description": "Pendant que les pâtes cuisent, mettez environ une cuillère à soupe d'huile d'olive dans la même poêle utilisée pour la chapelure.",
         "duration": 1
       },
       {
-        "description": "Over medium heat, add the garlic, whites of the scallions, and cauliflower to the skillet.",
+        "description": "À feu moyen, ajoutez l'ail, les parties blanches des oignons nouveaux et le chou-fleur dans la poêle.",
         "duration": 3
       },
       {
-        "description": "Saute until the cauliflower shows some caramelization.",
+        "description": "Faites sauter jusqu'à ce que le chou-fleur montre des signes de caramélisation.",
         "duration": 5
       },
       {
-        "description": "Then add the wine until the florets are tender-crisp.",
+        "description": "Ajoutez ensuite le vin jusqu'à ce que les fleurons soient tendres mais encore croquants.",
         "duration": 3
       },
       {
-        "description": "Add salt, pepper, and red pepper flakes.",
+        "description": "Ajoutez du sel, du poivre et des flocons de piment rouge.",
         "duration": 1
       },
       {
-        "description": "When pasta is just shy of al dente, reserve about a cup of the cooking water and drain the pasta.",
+        "description": "Lorsque les pâtes sont juste avant d'être al dente, réservez environ une tasse d'eau de cuisson et égouttez les pâtes.",
         "duration": 2
       },
       {
-        "description": "Add the drained pasta to the skillet—still over medium heat—with the veggies and toss with some pasta water, as necessary (I added a little at a time; I ended up using about 1/2 cup), till the pasta is coated and turns easily.",
+        "description": "Ajoutez les pâtes égouttées dans la poêle, toujours à feu moyen, avec les légumes et mélangez avec un peu d'eau de cuisson des pâtes, si nécessaire (ajoutez-en un peu à la fois ; j'ai utilisé environ 1/2 tasse), jusqu'à ce que les pâtes soient enrobées et se mélangent facilement.",
         "duration": 3
       },
       {
-        "description": "You may want to add another little drizzle of olive oil. Again, taste and season accordingly.",
+        "description": "Vous pouvez ajouter un autre petit filet d'huile d'olive. Goûtez et ajustez l'assaisonnement si nécessaire.",
         "duration": 1
       },
       {
-        "description": "Put into serving bowls and top with the bread crumb mixture. Sprinkle some more scallion greens on top.",
+        "description": "Mettez dans des bols de service et garnissez avec le mélange de chapelure. Saupoudrez un peu plus de parties vertes des oignons nouveaux sur le dessus.",
         "duration": 1
       },
       {
-        "description": "That's it! There's cauliflower in every bite. And that's a great thing.",
+        "description": "Et voilà ! Il y a du chou-fleur dans chaque bouchée. Et c'est une excellente chose.",
         "duration": 1
       }
     ],
-    "dishTypes": ["main course", "side dish"],
+    "dishTypes": ["plat principal", "accompagnement"],
     "ingredients": {
-      "Butter": 15.0,
-      "Cauliflower": 1.0,
-      "Cheese": 20.0,
-      "Olive Oil": 1.0,
-      "Garlic": 5.0,
-      "Pasta": 170.0,
-      "Pepper": 2.0,
-      "Salt": 2.0,
-      "Green Onion": 3.0,
-      "Wine": 2.0,
+      "Beurre": 15.0,
+      "Chou-Fleur": 1.0,
+      "Fromage râpé": 20.0,
+      "Huile d'olive": 1.0,
+      "Ail": 5.0,
+      "Pâtes": 170.0,
+      "Poivre": 2.0,
+      "Sel": 2.0,
+      "Vert d'oignon": 3.0,
+      "Vin": 2.0,
       "Crouton": 50.0
     },
-    "summary": "This recipe serves 2 and takes around 45min to make.\nOne portion of this dish costs about :"
+    "summary": "Cette recette suffit pour 2 personnes et prend autour de 45min à faire.\nUne portion de ce plat coûte environ : "
   },
 
   "15": {
@@ -667,20 +651,20 @@
     "preparationMinutes": 25,
     "recipeOutside": false,
     "ingredients": {
-      "Shortcrust Pastry": 1.0,
+      "Pâte brisée": 1.0,
       "Bacon": 200.0,
-      "Egg": 3.0,
-      "Cream": 200.0,
-      "Milk": 200.0,
-      "Gruyere": 100.0,
-      "Butter": 20.0,
-      "Salt": 0.5,
-      "Pepper": 0.5,
-      "Nutmeg": 0.25
+      "Oeuf": 3.0,
+      "Crème": 200.0,
+      "Lait": 200.0,
+      "Fromage râpé": 100.0,
+      "Beurre": 20.0,
+      "Sel": 0.5,
+      "Poivre": 0.5,
+      "Muscade": 0.25
     },
-    "dishTypes": ["main course", "appetizer"],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 4 and takes around 50min to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["plat principal", "apéritif"],
+    "gear": ["Four"],
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 50min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
         "description": "Préchauffez le four à 180°C. Étalez la pâte brisée dans un moule à tarte beurré.",
@@ -735,19 +719,19 @@
     "preparationMinutes": 17,
     "recipeOutside": false,
     "ingredients": {
-      "Shortcrust Pastry": 1.0,
-      "Spinach": 500.0,
-      "Egg": 3.0,
-      "Cream": 150.0,
+      "Pâte brisée": 1.0,
+      "Épinard": 500.0,
+      "Oeuf": 3.0,
+      "Crème": 150.0,
       "Feta": 150.0,
-      "Olive Oil": 2.0,
-      "Salt": 0.5,
-      "Pepper": 0.5,
-      "Nutmeg": 0.25
+      "Huile d'olive": 2.0,
+      "Sel": 0.5,
+      "Poivre": 0.5,
+      "Muscade": 0.25
     },
-    "dishTypes": ["main course", "side dish"],
-    "gear": ["Oven", "Stove"],
-    "summary": "This recipe serves 4 and takes around 30min to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["plat principal", "accompagnement"],
+    "gear": ["Four", "Plaque de cuisson"],
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
         "description": "Préchauffez le four à 180°C. Étalez la pâte dans un moule à tarte.",
@@ -786,20 +770,20 @@
     "preparationMinutes": 45,
     "recipeOutside": false,
     "ingredients": {
-      "Potato": 1000.0,
-      "Cream": 400.0,
-      "Milk": 200.0,
-      "Garlic": 2.0,
-      "Gruyere": 100.0,
-      "Butter": 30.0,
-      "Salt": 1.0,
-      "Pepper": 0.5,
-      "Nutmeg": 0.25
+      "Pomme de terre": 1000.0,
+      "Crème": 400.0,
+      "Lait": 200.0,
+      "Ail": 2.0,
+      "Fromage râpé": 100.0,
+      "Beurre": 30.0,
+      "Sel": 1.0,
+      "Poivre": 0.5,
+      "Muscade": 0.25
     },
     "servings": 6,
-    "dishTypes": ["side dish", "main course"],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 6 and takes around 1h 30min to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["accompagnement", "plat principal"],
+    "gear": ["Four", "Plaque de cuisson"],
+    "summary": "Cette recette suffit pour 6 personnes et prend autour de 1h 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
         "description": "Préchauffez le four à 160°C. Frottez un plat à gratin avec une gousse d'ail coupée, puis beurrez-le généreusement.",
@@ -848,56 +832,56 @@
     "preparationMinutes": 45,
     "recipeOutside": false,
     "ingredients": {
-      "Dark Chocolate": 250.0,
-      "Butter": 150.0,
-      "Sugar": 150.0,
-      "Egg": 3.0,
-      "Flour": 60.0,
-      "Baking Powder": 0.5,
-      "Salt": 0.25
+      "Chocolat": 250.0,
+      "Beurre": 150.0,
+      "Sucre": 150.0,
+      "Oeuf": 3.0,
+      "Farine de blé": 60.0,
+      "Levure": 0.5,
+      "Sel": 0.25
     },
     "servings": 6,
     "dishTypes": ["dessert", "snack"],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 6 and takes around 40min to make.\nOne portion of this dish costs about :",
+    "gear": ["Four"],
+    "summary": "Cette recette suffit pour 6 personnes et prend autour de 40min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Preheat oven to 180°C. Line a baking pan with parchment paper.",
+        "description": "Préchauffez le four à 180°C. Tapissez un moule de papier sulfurisé.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Melt chocolate and butter together in a double boiler or microwave, stirring until smooth.",
+        "description": "Faites fondre le chocolat et le beurre ensemble au bain-marie ou au micro-ondes, en remuant jusqu'à ce que le mélange soit lisse.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Remove from heat and whisk in sugar until well combined.",
+        "description": "Retirez du feu et incorporez le sucre en fouettant jusqu'à homogénéité.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Add eggs one at a time, whisking well after each addition.",
+        "description": "Ajoutez les œufs un à un, en fouettant bien après chaque ajout.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Sift in flour, baking powder, and salt. Gently fold until just combined.",
+        "description": "Tamisez la farine, la levure et le sel. Incorporez délicatement jusqu'à ce que le mélange soit juste homogène.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Pour batter into prepared pan and spread evenly.",
+        "description": "Versez la pâte dans le moule préparé et étalez-la uniformément.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Bake for 20-25 minutes until edges are set but center is still slightly soft.",
+        "description": "Faites cuire pendant 20-25 minutes jusqu'à ce que les bords soient pris mais que le centre reste légèrement moelleux.",
         "duration": 25,
         "type": "cooking"
       },
       {
-        "description": "Let cool completely in pan before cutting into squares.",
+        "description": "Laissez refroidir complètement dans le moule avant de couper en carrés.",
         "duration": 30,
         "type": "preparation"
       }
@@ -914,52 +898,52 @@
     "preparationMinutes": 60,
     "recipeOutside": false,
     "ingredients": {
-      "Flour": 300.0,
-      "Butter": 150.0,
-      "Sugar": 200.0,
-      "Apple": 6.0,
-      "Egg": 1.0,
-      "Cinnamon": 2.0,
-      "Lemon": 0.5,
-      "Salt": 0.25,
-      "Water": 60.0
+      "Farine de blé": 300.0,
+      "Beurre": 150.0,
+      "Sucre": 200.0,
+      "Pomme": 6.0,
+      "Oeuf": 1.0,
+      "Cannelle": 2.0,
+      "Citron": 0.5,
+      "Sel": 0.25,
+      "Eau": 60.0
     },
     "dishTypes": ["dessert"],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 8 and takes around 1h 30min to make.\nOne portion of this dish costs about :",
+    "gear": ["Four"],
+    "summary": "Cette recette suffit pour 8 personnes et prend autour de 1h 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Make the pastry: Mix flour and salt, then rub in cold butter until it resembles breadcrumbs.",
+        "description": "Préparez la pâte : Mélangez la farine et le sel, puis incorporez le beurre froid jusqu'à obtenir une texture sableuse.",
         "duration": 8,
         "type": "preparation"
       },
       {
-        "description": "Add cold water gradually and form into a dough. Divide in half, wrap in plastic, and chill for 30 minutes.",
+        "description": "Ajoutez progressivement de l'eau froide et formez une pâte. Divisez-la en deux, enveloppez-la dans du film plastique et réfrigérez pendant 30 minutes.",
         "duration": 35,
         "type": "preparation"
       },
       {
-        "description": "Peel and slice apples. Toss with sugar, cinnamon, and lemon juice.",
+        "description": "Épluchez et tranchez les pommes. Mélangez-les avec le sucre, la cannelle et le jus de citron.",
         "duration": 15,
         "type": "preparation"
       },
       {
-        "description": "Preheat oven to 200°C. Roll out half the pastry and line a 9-inch pie dish.",
+        "description": "Préchauffez le four à 200°C. Étalez la moitié de la pâte et garnissez un moule à tarte de 23 cm.",
         "duration": 10,
         "type": "preparation"
       },
       {
-        "description": "Fill with apple mixture. Roll out remaining pastry and place on top. Seal edges and cut vents.",
+        "description": "Remplissez avec le mélange de pommes. Étalez le reste de la pâte et placez-le sur le dessus. Scellez les bords et faites des entailles pour laisser échapper la vapeur.",
         "duration": 8,
         "type": "preparation"
       },
       {
-        "description": "Brush with beaten egg and sprinkle with sugar.",
+        "description": "Badigeonnez avec un œuf battu et saupoudrez de sucre.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Bake for 45-50 minutes until golden brown and apples are tender.",
+        "description": "Faites cuire au four pendant 45-50 minutes jusqu'à ce que la tarte soit dorée et que les pommes soient tendres.",
         "duration": 50,
         "type": "cooking"
       }
@@ -967,7 +951,7 @@
   },
 
   "20": {
-    "name": "Honey Glazed Salmon",
+    "name": "Saumon glacé au miel",
     "personalized": "Nope",
     "image": "",
     "readyInMinutes": 26,
@@ -975,48 +959,48 @@
     "preparationMinutes": 11,
     "recipeOutside": false,
     "ingredients": {
-      "Salmon": 600.0,
-      "Honey": 3.0,
-      "Soy Sauce": 2.0,
-      "Garlic": 2.0,
-      "Ginger": 1.0,
-      "Lemon": 1.0,
-      "Olive Oil": 1.0,
-      "Salt": 0.25,
-      "Pepper": 0.25
+      "Saumon": 600.0,
+      "Miel": 3.0,
+      "Sauce soja": 2.0,
+      "Ail": 2.0,
+      "Gingembre": 1.0,
+      "Citron": 1.0,
+      "Huile d'olive": 1.0,
+      "Sel": 0.25,
+      "Poivre": 0.25
     },
     "servings": 4,
-    "dishTypes": ["main course"],
-    "gear": ["Oven"],
-    "summary": "This recipe serves 4 and takes around 25min to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["plat principal"],
+    "gear": ["Four"],
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 25min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Preheat oven to 200°C. Line a baking sheet with parchment paper.",
+        "description": "Préchauffez le four à 200°C. Tapissez une plaque de cuisson avec du papier sulfurisé.",
         "duration": 1,
         "type": "preparation"
       },
       {
-        "description": "Mix honey, soy sauce, minced garlic, grated ginger, and lemon juice in a bowl.",
+        "description": "Mélangez le miel, la sauce soja, l'ail haché, le gingembre râpé et le jus de citron dans un bol.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Place salmon fillets on the baking sheet, season with salt and pepper.",
+        "description": "Placez les filets de saumon sur la plaque de cuisson, assaisonnez avec du sel et du poivre.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Brush salmon generously with the honey-soy glaze.",
+        "description": "Badigeonnez généreusement le saumon avec le glaçage au miel et à la sauce soja.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Bake for 12-15 minutes until salmon is cooked through and flakes easily.",
+        "description": "Faites cuire au four pendant 12-15 minutes jusqu'à ce que le saumon soit cuit et se défasse facilement.",
         "duration": 15,
         "type": "cooking"
       },
       {
-        "description": "Brush with remaining glaze and serve immediately.",
+        "description": "Badigeonnez avec le glaçage restant et servez immédiatement.",
         "duration": 1,
         "type": "preparation"
       }
@@ -1024,7 +1008,7 @@
   },
 
   "21": {
-    "name": "Chicken Tikka Masala",
+    "name": "Poulet Tikka Masala",
     "personalized": "Nope",
     "image": "",
     "readyInMinutes": 74,
@@ -1032,57 +1016,57 @@
     "preparationMinutes": 37,
     "recipeOutside": false,
     "ingredients": {
-      "Chicken Breast": 600.0,
-      "Yogurt": 150.0,
-      "Tomato Sauce": 400.0,
-      "Cream": 150.0,
-      "Onion": 2.0,
-      "Garlic": 4.0,
-      "Ginger": 2.0,
-      "Curry Powder": 2.0,
+      "Blanc de poulet": 600.0,
+      "Yaourt": 150.0,
+      "Sauce tomate": 400.0,
+      "Crème": 150.0,
+      "Oignon": 2.0,
+      "Ail": 4.0,
+      "Gingembre": 2.0,
+      "Curry": 2.0,
       "Cumin": 1.0,
       "Paprika": 1.0,
-      "Butter": 30.0,
-      "Salt": 1.0,
-      "Pepper": 0.5
+      "Beurre": 30.0,
+      "Sel": 1.0,
+      "Poivre": 0.5
     },
     "servings": 4,
-    "dishTypes": ["main course"],
-    "gear": ["Stove"],
-    "summary": "This recipe serves 4 and takes around 1h to make.\nOne portion of this dish costs about :",
+    "dishTypes": ["plat principal"],
+    "gear": ["Plaque de cuisson"],
+    "summary": "Cette recette suffit pour 4 personnes et prend autour de 1h à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Cut chicken into bite-sized pieces. Marinate in yogurt, curry powder, and salt for 30 minutes.",
+        "description": "Coupez le poulet en morceaux de la taille d'une bouchée. Faites-le mariner dans le yaourt, la poudre de curry et le sel pendant 30 minutes.",
         "duration": 35,
         "type": "preparation"
       },
       {
-        "description": "Heat oil in a pan and cook chicken pieces until browned. Set aside.",
+        "description": "Chauffez de l'huile dans une poêle et faites cuire les morceaux de poulet jusqu'à ce qu'ils soient dorés. Réservez.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "In the same pan, melt butter and sauté chopped onion until soft.",
+        "description": "Dans la même poêle, faites fondre le beurre et faites revenir l'oignon haché jusqu'à ce qu'il soit tendre.",
         "duration": 5,
         "type": "cooking"
       },
       {
-        "description": "Add minced garlic, ginger, cumin, and paprika. Cook for 2 minutes.",
+        "description": "Ajoutez l'ail émincé, le gingembre, le cumin et le paprika. Faites cuire pendant 2 minutes.",
         "duration": 2,
         "type": "cooking"
       },
       {
-        "description": "Add tomato sauce and simmer for 10 minutes.",
+        "description": "Ajoutez la sauce tomate et laissez mijoter pendant 10 minutes.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Return chicken to pan, add cream, and simmer for 10 more minutes.",
+        "description": "Remettez le poulet dans la poêle, ajoutez la crème et laissez mijoter encore 10 minutes.",
         "duration": 10,
         "type": "cooking"
       },
       {
-        "description": "Season to taste and serve with rice or naan bread.",
+        "description": "Assaisonnez selon votre goût et servez avec du riz ou du pain naan.",
         "duration": 2,
         "type": "preparation"
       }
@@ -1090,7 +1074,7 @@
   },
 
   "22": {
-    "name": "Chocolate Chip Cookies",
+    "name": "Cookies au pépites de chocolat",
     "personalized": "Nope",
     "image": "",
     "readyInMinutes": 42,
@@ -1098,63 +1082,63 @@
     "preparationMinutes": 30,
     "recipeOutside": false,
     "ingredients": {
-      "Flour": 280.0,
-      "Butter": 225.0,
-      "Sugar": 150.0,
-      "Brown Sugar": 150.0,
-      "Egg": 2.0,
-      "Vanilla Extract": 2.0,
-      "Baking Soda": 1.0,
-      "Salt": 0.5,
-      "Chocolate Chips": 300.0
+      "Farine de blé": 280.0,
+      "Beurre": 225.0,
+      "Sucre": 150.0,
+      "Cassonade": 150.0,
+      "Oeuf": 2.0,
+      "Extrait de vanille": 2.0,
+      "Levure": 1.0,
+      "Sel": 0.5,
+      "Pépites de chocolat": 300.0
     },
     "servings": 24,
     "dishTypes": ["dessert", "snack"],
-    "gear": ["Oven"],
-    "summary": "This recipe makes 24 cookies and takes around 30min to make.\nOne portion of this dish costs about :",
+    "gear": ["Four"],
+    "summary": "Cette recette fait 24 cookies et prend autour de 30min à faire.\nUne portion de ce plat coûte environ : ",
     "steps": [
       {
-        "description": "Preheat oven to 190°C. Line baking sheets with parchment paper.",
+        "description": "Préchauffez le four à 190°C. Tapissez des plaques de cuisson avec du papier sulfurisé.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Cream softened butter with both sugars until light and fluffy.",
+        "description": "Crémez le beurre ramolli avec les deux sucres jusqu'à ce que le mélange soit léger et mousseux.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Beat in eggs one at a time, then add vanilla extract.",
+        "description": "Incorporez les œufs un à un, puis ajoutez l'extrait de vanille.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Mix flour, baking soda, and salt in a separate bowl.",
+        "description": "Mélangez la farine, le bicarbonate de soude et le sel dans un bol séparé.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Gradually add dry ingredients to wet ingredients, mixing until just combined.",
+        "description": "Ajoutez progressivement les ingrédients secs aux ingrédients humides, en mélangeant juste assez pour combiner.",
         "duration": 3,
         "type": "preparation"
       },
       {
-        "description": "Fold in chocolate chips.",
+        "description": "Incorporez les pépites de chocolat.",
         "duration": 2,
         "type": "preparation"
       },
       {
-        "description": "Drop spoonfuls of dough onto baking sheets, spacing them 2 inches apart.",
+        "description": "Déposez des cuillerées de pâte sur les plaques de cuisson, en les espaçant de 5 cm.",
         "duration": 5,
         "type": "preparation"
       },
       {
-        "description": "Bake for 10-12 minutes until edges are golden but centers are still soft.",
+        "description": "Faites cuire pendant 10-12 minutes jusqu'à ce que les bords soient dorés mais que le centre reste moelleux.",
         "duration": 12,
         "type": "cooking"
       },
       {
-        "description": "Cool on baking sheet for 5 minutes before transferring to a wire rack.",
+        "description": "Laissez refroidir sur la plaque de cuisson pendant 5 minutes avant de transférer sur une grille.",
         "duration": 5,
         "type": "preparation"
       }

@@ -6,7 +6,6 @@ import 'package:dilly_daily/models/Personalization/my_recipes.dart';
 import 'package:dilly_daily/models/Recipe.dart';
 import 'package:dilly_daily/models/Step.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,39 +17,42 @@ class RecipesDico extends Iterable implements Iterator {
   Function? onMyRecipesChanged;
 
   static List<String> dishTypes = [
-    "main course",
-    "side dish",
+    "plat principal",
+    "accompagnement",
     "dessert",
-    "appetizer",
-    "salad",
-    "bread",
-    "breakfast",
-    "soup",
-    "beverage",
+    "apéritif",
+    "salade",
+    "pain",
+    "petit-déjeuner",
+    "soupe",
+    "boisson",
     "sauce",
     "marinade",
-    "fingerfood",
     "snack",
-    "drink"
   ];
   static List<Gear> kitchenGear = [
     Gear(
-      name: "Oven",
+      name: "Four",
       icon: Icons.kitchen,
       description: "Modern electric oven for baking and roasting",
     ),
     Gear(
-      name: "Mixer",
+      name: "Plaque de cuisson",
+      icon: Icons.kitchen,
+      description: "Kitchen mixer for smoothies and shakes",
+    ),
+    Gear(
+      name: "Mixeur",
       icon: Icons.blender_rounded,
       description: "Kitchen mixer for smoothies and shakes",
     ),
     Gear(
-      name: "Fryer",
+      name: "Friteuse",
       icon: Icons.local_fire_department,
       description: "Deep fryer for fries and snacks",
     ),
     Gear(
-      name: "Microwave",
+      name: "Micro-ondes",
       icon: Icons.microwave_rounded,
       description: "Microwave oven for heating food",
     ),
@@ -86,8 +88,9 @@ class RecipesDico extends Iterable implements Iterator {
   Iterator get iterator => _bigDict.keys.iterator;
 
   Future<String> fetchRecipes() async {
-    final response = await http
-        .get(Uri.parse('https://fastapi-example-da0l.onrender.com/recipes'));
+    final response = await http.get(
+      Uri.parse('https://fastapi-example-da0l.onrender.com/recipes'),
+    );
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -100,8 +103,8 @@ class RecipesDico extends Iterable implements Iterator {
   }
 
   Future<void> load() async {
-    final String jsonString = //await fetchRecipes();
-        await rootBundle.loadString('assets/data/recipes.json');
+    final String jsonString = await fetchRecipes();
+    //await rootBundle.loadString('assets/data/recipes.json');
     final data = jsonDecode(jsonString);
     for (String key in data.keys) {
       String id = key;
